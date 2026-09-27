@@ -1,14 +1,19 @@
-# Bumi Aksara — Personal Portfolio
+# Bumi Aksara — Portfolio Alternatif Editorial
 
-Isi folder:
-- `index.html` → struktur dan konten website
-- `style.css` → tampilan visual dan responsive styling
-- `script.js` → interaksi website
+Versi pembanding visual dari portfolio Bumi Aksara. Semua konten, copywriting, urutan bagian, dan interaksi utama mengikuti website yang diberikan. Desain menggunakan palet krem, biru tua, dan terakota dengan tipografi editorial.
 
-## Cara publish ke GitHub Pages
-1. Upload ketiga file ke root repository GitHub.
-2. Pastikan nama file tidak berubah.
-3. Buka `Settings > Pages`.
-4. Pilih `Deploy from a branch`.
-5. Pilih branch `main` dan folder `/ (root)`.
-6. Save, lalu buka URL GitHub Pages setelah deployment selesai.
+## Isi folder
+
+- `index.html` — struktur dan konten website
+- `style.css` — desain alternatif dan tampilan responsif
+- `script.js` — navigasi mobile, animasi masuk, filter project, dan tombol kembali ke atas
+
+## Preview
+
+Buka `index.html` di browser. Tidak perlu instalasi, proses build, atau koneksi ke layanan eksternal.
+
+## Upload ke GitHub / Cloudflare Pages
+
+Upload tiga file (`index.html`, `style.css`, dan `script.js`) ke root repository atau folder publik project. Pastikan namanya persis sama dan tetap berada di folder yang sama. Commit dan push ke branch production agar halaman diperbarui.
+
+Tautan email dan sosial mengikuti file asal, termasuk alamat `example.com` dan tautan `#` sebagai placeholder. Ganti saat profil asli siap dipublikasikan.
