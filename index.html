@@ -1,291 +1,194 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bumi Aksara | Personal Portfolio</title>
-  <meta
-    name="description"
-    content="Personal portfolio Bumi Aksara, seorang entrepreneur dan freelancer dengan latar belakang pendidikan Ekonomi."
-  >
+  <meta name="description" content="Personal portfolio Bumi Aksara, entrepreneur dan freelancer dengan latar belakang Ekonomi." />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <div class="page-glow page-glow--one"></div>
+  <div class="page-glow page-glow--two"></div>
 
-  <!-- HEADER / NAVIGATION -->
-  <header>
-    <nav aria-label="Navigasi utama">
-      <a href="#home">Bumi Aksara</a>
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home" aria-label="Bumi Aksara">
+        <span class="brand-mark">BA</span>
+        <span class="brand-text">Bumi Aksara</span>
+      </a>
 
-      <ul>
-        <li><a href="#about">Tentang Saya</a></li>
-        <li><a href="#experience">Pengalaman</a></li>
-        <li><a href="#expertise">Keahlian</a></li>
-        <li><a href="#projects">Project</a></li>
-        <li><a href="#business">Usaha</a></li>
-        <li><a href="#contact">Kontak</a></li>
-      </ul>
-    </nav>
+      <button class="menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
+        <a href="#about">Tentang</a>
+        <a href="#experience">Pengalaman</a>
+        <a href="#expertise">Keahlian</a>
+        <a href="#projects">Project</a>
+        <a href="#contact">Kontak</a>
+      </nav>
+    </div>
   </header>
 
   <main>
+    <section class="hero section" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Entrepreneur • Freelancer • Problem Solver</div>
+          <h1>Halo, saya <span>Bumi Aksara.</span></h1>
+          <p class="hero-lead">Saya membantu mengubah ide menjadi project yang lebih terstruktur, relevan, dan siap dijalankan.</p>
+          <p class="hero-body">Dengan latar belakang Ekonomi, saya terbiasa melihat sebuah project dari sisi kebutuhan pengguna, proses, efisiensi, dan nilai yang bisa diciptakan.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">Lihat Portfolio <span aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="#contact">Hubungi Saya</a>
+          </div>
+          <div class="hero-meta">
+            <div><strong>4+</strong><span>Tahun pengalaman</span></div>
+            <div><strong>12+</strong><span>Project selesai</span></div>
+            <div><strong>3</strong><span>Area fokus</span></div>
+          </div>
+        </div>
 
-    <!-- HERO -->
-    <section id="home">
-      <p>Halo, saya</p>
-
-      <h1>Bumi Aksara</h1>
-
-      <p>
-        Entrepreneur &amp; Freelancer dengan latar belakang pendidikan Ekonomi.
-        Saya membantu mengembangkan ide menjadi project yang lebih terstruktur,
-        sederhana, dan memiliki manfaat nyata.
-      </p>
-
-      <p>
-        <a href="#projects">Lihat Portfolio</a>
-        <a href="#contact">Hubungi Saya</a>
-      </p>
+        <div class="hero-visual reveal">
+          <div class="profile-card tilt-card">
+            <div class="profile-orbit profile-orbit--one"></div>
+            <div class="profile-orbit profile-orbit--two"></div>
+            <div class="avatar-wrap">
+              <div class="avatar">BA</div>
+              <span class="status-dot" aria-hidden="true"></span>
+            </div>
+            <p class="profile-kicker">Saat ini</p>
+            <h2>Building meaningful projects.</h2>
+            <div class="profile-tags"><span>Business</span><span>Project</span><span>Freelance</span></div>
+            <div class="profile-quote">“Mulai dari yang jelas, lalu perbaiki sambil berjalan.”</div>
+          </div>
+        </div>
+      </div>
     </section>
 
-
-    <!-- ABOUT -->
-    <section id="about">
-      <h2>Tentang Saya</h2>
-
-      <p>
-        Saya Bumi Aksara. Saya memiliki ketertarikan pada dunia bisnis,
-        pengembangan project, dan pekerjaan freelance.
-      </p>
-
-      <p>
-        Latar belakang pendidikan Ekonomi membantu saya melihat sebuah project
-        bukan hanya dari sisi ide, tetapi juga dari sisi kebutuhan pengguna,
-        proses, efisiensi, dan nilai yang bisa dihasilkan.
-      </p>
-
-      <p>
-        Saat ini saya menjalankan usaha secara mandiri sekaligus mengerjakan
-        beberapa project freelance bersama individu maupun bisnis kecil.
-      </p>
+    <section class="section" id="about">
+      <div class="container split-layout">
+        <div class="section-heading reveal">
+          <span class="section-number">01</span>
+          <p class="eyebrow">Tentang Saya</p>
+          <h2>Saya suka membuat sesuatu menjadi lebih sederhana.</h2>
+        </div>
+        <div class="about-content reveal">
+          <p class="large-copy">Saya Bumi Aksara. Saya memiliki ketertarikan pada dunia bisnis, pengembangan project, dan pekerjaan freelance.</p>
+          <p>Latar belakang pendidikan Ekonomi membantu saya memahami bahwa ide yang baik tetap membutuhkan proses yang jelas, prioritas yang tepat, dan eksekusi yang konsisten.</p>
+          <p>Saat ini saya menjalankan usaha secara mandiri sekaligus membantu individu dan bisnis kecil melalui berbagai project berbasis riset, perencanaan, dan pengembangan ide.</p>
+          <div class="facts-grid">
+            <article><span>Pendidikan</span><strong>Sarjana Ekonomi</strong><p>Universitas Nusantara</p></article>
+            <article><span>Domisili</span><strong>Indonesia</strong><p>Terbuka untuk remote project</p></article>
+            <article><span>Fokus</span><strong>Business & Project</strong><p>Structured execution</p></article>
+          </div>
+        </div>
+      </div>
     </section>
 
-
-    <!-- EDUCATION -->
-    <section id="education">
-      <h2>Pendidikan</h2>
-
-      <article>
-        <h3>Sarjana Ekonomi</h3>
-        <p>Universitas Nusantara</p>
-        <p>2016 - 2020</p>
-
-        <p>
-          Mempelajari dasar ekonomi, bisnis, pemasaran, pengelolaan keuangan,
-          dan pengembangan usaha.
-        </p>
-      </article>
+    <section class="section section-dark" id="experience">
+      <div class="container">
+        <div class="section-heading section-heading--row reveal">
+          <div>
+            <span class="section-number">02</span>
+            <p class="eyebrow">Pengalaman</p>
+            <h2>Beberapa perjalanan yang membentuk cara saya bekerja.</h2>
+          </div>
+          <p class="section-side-copy">Bekerja lintas fungsi membuat saya terbiasa melihat masalah dari berbagai sudut sebelum memutuskan solusi.</p>
+        </div>
+        <div class="timeline">
+          <article class="timeline-item reveal"><div class="timeline-year">2022 — Sekarang</div><div class="timeline-content"><h3>Entrepreneur</h3><p>Mengembangkan dan mengelola usaha kecil mulai dari perencanaan, operasional, pemasaran, sampai evaluasi pengembangan bisnis.</p></div></article>
+          <article class="timeline-item reveal"><div class="timeline-year">2021 — Sekarang</div><div class="timeline-content"><h3>Freelance Project Specialist</h3><p>Membantu individu dan bisnis kecil mengerjakan project mulai dari riset, perencanaan, dokumentasi, sampai eksekusi.</p></div></article>
+          <article class="timeline-item reveal"><div class="timeline-year">2020 — 2022</div><div class="timeline-content"><h3>Business Support</h3><p>Mendukung pekerjaan operasional dan pengembangan bisnis melalui pengolahan data, koordinasi, dan penyusunan laporan sederhana.</p></div></article>
+        </div>
+      </div>
     </section>
 
-
-    <!-- EXPERIENCE -->
-    <section id="experience">
-      <h2>Pengalaman</h2>
-
-      <article>
-        <h3>Entrepreneur</h3>
-        <p>2022 - Sekarang</p>
-
-        <p>
-          Mengembangkan dan mengelola usaha kecil mulai dari perencanaan,
-          operasional, pemasaran, sampai evaluasi pengembangan bisnis.
-        </p>
-      </article>
-
-      <article>
-        <h3>Freelance Project Specialist</h3>
-        <p>2021 - Sekarang</p>
-
-        <p>
-          Membantu individu dan bisnis kecil mengerjakan berbagai kebutuhan
-          project, mulai dari riset, perencanaan, dokumentasi, sampai eksekusi.
-        </p>
-      </article>
-
-      <article>
-        <h3>Business Support</h3>
-        <p>2020 - 2022</p>
-
-        <p>
-          Mendukung pekerjaan operasional dan pengembangan bisnis melalui
-          pengolahan data, koordinasi, dan penyusunan laporan sederhana.
-        </p>
-      </article>
+    <section class="section" id="expertise">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-number">03</span>
+          <p class="eyebrow">Keahlian & Layanan</p>
+          <h2>Area yang paling sering saya kerjakan.</h2>
+        </div>
+        <div class="expertise-grid">
+          <article class="service-card reveal"><span class="service-index">01</span><h3>Business Planning</h3><p>Membantu menyederhanakan ide bisnis menjadi rencana kerja yang lebih jelas, realistis, dan mudah dijalankan.</p></article>
+          <article class="service-card reveal"><span class="service-index">02</span><h3>Project Management</h3><p>Mengatur kebutuhan, prioritas, timeline, dan workflow agar project bergerak lebih terarah.</p></article>
+          <article class="service-card reveal"><span class="service-index">03</span><h3>Research & Analysis</h3><p>Melakukan riset sederhana untuk membantu proses pengambilan keputusan dan pengembangan project.</p></article>
+          <article class="service-card reveal"><span class="service-index">04</span><h3>Freelance Support</h3><p>Mendukung kebutuhan individu, UMKM, dan bisnis kecil untuk berbagai pekerjaan berbasis project.</p></article>
+        </div>
+      </div>
     </section>
 
-
-    <!-- EXPERTISE -->
-    <section id="expertise">
-      <h2>Keahlian &amp; Layanan</h2>
-
-      <article>
-        <h3>Business Planning</h3>
-        <p>
-          Membantu menyusun ide bisnis menjadi rencana kerja yang lebih
-          sederhana dan terstruktur.
-        </p>
-      </article>
-
-      <article>
-        <h3>Project Management</h3>
-        <p>
-          Membantu mengatur kebutuhan, prioritas, timeline, dan proses
-          pengerjaan sebuah project.
-        </p>
-      </article>
-
-      <article>
-        <h3>Research &amp; Analysis</h3>
-        <p>
-          Melakukan riset sederhana untuk membantu proses pengambilan keputusan
-          dan pengembangan project.
-        </p>
-      </article>
-
-      <article>
-        <h3>Freelance Support</h3>
-        <p>
-          Mendukung kebutuhan individu, UMKM, dan bisnis kecil untuk berbagai
-          pekerjaan berbasis project.
-        </p>
-      </article>
+    <section class="section projects-section" id="projects">
+      <div class="container">
+        <div class="section-heading section-heading--row reveal">
+          <div>
+            <span class="section-number">04</span>
+            <p class="eyebrow">Selected Projects</p>
+            <h2>Beberapa project yang pernah saya kerjakan.</h2>
+          </div>
+          <div class="project-filter" role="group" aria-label="Filter project">
+            <button class="filter-button active" data-filter="all">Semua</button>
+            <button class="filter-button" data-filter="business">Business</button>
+            <button class="filter-button" data-filter="project">Project</button>
+            <button class="filter-button" data-filter="research">Research</button>
+          </div>
+        </div>
+        <div class="projects-grid">
+          <article class="project-card reveal" data-category="business"><div class="project-visual visual-one"><span>01</span></div><div class="project-content"><p class="project-type">Business Planning</p><h3>Project Arunika</h3><p>Membantu usaha lokal merapikan konsep produk, prioritas pekerjaan, dan rencana peluncuran sederhana.</p><span class="project-role">Project Planning & Business Support</span></div></article>
+          <article class="project-card reveal" data-category="project"><div class="project-visual visual-two"><span>02</span></div><div class="project-content"><p class="project-type">Independent Project</p><h3>Ruang Tumbuh</h3><p>Project mandiri untuk membuat materi belajar sederhana mengenai bisnis dan pengembangan diri.</p><span class="project-role">Founder & Content Development</span></div></article>
+          <article class="project-card reveal" data-category="research"><div class="project-visual visual-three"><span>03</span></div><div class="project-content"><p class="project-type">Research & Digital</p><h3>UMKM Digital Starter</h3><p>Membantu bisnis kecil menyusun informasi produk dan kebutuhan awal untuk membangun kehadiran digital.</p><span class="project-role">Research & Project Support</span></div></article>
+        </div>
+      </div>
     </section>
 
-
-    <!-- PROJECTS -->
-    <section id="projects">
-      <h2>Selected Projects</h2>
-
-      <article>
-        <h3>Project Arunika</h3>
-
-        <p>
-          Membantu sebuah usaha lokal merapikan konsep produk, menyusun prioritas
-          pekerjaan, dan membuat rencana peluncuran sederhana.
-        </p>
-
-        <p>
-          <strong>Peran:</strong> Project Planning &amp; Business Support
-        </p>
-      </article>
-
-      <article>
-        <h3>Ruang Tumbuh</h3>
-
-        <p>
-          Project mandiri untuk membuat materi belajar sederhana bagi anak muda
-          yang ingin mulai memahami bisnis dan pengembangan diri.
-        </p>
-
-        <p>
-          <strong>Peran:</strong> Founder &amp; Content Development
-        </p>
-      </article>
-
-      <article>
-        <h3>UMKM Digital Starter</h3>
-
-        <p>
-          Membantu bisnis kecil menyusun informasi produk dan kebutuhan dasar
-          untuk mulai memiliki kehadiran digital yang lebih rapi.
-        </p>
-
-        <p>
-          <strong>Peran:</strong> Research &amp; Project Support
-        </p>
-      </article>
+    <section class="section business-section">
+      <div class="container">
+        <div class="business-card reveal">
+          <div><span class="section-number">05</span><p class="eyebrow">Usaha yang Saya Jalankan</p><h2>Aksara Project</h2></div>
+          <div><p class="large-copy">Dukungan berbasis project untuk individu dan bisnis yang membutuhkan bantuan dalam perencanaan, riset, dokumentasi, dan pengembangan ide.</p><p>Saya percaya bahwa sesuatu tidak selalu harus dimulai dalam skala besar. Yang penting adalah memulainya dengan jelas, menjalankannya secara konsisten, lalu terus memperbaikinya.</p></div>
+        </div>
+      </div>
     </section>
 
-
-    <!-- BUSINESS -->
-    <section id="business">
-      <h2>Usaha yang Saya Jalankan</h2>
-
-      <article>
-        <h3>Aksara Project</h3>
-
-        <p>
-          Aksara Project adalah usaha kecil yang menyediakan bantuan berbasis
-          project untuk individu dan bisnis yang membutuhkan dukungan dalam
-          perencanaan, riset, dokumentasi, dan pengembangan ide.
-        </p>
-
-        <p>
-          Saya percaya bahwa sesuatu tidak selalu harus dimulai dalam skala
-          besar. Yang penting adalah memulainya dengan jelas, menjalankannya
-          secara konsisten, lalu terus memperbaikinya.
-        </p>
-      </article>
+    <section class="section values-section">
+      <div class="container">
+        <div class="section-heading reveal"><span class="section-number">06</span><p class="eyebrow">Cara Saya Bekerja</p><h2>Lima prinsip sederhana.</h2></div>
+        <div class="values-list">
+          <div class="value-row reveal"><span>01</span><p>Mulai dari objective yang jelas.</p></div>
+          <div class="value-row reveal"><span>02</span><p>Menyederhanakan sesuatu yang terasa kompleks.</p></div>
+          <div class="value-row reveal"><span>03</span><p>Membuat pekerjaan lebih terstruktur dan mudah dijalankan.</p></div>
+          <div class="value-row reveal"><span>04</span><p>Terbuka terhadap proses belajar dan perbaikan.</p></div>
+          <div class="value-row reveal"><span>05</span><p>Fokus pada hasil yang benar-benar bisa digunakan.</p></div>
+        </div>
+      </div>
     </section>
 
-
-    <!-- VALUES -->
-    <section id="values">
-      <h2>Cara Saya Bekerja</h2>
-
-      <ul>
-        <li>Mulai dari objective yang jelas.</li>
-        <li>Menyederhanakan sesuatu yang terasa kompleks.</li>
-        <li>Membuat pekerjaan lebih terstruktur dan mudah dijalankan.</li>
-        <li>Terbuka terhadap proses belajar dan perbaikan.</li>
-        <li>Fokus pada hasil yang benar-benar bisa digunakan.</li>
-      </ul>
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="contact-card reveal">
+          <div><p class="eyebrow">Mari Terhubung</p><h2>Punya ide atau project yang ingin dibicarakan?</h2></div>
+          <div class="contact-actions">
+            <a class="button button-light" href="mailto:bumi.aksara@example.com">Kirim Email <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="#" aria-label="LinkedIn Bumi Aksara">LinkedIn</a>
+            <a class="text-link" href="#" aria-label="Instagram Bumi Aksara">Instagram</a>
+          </div>
+        </div>
+      </div>
     </section>
-
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <h2>Mari Terhubung</h2>
-
-      <p>
-        Jika kamu ingin berdiskusi, berkolaborasi, atau mempunyai sebuah project
-        yang ingin dikerjakan bersama, silakan hubungi saya.
-      </p>
-
-      <address>
-        <p>
-          Email:
-          <a href="mailto:bumi.aksara@example.com">
-            bumi.aksara@example.com
-          </a>
-        </p>
-
-        <p>
-          LinkedIn:
-          <a href="#" aria-label="LinkedIn Bumi Aksara">
-            linkedin.com/in/bumiaksara
-          </a>
-        </p>
-
-        <p>
-          Instagram:
-          <a href="#" aria-label="Instagram Bumi Aksara">
-            @bumiaksara
-          </a>
-        </p>
-      </address>
-    </section>
-
   </main>
 
-
-  <!-- FOOTER -->
-  <footer>
-    <p>
-      &copy; 2026 Bumi Aksara. Personal Portfolio.
-    </p>
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 Bumi Aksara. Personal Portfolio.</p>
+      <a href="#top">Kembali ke atas ↑</a>
+    </div>
   </footer>
 
+  <button class="back-to-top" type="button" aria-label="Kembali ke atas">↑</button>
+  <script src="script.js"></script>
 </body>
 </html>
