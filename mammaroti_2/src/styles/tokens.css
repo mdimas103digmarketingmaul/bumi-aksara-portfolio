@@ -1,0 +1,22 @@
+:root {
+  /* Measured from the PDF's 1440 × 12524 artboard. One u = one design pixel at 1440px. */
+  --u: min(0.0694444444vw, 1.3333333333px);
+  --color-primary: #f89f48;
+  --color-hero: #eca259;
+  --color-taro: #a570b1;
+  --color-plum: #611938;
+  --color-brown: #754b21;
+  --color-button: #c4803c;
+  --color-cream: #f5e3d2;
+  --color-text: #000;
+  --color-muted: #8a8a8a;
+  --color-card-warm: #fff7ef;
+  --color-card-cool: #fafafa;
+  --color-card-border: #f8a554;
+  --color-input: #ededed;
+  --container-width: 1264px;
+  --radius-sm: 8px;
+  --radius-md: 18px;
+  --radius-lg: 40px;
+  --transition: 220ms ease;
+}
