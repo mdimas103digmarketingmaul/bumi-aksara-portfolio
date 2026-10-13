@@ -1,0 +1,8 @@
+.scope {
+  min-height: 100vh;
+}
+
+/*
+  Tambahkan styling khusus option ini di bawah.
+  Gunakan CSS Module agar tidak mengganggu production atau option lain.
+*/

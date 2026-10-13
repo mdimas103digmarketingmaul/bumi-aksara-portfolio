@@ -1,0 +1,170 @@
+.section {
+  --night: #17130f;
+  --orange: #e19a50;
+  --cream: #f4ead7;
+  position: relative;
+  min-height: 900px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 52% 46%, #4b2b17 0, #261a12 28%, var(--night) 60%);
+  color: var(--cream);
+}
+.noise {
+  position: absolute;
+  inset: 0;
+  opacity: .09;
+  background-image:
+    radial-gradient(circle at 10% 10%, #fff 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 30%, #fff 0 1px, transparent 1px);
+  background-size: 22px 22px, 35px 35px;
+  mix-blend-mode: overlay;
+}
+.heading {
+  position: absolute;
+  z-index: 6;
+  top: 68px;
+  left: clamp(28px, 6vw, 90px);
+}
+.heading span,
+.sideCopy span {
+  color: var(--orange);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .2em;
+}
+.heading h1 {
+  margin: 14px 0 0;
+  font-size: clamp(58px, 7vw, 100px);
+  line-height: .82;
+  letter-spacing: -.065em;
+}
+.compass {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  width: min(690px, 58vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -47%);
+}
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(244,234,215,.18);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.ringOuter { width: 100%; height: 100%; }
+.ringMiddle { width: 72%; height: 72%; border-style: dashed; animation: spin 35s linear infinite; }
+.ringInner { width: 44%; height: 44%; border-color: rgba(225,154,80,.42); }
+.bun {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: 61%;
+  height: auto;
+  transform: translate(-50%, -48%);
+  filter: drop-shadow(0 38px 50px rgba(0,0,0,.4));
+  animation: float 5s ease-in-out infinite;
+}
+.marker {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  min-width: 110px;
+}
+.marker b {
+  color: var(--cream);
+  font-size: clamp(20px, 2.4vw, 34px);
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+.marker span {
+  margin-top: 5px;
+  color: rgba(244,234,215,.5);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.markerTop { top: -2%; left: 50%; transform: translateX(-50%); text-align: center; align-items: center; }
+.markerRight { right: -7%; top: 50%; transform: translateY(-50%); }
+.markerBottom { bottom: -3%; left: 50%; transform: translateX(-50%); text-align: center; align-items: center; }
+.markerLeft { left: -4%; top: 50%; transform: translateY(-50%); text-align: right; align-items: flex-end; }
+.beacon {
+  position: absolute;
+  z-index: 3;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--orange);
+  border-radius: 50%;
+  background: var(--night);
+  box-shadow: 0 0 0 8px rgba(225,154,80,.08), 0 0 30px rgba(225,154,80,.35);
+}
+.beaconTop { top: 7%; left: calc(50% - 5px); }
+.beaconRight { right: 7%; top: calc(50% - 5px); }
+.beaconBottom { bottom: 7%; left: calc(50% - 5px); }
+.beaconLeft { left: 7%; top: calc(50% - 5px); }
+
+.sideCopy {
+  position: absolute;
+  z-index: 6;
+  right: clamp(26px, 4vw, 62px);
+  bottom: 58px;
+  width: min(310px, 28vw);
+}
+.sideCopy p {
+  margin: 14px 0 0;
+  color: rgba(244,234,215,.64);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.counter {
+  position: absolute;
+  z-index: 6;
+  left: clamp(28px, 6vw, 90px);
+  bottom: 62px;
+  color: rgba(244,234,215,.4);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes float {
+  0%, 100% { transform: translate(-50%, -48%) rotate(-1deg); }
+  50% { transform: translate(-50%, -51%) rotate(1deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ringMiddle, .bun { animation: none; }
+}
+@media (max-width: 800px) {
+  .section { min-height: 820px; }
+  .heading { top: 45px; left: 24px; }
+  .heading h1 { font-size: clamp(52px, 15vw, 78px); }
+  .compass {
+    top: 57%;
+    left: 50%;
+    width: min(82vw, 540px);
+  }
+  .markerRight { right: -10%; }
+  .markerLeft { left: -8%; }
+  .sideCopy {
+    right: 24px;
+    bottom: 34px;
+    width: min(300px, calc(100% - 48px));
+    text-align: right;
+  }
+  .counter { left: 24px; bottom: 36px; }
+}
+@media (max-width: 520px) {
+  .section { min-height: 760px; }
+  .compass { top: 55%; width: 88vw; }
+  .marker b { font-size: 18px; }
+  .marker span { display: none; }
+  .markerRight { right: -2%; }
+  .markerLeft { left: -1%; }
+  .sideCopy p { display: none; }
+}

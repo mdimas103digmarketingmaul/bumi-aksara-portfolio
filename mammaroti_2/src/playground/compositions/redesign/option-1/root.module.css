@@ -1,0 +1,113 @@
+/* Option 1 — "Pull-apart". Shared tokens + primitives, scoped to .root. */
+
+.root {
+  --o1-yellow: #f6b81f;      /* paper-bag yellow (BAKER bags / IG feed) */
+  --o1-crust: #f89f48;       /* brand primary */
+  --o1-crust-deep: #c4803c;  /* brand button */
+  --o1-kopi: #3b200f;        /* espresso brown, text + dark scenes */
+  --o1-kopi-soft: #6b4a33;
+  --o1-plum: #611938;        /* brand plum */
+  --o1-taro: #a570b1;        /* brand taro */
+  --o1-flour: #fffdf8;       /* page */
+  --o1-line: rgb(59 32 15 / 14%);
+  --o1-focus: var(--o1-plum);
+
+  --o1-display: var(--font-bebas), 'Bebas Neue', Impact, sans-serif;
+  --o1-body: var(--font-poppins), 'Poppins', Arial, sans-serif;
+
+  --o1-gutter: clamp(16px, 4vw, 56px);
+  --o1-max: 1320px;
+  --o1-ease: cubic-bezier(.2, .8, .2, 1);
+
+  position: relative;
+  overflow-x: clip;
+  background: var(--o1-flour);
+  color: var(--o1-kopi);
+  font-family: var(--o1-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.root :focus-visible {
+  outline: 3px solid var(--o1-focus);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.root ::selection { background: var(--o1-yellow); color: var(--o1-kopi); }
+
+.wrap {
+  width: min(var(--o1-max), 100% - 2 * var(--o1-gutter));
+  margin-inline: auto;
+}
+
+.skip {
+  position: fixed;
+  z-index: 200;
+  top: 12px;
+  left: 12px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--o1-kopi);
+  font-weight: 600;
+  transform: translateY(-180%);
+}
+.skip:focus { transform: none; }
+
+/* Buttons — two weights only. */
+.btn,
+.btn:hover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--o1-kopi);
+  color: var(--o1-flour);
+  font-family: var(--o1-body);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: transform 200ms var(--o1-ease), background-color 200ms ease, box-shadow 200ms ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -12px rgb(59 32 15 / 70%); }
+.btn:active { transform: translateY(0) scale(.98); }
+
+.btnGhost,
+.btnGhost:hover {
+  background: transparent;
+  color: var(--o1-kopi);
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+.btnGhost:hover { background: rgb(59 32 15 / 6%); box-shadow: inset 0 0 0 2px currentColor; }
+
+.btnLight,
+.btnLight:hover { background: var(--o1-flour); color: var(--o1-kopi); }
+
+/* Section headings share one scale. */
+.h2 {
+  font-family: var(--o1-display);
+  font-weight: 400;
+  font-size: clamp(48px, 7vw, 104px);
+  line-height: .9;
+  letter-spacing: .005em;
+}
+
+.lede {
+  max-width: 46ch;
+  font-size: clamp(16px, 1.3vw, 18px);
+  color: var(--o1-kopi-soft);
+}
+
+/* Brand logo rendered from the supplied artwork as a mask so it can take any colour. */
+.logo {
+  display: block;
+  background: currentColor;
+  -webkit-mask: var(--logo-src) center / contain no-repeat;
+  mask: var(--logo-src) center / contain no-repeat;
+}
