@@ -7,6 +7,9 @@ backend:
 
 local_backend: true
 
+media_folder: "hanasari-website/assets/uploads"
+public_folder: "/hanasari-website/assets/uploads"
+
 collections:
   - name: "website"
     label: "Website"
