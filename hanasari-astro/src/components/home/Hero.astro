@@ -1,0 +1,64 @@
+<section id="beranda" class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow hero-eyebrow"><span class="hero-eyebrow-dot" aria-hidden="true"></span><span id="hero-eyebrow" class="hero-eyebrow-text">SELERA NUSANTARA, SEPENUH HATI</span></div>
+      <h1>
+        <span id="hero-headline-line-1">Harga Merakyat.</span><br />
+        <span id="hero-headline-line-2-prefix">Rasa</span>
+        <span class="hero-highlight"><span id="hero-headline-highlight">Ningrat</span><svg viewBox="0 0 380 22" aria-hidden="true"><path d="M4 16Q180 -3 375 10M20 20Q190 6 345 16"></path></svg></span>.
+      </h1>
+      <p id="hero-description">Hidangan yang akrab di lidah, istimewa di setiap acara. Dari makan siang kantor hingga perayaan keluarga, biarkan Hanasari menyiapkan sajian Anda.</p>
+      <div class="button-row">
+        <a class="button" href="#menu">Jelajahi Menu <span aria-hidden="true">↗</span></a>
+        <a class="button button-outline" data-wa="Saya ingin bertanya tentang paket catering." data-source="Beranda" href="https://wa.me/628563050300">Chat WhatsApp <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-note"><span class="tiny-flower" aria-hidden="true">✳</span><span><strong>Untuk momen kecil. Untuk hari besar.</strong><br />Pilihan paket sesuai kebutuhan acara Anda.</span></div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-frame"><img src="/assets/images/nasi-box-styled.webp" alt="Nasi box Hanasari dengan ayam, sayuran, sambal, dan kemasan khas Hanasari" width="778" height="1066" fetchpriority="high" /></div>
+      <div class="round-seal" aria-label="Cita rasa Nusantara"><span>CITA RASA</span><b>✳</b><span>NUSANTARA</span></div>
+      <div class="hero-mini">
+        <img src="/assets/images/tumpeng.webp" alt="Tumpeng nasi kuning Hanasari" width="90" height="98" />
+        <div><small>RAYAKAN KEBERSAMAAN</small><strong>Sajian istimewa,<br />momen berkesan.</strong><a href="#menu" data-filter-link="spesial">Temukan pilihan <span aria-hidden="true">↗</span></a></div>
+      </div>
+      <span class="visual-caption">#RayakanDenganHanasari</span>
+    </div>
+  </div>
+</section>
+
+
+<style>
+  /* Scoped hero fix: keep the eyebrow as one clean line and prevent the global
+     .eyebrow > span dot style from being applied to the text span. */
+  .hero-eyebrow {
+    flex-wrap: nowrap;
+  }
+
+  .hero-eyebrow > .hero-eyebrow-dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    background: var(--green);
+    border-radius: 50%;
+  }
+
+  .hero-eyebrow > .hero-eyebrow-text {
+    width: auto;
+    height: auto;
+    flex: 0 1 auto;
+    background: transparent;
+    border-radius: 0;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 380px) {
+    .hero-eyebrow {
+      gap: 8px;
+      letter-spacing: 1px;
+    }
+
+    .hero-eyebrow > .hero-eyebrow-text {
+      font-size: 7.5px;
+    }
+  }
+</style>

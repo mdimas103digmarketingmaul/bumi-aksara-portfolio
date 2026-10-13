@@ -1,0 +1,57 @@
+---
+import Icon from './Icon.astro';
+import { asset, img, waLink } from './data';
+---
+<section id="beranda" class="o1-hero" aria-labelledby="o1-hero-title">
+  <div class="o1-hero__bg" aria-hidden="true">
+    <svg class="o1-hero__grid" viewBox="0 0 400 400"><defs><pattern id="o1-grid" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><path d="M0 0H40M0 0V40" stroke="currentColor" stroke-width="2.4" fill="none" /></pattern></defs><rect width="400" height="400" fill="url(#o1-grid)" /></svg>
+    <span class="o1-hero__pill o1-hero__pill--1"></span>
+    <span class="o1-hero__pill o1-hero__pill--2"></span>
+    <span class="o1-hero__glow"></span>
+  </div>
+
+  <div class="o1-container o1-hero__grid-layout">
+    <div class="o1-hero__copy">
+      <p class="o1-eyebrow o1-eyebrow--light"><span class="o1-eyebrow__dot"></span>Selera Nusantara, sepenuh hati</p>
+      <h1 id="o1-hero-title" class="o1-hero__title">
+        <span class="o1-hero__line">Harga Merakyat.</span>
+        <span class="o1-hero__line">Rasa <span class="o1-hero__accent">Ningrat<svg viewBox="0 0 380 22" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16Q180 -3 375 10M20 20Q190 6 345 16" /></svg></span>.</span>
+      </h1>
+      <p class="o1-hero__lead">
+        Hidangan Nusantara yang akrab di lidah dan istimewa di setiap acara. Dari makan siang kantor hingga syukuran keluarga, biarkan Hanasari menyiapkan sajiannya.
+      </p>
+      <div class="o1-hero__actions">
+        <a class="o1-btn o1-btn--primary" href="#menu">Lihat Menu & Harga <Icon name="arrow" /></a>
+        <a class="o1-btn o1-btn--ghost-light" href={waLink('Saya ingin bertanya tentang paket catering.', 'Beranda')} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /> Chat WhatsApp</a>
+      </div>
+      <ul class="o1-hero__facts" aria-label="Sekilas Hanasari">
+        <li><span>Nasi box mulai</span><strong>Rp23rb</strong></li>
+        <li><span>Snack box mulai</span><strong>Rp14rb</strong></li>
+        <li class="o1-hero__fact-badge"><span>Bisa dipesan via</span><strong>E-Katalog</strong></li>
+      </ul>
+    </div>
+
+    <div class="o1-hero__visual">
+      <div class="o1-hero__arch-outline" aria-hidden="true"></div>
+      <figure class="o1-hero__arch">
+        <img src={img('nasi-box-styled.webp')} alt="Nasi box Hanasari berisi ayam, sayuran, sambal, dan buah dalam kemasan khas Hanasari" width="778" height="1066" fetchpriority="high" />
+      </figure>
+      <div class="o1-hero__plate" aria-hidden="true">
+        <img src={img('nasi-kuning.webp')} alt="" width="926" height="903" />
+      </div>
+      <div class="o1-hero__seal" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <defs><path id="o1-seal-path" d="M100 100m-74 0a74 74 0 1 1 148 0a74 74 0 1 1-148 0" /></defs>
+          <text><textPath href="#o1-seal-path">Cita Rasa Nusantara ✳ Rayakan dengan Hanasari ✳</textPath></text>
+        </svg>
+        <img class="o1-hero__seal-mark" src={asset('hs-mark-white.webp')} alt="" width="306" height="246" />
+      </div>
+      <a class="o1-hero__ticket" href="#menu" data-tab-link="spesial">
+        <img src={img('tumpeng.webp')} alt="" width="64" height="64" loading="lazy" />
+        <span><small>Rayakan kebersamaan</small><strong>Tumpeng untuk<br />hari istimewa</strong></span>
+        <Icon name="arrow" size={16} />
+      </a>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,40 @@
+---
+/*
+ * Layout khusus Visual Option 1.
+ * Sengaja TIDAK mengimpor src/styles/global.css agar gaya production
+ * tidak bercampur dengan eksperimen ini (dan sebaliknya).
+ */
+import '../../../styles/playground/option-1.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Visual Option 1 — alternatif desain homepage Hanasari Catering untuk perbandingan di playground.'
+} = Astro.props;
+---
+<!doctype html>
+<html lang="id" class="o1-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="theme-color" content="#0c2f2e" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preload" href="/assets/playground/option-1/fonts/montserrat-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/poppins-0.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/images/nasi-box-styled.webp" as="image" fetchpriority="high" />
+    <title>{title}</title>
+    <script is:inline>document.documentElement.classList.add('o1-js');</script>
+  </head>
+  <body class="o1">
+    <slot />
+    <script>
+      import './option-1.client.ts';
+    </script>
+  </body>
+</html>

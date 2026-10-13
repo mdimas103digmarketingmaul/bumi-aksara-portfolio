@@ -1,0 +1,53 @@
+---
+import Icon from './Icon.astro';
+import { dishGroups, waLink } from './data';
+
+const count = (ids: string[]) => dishGroups.filter((g) => ids.includes(g.id)).reduce((n, g) => n + g.items.length, 0);
+const stats = [
+  { value: count(['ayam', 'daging', 'ikan']), label: 'Lauk utama' },
+  { value: count(['tumisan', 'gorengan']), label: 'Tumisan & gorengan' },
+  { value: count(['sambal']), label: 'Sambal' },
+  { value: count(['snack']), label: 'Snack & kue' }
+];
+---
+<section class="o1-dishes" aria-labelledby="o1-dishes-title">
+  <div class="o1-dishes__decor" aria-hidden="true"></div>
+  <div class="o1-container">
+    <div class="o1-dishes__head" data-reveal>
+      <div>
+        <p class="o1-eyebrow o1-eyebrow--light">Racik isi box</p>
+        <h2 id="o1-dishes-title" class="o1-h2 o1-h2--light">Lauknya bisa dipilih. <em>Sesuai selera.</em></h2>
+        <p class="o1-dishes__lead">Setiap paket bisa diisi dengan lauk favorit Anda. Intip pilihan dari katalog Hanasari, lalu sampaikan kombinasi yang diinginkan ke admin.</p>
+      </div>
+      <ul class="o1-dishes__stats">
+        {stats.map((s) => <li><strong data-count={s.value}>{s.value}</strong><span>{s.label}</span></li>)}
+      </ul>
+    </div>
+
+    <div class="o1-dishes__explorer" data-chips data-reveal>
+      <div class="o1-dishes__filters" role="tablist" aria-label="Kategori pilihan isi">
+        {dishGroups.map((g, i) => (
+          <button type="button" role="tab" id={`o1-dish-tab-${g.id}`} aria-controls={`o1-dish-${g.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-chip-tab={g.id}>
+            {g.label}<span>{g.items.length}</span>
+          </button>
+        ))}
+      </div>
+      {dishGroups.map((g, i) => (
+        <div class:list={['o1-dishes__panel', { 'is-active': i === 0 }]} role="tabpanel" id={`o1-dish-${g.id}`} aria-labelledby={`o1-dish-tab-${g.id}`} data-chip-panel={g.id}>
+          <h3 class="o1-visually-hidden">{g.label}</h3>
+          <ul>
+            {g.items.map((item, j) => <li style={`--i:${j}`}>{item}</li>)}
+          </ul>
+          {g.id === 'ikan' && <p class="o1-dishes__hint">Jenis ikan: bawal, nila, gurame, emas, kembung, atau tongkol.</p>}
+          {g.id === 'snack' && <p class="o1-dishes__hint">Khusus roti, minimal pemesanan 40 pcs untuk paket premium.</p>}
+        </div>
+      ))}
+      <div class="o1-dishes__foot">
+        <p>*Mengikuti ketersediaan. Konfirmasikan pilihan isi kepada admin.</p>
+        <a class="o1-btn o1-btn--primary o1-btn--sm" href={waLink('Saya ingin meracik isi nasi box / snack box. Boleh dibantu pilihan lauknya?', 'Racik isi box')} target="_blank" rel="noopener noreferrer">
+          <Icon name="whatsapp" /> Racik bersama admin
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,20 +1,15 @@
-<footer class="site-footer" id="kontak">
-  <div class="container footer-grid">
-    <div>
-      <img class="footer-logo" src="/assets/images/logo.webp" alt="Hanasari Catering" />
-      <p>Sajian Nusantara yang akrab di lidah untuk kantor, keluarga, dan momen istimewa.</p>
-    </div>
-    <div>
-      <strong>Navigasi</strong>
-      <a href="/">Beranda</a>
-      <a href="/artikel/">Artikel</a>
-      <a href="/#menu">Menu & Paket</a>
-    </div>
-    <div>
-      <strong>Kontak</strong>
-      <a href="https://wa.me/6280000000000">WhatsApp</a>
-      <span>Jakarta & sekitarnya</span>
-    </div>
-  </div>
-  <div class="container footer-bottom">© 2026 Hanasari Catering</div>
+<footer class="article-footer">
+  <div class="container"><a href="/#beranda">← Kembali ke Hanasari Catering</a><span>Harga Merakyat, Rasa Ningrat.</span></div>
 </footer>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.querySelector<HTMLElement>('#navigasi');
+  if (button && nav) {
+    button.addEventListener('click', () => {
+      const open = button.getAttribute('aria-expanded') !== 'true';
+      button.setAttribute('aria-expanded', String(open));
+      button.setAttribute('aria-label', open ? 'Tutup navigasi' : 'Buka navigasi');
+      nav.classList.toggle('is-open', open);
+    });
+  }
+</script>

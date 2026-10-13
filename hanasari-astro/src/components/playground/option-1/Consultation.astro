@@ -1,0 +1,86 @@
+---
+import Icon from './Icon.astro';
+import { asset, WA_NUMBER } from './data';
+---
+<section id="konsultasi" class="o1-section o1-consult" aria-labelledby="o1-consult-title">
+  <div class="o1-consult__bg" aria-hidden="true"></div>
+  <div class="o1-container o1-consult__grid">
+    <div class="o1-consult__intro" data-reveal>
+      <p class="o1-eyebrow o1-eyebrow--light">Mulai dari cerita Anda</p>
+      <h2 id="o1-consult-title" class="o1-h2 o1-h2--light">Ada acara? <em>Kita siapkan bersama.</em></h2>
+      <p>Isi kebutuhan awal Anda. Kami merangkumnya menjadi pesan WhatsApp agar konsultasi lebih cepat dan jelas.</p>
+
+      <div class="o1-chat" aria-hidden="true">
+        <div class="o1-chat__head">
+          <span class="o1-chat__avatar"><img src={asset('hs-mark.webp')} alt="" width="306" height="246" /></span>
+          <span><strong>Hanasari Catering</strong><small>Pratinjau pesan Anda</small></span>
+        </div>
+        <div class="o1-chat__body">
+          <div class="o1-chat__bubble">
+            <p data-preview>Halo Hanasari Catering, saya datang dari website Hanasari.<br /><br />Saya ingin konsultasi catering. Detail akan muncul di sini saat Anda mengisi formulir.</p>
+            <span class="o1-chat__time">Belum terkirim</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="o1-form" data-inquiry data-wa-number={WA_NUMBER} novalidate data-reveal>
+      <div class="o1-form__head">
+        <h3>Ceritakan kebutuhan Anda</h3>
+        <span>Isi ±1 menit</span>
+      </div>
+
+      <div class="o1-field">
+        <label for="o1-nama">Nama Anda <span class="o1-req" aria-hidden="true">*</span></label>
+        <input id="o1-nama" name="nama" type="text" placeholder="Nama panggilan Anda" autocomplete="name" maxlength="80" required />
+      </div>
+
+      <fieldset class="o1-field o1-field--chips">
+        <legend>Jenis acara <span class="o1-req" aria-hidden="true">*</span></legend>
+        <div class="o1-chips">
+          {['Rapat / acara kantor', 'Acara keluarga', 'Syukuran / perayaan', 'Makan harian', 'Lainnya'].map((label, i) => (
+            <label class="o1-chip"><input type="radio" name="acara" value={label} required={i === 0} /><span>{label}</span></label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="o1-form__row">
+        <div class="o1-field">
+          <label for="o1-paket">Pilihan menu</label>
+          <select id="o1-paket" name="paket">
+            <option>Belum tahu, bantu pilihkan</option>
+            <option>Nasi Box</option>
+            <option>Snack Box</option>
+            <option>Tumpeng</option>
+            <option>Hampers / lainnya</option>
+          </select>
+        </div>
+        <div class="o1-field">
+          <label for="o1-porsi">Jumlah porsi / box</label>
+          <input id="o1-porsi" name="porsi" type="number" min="1" max="100000" step="1" placeholder="Contoh: 50" inputmode="numeric" />
+        </div>
+      </div>
+
+      <div class="o1-form__row">
+        <div class="o1-field">
+          <label for="o1-tanggal">Tanggal acara</label>
+          <input id="o1-tanggal" name="tanggal" type="date" />
+        </div>
+        <div class="o1-field">
+          <label for="o1-lokasi">Lokasi acara / pengiriman</label>
+          <input id="o1-lokasi" name="lokasi" type="text" placeholder="Contoh: Matraman, Jaktim" maxlength="200" />
+        </div>
+      </div>
+
+      <div class="o1-field">
+        <label for="o1-catatan">Catatan tambahan</label>
+        <textarea id="o1-catatan" name="catatan" rows="3" maxlength="800" placeholder="Anggaran, pilihan lauk, alergi, atau kebutuhan khusus"></textarea>
+      </div>
+
+      <p class="o1-form__error" data-form-error role="alert" hidden></p>
+      <button class="o1-btn o1-btn--primary o1-btn--block" type="submit"><Icon name="whatsapp" /> Lanjutkan ke WhatsApp</button>
+      <p class="o1-form__note">Belum merupakan pemesanan. Pesan baru terkirim setelah Anda menekan Kirim di WhatsApp. Data formulir tidak disimpan di website.</p>
+      <p class="o1-form__result" data-form-result role="status" hidden>Pesan sudah disiapkan. <a data-form-fallback target="_blank" rel="noopener noreferrer">Buka WhatsApp di sini</a> jika tab belum terbuka.</p>
+    </form>
+  </div>
+</section>

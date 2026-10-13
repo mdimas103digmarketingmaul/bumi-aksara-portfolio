@@ -1,0 +1,55 @@
+---
+import Icon from './Icon.astro';
+import { INSTAGRAM_URL, LINKS_URL, MAPS_URL, TIKTOK_URL, asset, waLink } from './data';
+---
+<footer id="kontak" class="o1-footer" aria-labelledby="o1-footer-title">
+  <div class="o1-container">
+    <div class="o1-footer__cta" data-reveal>
+      <div>
+        <p class="o1-eyebrow o1-eyebrow--light">Hubungi kami</p>
+        <h2 id="o1-footer-title" class="o1-h2 o1-h2--light">Mari mulai dengan sapaan <em>hangat.</em></h2>
+      </div>
+      <a class="o1-btn o1-btn--primary" href={waLink('Saya ingin konsultasi catering untuk acara saya.', 'Kontak')} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /> Hubungi Hanasari</a>
+    </div>
+
+    <div class="o1-footer__grid">
+      <div class="o1-footer__col">
+        <p class="o1-footer__label">WhatsApp</p>
+        <a class="o1-footer__big" href={waLink('Saya datang dari website dan ingin bertanya tentang catering.', 'Nomor kontak')} target="_blank" rel="noopener noreferrer">0856 3050 300 <Icon name="arrow" size={20} /></a>
+        <p class="o1-footer__muted">Konfirmasi jadwal layanan dan ketersediaan pesanan langsung dengan admin.</p>
+      </div>
+      <div class="o1-footer__col">
+        <p class="o1-footer__label">Dapur Hanasari</p>
+        <address>Jalan Nanas, Gang Flamboyan 8 No. 10<br />RT 011 / RW 003, Utan Kayu Selatan,<br />Matraman, Jakarta Timur.</address>
+        <a class="o1-footer__link" href={MAPS_URL} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={16} /> Petunjuk arah di Google Maps</a>
+      </div>
+      <div class="o1-footer__col">
+        <p class="o1-footer__label">Ikuti cerita kami</p>
+        <ul class="o1-footer__social">
+          <li><a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"><Icon name="instagram" /> Instagram<Icon name="arrow" size={16} class="o1-footer__social-arrow" /></a></li>
+          <li><a href={TIKTOK_URL} target="_blank" rel="noopener noreferrer"><Icon name="tiktok" /> TikTok<Icon name="arrow" size={16} class="o1-footer__social-arrow" /></a></li>
+          <li><a href={LINKS_URL} target="_blank" rel="noopener noreferrer"><Icon name="link" /> Semua link Hanasari<Icon name="arrow" size={16} class="o1-footer__social-arrow" /></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="o1-footer__tags" aria-label="Tagar Hanasari">
+      <span>#RayakanDenganHanasari</span><span>#HargaMerakyatRasaNingrat</span><span>#JuaraSeleraNusantara</span>
+    </p>
+  </div>
+
+  <div class="o1-footer__word" aria-hidden="true">Hanasari</div>
+
+  <div class="o1-container o1-footer__bottom">
+    <a class="o1-brand o1-brand--footer" href="#beranda">
+      <span class="o1-brand__mark"><img src={asset('hs-mark-white.webp')} alt="" width="306" height="246" loading="lazy" /></span>
+      <span class="o1-brand__word">Hanasari<small>Catering</small></span>
+    </a>
+    <span>© 2026 Hanasari Catering.</span>
+    <span class="o1-footer__tagline">Harga Merakyat, Rasa Ningrat.</span>
+  </div>
+</footer>
+
+<a class="o1-float-wa" data-float-wa href={waLink('Saya ingin bertanya tentang menu dan pemesanan.', 'Tombol WhatsApp mengambang')} target="_blank" rel="noopener noreferrer" aria-label="Chat Hanasari melalui WhatsApp">
+  <Icon name="whatsapp" size={24} /><span>Chat kami</span>
+</a>

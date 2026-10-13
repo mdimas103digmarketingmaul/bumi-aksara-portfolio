@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+import { faqs, waLink } from './data';
+---
+<section class="o1-section o1-faq" aria-labelledby="o1-faq-title">
+  <div class="o1-container o1-faq__grid">
+    <div class="o1-faq__intro" data-reveal>
+      <p class="o1-eyebrow">Sebelum memesan</p>
+      <h2 id="o1-faq-title" class="o1-h2">Mungkin ini yang ingin <em>ditanyakan.</em></h2>
+      <div class="o1-faq__help">
+        <p><strong>Masih ada pertanyaan lain?</strong> Admin Hanasari siap membantu melalui WhatsApp.</p>
+        <a class="o1-btn o1-btn--dark o1-btn--sm" href={waLink('Saya punya pertanyaan tentang layanan Hanasari.', 'FAQ')} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /> Tanya admin</a>
+      </div>
+    </div>
+    <div class="o1-faq__list" data-reveal>
+      {faqs.map((item, i) => (
+        <details class="o1-faq__item" name="o1-faq" open={i === 0}>
+          <summary>
+            <span class="o1-faq__num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="o1-faq__q">{item.q}</span>
+            <span class="o1-faq__icon" aria-hidden="true"><Icon name="plus" size={18} /></span>
+          </summary>
+          <div class="o1-faq__a">
+            <p>{item.a}</p>
+            {item.cta && <a class="o1-link" href={waLink(item.cta.message, item.cta.source)} target="_blank" rel="noopener noreferrer">{item.cta.label} <Icon name="arrow" size={16} /></a>}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

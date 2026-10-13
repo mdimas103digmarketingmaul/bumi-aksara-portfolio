@@ -1,0 +1,54 @@
+---
+import Icon from './Icon.astro';
+import { img, waLink } from './data';
+
+const values = [
+  { title: 'Rasa yang selalu dirindukan', text: 'Ragam lauk dan sambal Nusantara untuk melengkapi selera Anda.' },
+  { title: 'Praktis untuk tuan rumah', text: 'Ceritakan kebutuhan acara, lalu diskusikan menu dan pengirimannya bersama kami.' },
+  { title: 'Hangat dalam pelayanan', text: 'Dari pertanyaan pertama hingga pilihan paket, kami siap membantu.' }
+];
+---
+<section id="tentang" class="o1-section o1-about" aria-labelledby="o1-about-title">
+  <div class="o1-container o1-about__grid">
+    <div class="o1-about__visual" data-reveal>
+      <figure class="o1-about__main">
+        <img src={img('tumpeng.webp')} alt="Tumpeng Hanasari, nasi kuning dengan beragam lauk untuk dinikmati bersama" width="1050" height="1400" loading="lazy" decoding="async" />
+      </figure>
+      <div class="o1-about__stamp" aria-hidden="true">Dibuat untuk<strong>dinikmati bersama.</strong></div>
+    </div>
+
+    <div class="o1-about__copy">
+      <div data-reveal>
+        <p class="o1-eyebrow">Kenal lebih dekat</p>
+        <h2 id="o1-about-title" class="o1-h2">Bukan sekadar sajian. Bagian dari <em>kebersamaan.</em></h2>
+        <p class="o1-about__lead">Di Hanasari, kami percaya makanan punya cara sederhana untuk mendekatkan. Seporsi hidangan yang lezat bisa membuat makan siang lebih hangat dan perayaan terasa lebih istimewa.</p>
+        <p>Itulah semangat kami menghadirkan hidangan Nusantara: cita rasa yang akrab, sajian yang rapi, dan pilihan paket yang mudah dijangkau.</p>
+      </div>
+      <ol class="o1-values" data-reveal>
+        {values.map((v, i) => (
+          <li>
+            <span class="o1-values__num">{String(i + 1).padStart(2, '0')}</span>
+            <div><h3>{v.title}</h3><p>{v.text}</p></div>
+          </li>
+        ))}
+      </ol>
+      <a class="o1-link" href={waLink('Saya ingin berdiskusi tentang kebutuhan acara saya.', 'Tentang kami')} target="_blank" rel="noopener noreferrer" data-reveal>
+        Mari ceritakan rencana acara Anda <Icon name="arrow" size={18} />
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="o1-occasions" aria-label="Satu dapur, banyak cerita">
+  <div class="o1-marquee o1-marquee--big">
+    {[0, 1].map((n) => (
+      <ul class="o1-marquee__track" aria-hidden={n === 1 ? 'true' : undefined}>
+        <li>Rapat kantor</li><li class="is-star">✳</li>
+        <li>Acara keluarga</li><li class="is-star">✳</li>
+        <li>Syukuran</li><li class="is-star">✳</li>
+        <li>Momen berbagi</li><li class="is-star">✳</li>
+        <li>#RayakanDenganHanasari</li><li class="is-star">✳</li>
+      </ul>
+    ))}
+  </div>
+</div>

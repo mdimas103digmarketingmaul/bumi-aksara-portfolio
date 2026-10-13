@@ -1,0 +1,53 @@
+---
+import Icon from './Icon.astro';
+import { clients, img } from './data';
+
+const features = [
+  { icon: 'leaf', title: 'Sajian halal', text: 'Untuk momen makan bersama' },
+  { icon: 'spark', title: 'Ragam rasa Nusantara', text: 'Pilihan lauk, sayur, dan sambal' },
+  { icon: 'users', title: 'Paket untuk setiap momen', text: 'Dari keluarga hingga korporasi' },
+  { icon: 'chat', title: 'Mudah pesan online', text: 'Konsultasikan langsung dengan kami', href: '#pesan-online' }
+] as const;
+---
+<section id="keunggulan" class="o1-trust" aria-label="Keunggulan dan pelanggan Hanasari">
+  <div class="o1-container">
+    <ul class="o1-trust__features" data-reveal>
+      {features.map((item) => (
+        <li>
+          {'href' in item ? (
+            <a href={item.href} class="o1-trust__feature o1-trust__feature--link">
+              <span class="o1-trust__icon"><Icon name={item.icon} size={22} /></span>
+              <span><strong>{item.title}</strong><small>{item.text}</small></span>
+              <Icon name="arrow" size={16} class="o1-trust__arrow" />
+            </a>
+          ) : (
+            <div class="o1-trust__feature">
+              <span class="o1-trust__icon"><Icon name={item.icon} size={22} /></span>
+              <span><strong>{item.title}</strong><small>{item.text}</small></span>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    <div class="o1-clients" data-reveal>
+      <div class="o1-clients__label">
+        <p class="o1-eyebrow">Telah dipercaya</p>
+        <p>Instansi, kampus, sekolah, dan perusahaan yang pernah menikmati sajian Hanasari.</p>
+      </div>
+      <div class="o1-marquee o1-clients__marquee" aria-label="Daftar pelanggan Hanasari">
+        <ul class="o1-marquee__track">
+          {clients.map((name) => <li>{name}</li>)}
+        </ul>
+        <ul class="o1-marquee__track" aria-hidden="true">
+          {clients.map((name) => <li>{name}</li>)}
+        </ul>
+      </div>
+      <div class="o1-clients__badges">
+        <img src={img('halal-indonesia.webp')} alt="Halal Indonesia" width="22" height="40" loading="lazy" />
+        <img src={img('buatan-indonesia.webp')} alt="Bangga Buatan Indonesia" width="40" height="42" loading="lazy" />
+        <img src={img('inaproc.webp')} alt="INAPROC Katalog Elektronik" width="104" height="29" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>

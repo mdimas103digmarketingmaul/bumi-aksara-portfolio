@@ -1,0 +1,48 @@
+---
+import Icon from './Icon.astro';
+import { img, rupiah, waLink, type Product } from './data';
+
+interface Props {
+  product: Product;
+  index: number;
+  categoryLabel: string;
+}
+
+const { product, index, categoryLabel } = Astro.props;
+const price = product.price ? rupiah(product.price) : null;
+const message = `Saya tertarik dengan ${categoryLabel} — ${product.name}${price ? ` (${price}/box di katalog)` : ''}. Boleh minta informasi dan ketersediaannya?`;
+const motif = product.name.split(' ')[0];
+const isPhotoBg = product.id === 'tumpeng';
+---
+<li class:list={['o1-card', { 'is-featured': product.featured && product.price, 'is-text': !product.image, 'is-photo': isPhotoBg }]}>
+  <div class="o1-card__media">
+    <span class="o1-card__tier">{String(index + 1).padStart(2, '0')}</span>
+    <span class="o1-card__tag">{product.featured && product.price ? <><Icon name="star" size={12} /> Paling lengkap</> : product.tag}</span>
+    {product.image ? (
+      <img src={img(product.image)} alt={`${product.name} Hanasari — contoh penyajian`} width="420" height="320" loading="lazy" decoding="async" />
+    ) : (
+      <span class="o1-card__motif" aria-hidden="true"><span>{motif}</span></span>
+    )}
+  </div>
+  <div class="o1-card__body">
+    <p class="o1-card__cat">{categoryLabel}</p>
+    <h3 class="o1-card__title">{product.name}</h3>
+    {price ? (
+      <p class="o1-card__price"><strong>{price}</strong><span>/ box</span></p>
+    ) : (
+      <p class="o1-card__price o1-card__price--ask"><strong>Tanya admin</strong><span>harga &amp; pilihan</span></p>
+    )}
+    {product.items.length > 0 ? (
+      <ul class="o1-card__items" aria-label={`Isi ${product.name}`}>
+        {product.items.map((item) => <li>{item}</li>)}
+      </ul>
+    ) : (
+      <p class="o1-card__note">{product.note}</p>
+    )}
+    {product.pack && <p class="o1-card__pack"><Icon name="box" size={16} />{product.pack}</p>}
+    <a class="o1-card__cta" href={waLink(message, `Menu ${product.name}`)} target="_blank" rel="noopener noreferrer" aria-label={`Tanyakan ${product.name} melalui WhatsApp`}>
+      <span>{price ? 'Pesan paket ini' : 'Tanyakan ke admin'}</span>
+      <Icon name="arrow" size={16} />
+    </a>
+  </div>
+</li>

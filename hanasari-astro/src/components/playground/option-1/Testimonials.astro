@@ -1,0 +1,56 @@
+---
+import Icon from './Icon.astro';
+import { MAPS_URL, reviews } from './data';
+---
+<section id="testimoni" class="o1-section o1-reviews" aria-labelledby="o1-reviews-title">
+  <div class="o1-container o1-reviews__grid">
+    <div class="o1-reviews__intro" data-reveal>
+      <p class="o1-eyebrow">Cerita dari pelanggan</p>
+      <h2 id="o1-reviews-title" class="o1-h2">Yang paling berarti? Saat Anda bilang <em>enak.</em></h2>
+      <p>Cuplikan pengalaman pelanggan dari ulasan Google yang dibagikan kepada Hanasari.</p>
+      <a class="o1-link" href={MAPS_URL} target="_blank" rel="noopener noreferrer">Lihat di Google Maps <Icon name="arrow" size={18} /></a>
+    </div>
+
+    <div class="o1-reviews__stage" data-reviews data-reveal>
+      <div class="o1-reviews__slides" aria-live="polite">
+        {reviews.map((review, i) => (
+          <figure class:list={['o1-review', { 'is-active': i === 0 }]} data-review-slide={i} id={`o1-review-${i}`} aria-label={`Ulasan ${i + 1} dari ${reviews.length}`}>
+            <div class="o1-review__stars" aria-label="5 dari 5 bintang">
+              {[1, 2, 3, 4, 5].map(() => <Icon name="star" size={18} />)}
+            </div>
+            <blockquote><p>“{review.quote}”</p></blockquote>
+            <figcaption>
+              <span class="o1-avatar" aria-hidden="true">{review.initials}</span>
+              <span><strong>{review.name}</strong><small>Ulasan Google · Pelanggan Hanasari</small></span>
+              <button class="o1-review__proof" type="button" data-proof={`/assets/testimonials/${review.image}`} data-proof-name={review.name}>
+                Lihat tangkapan layar <Icon name="arrow" size={14} />
+              </button>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <div class="o1-reviews__controls">
+        <div class="o1-reviews__people" role="group" aria-label="Pilih ulasan">
+          {reviews.map((review, i) => (
+            <button type="button" class="o1-avatar o1-avatar--btn" data-review-go={i} aria-controls={`o1-review-${i}`} aria-label={`Tampilkan ulasan ${review.name}`} aria-pressed={i === 0 ? 'true' : 'false'}>{review.initials}</button>
+          ))}
+        </div>
+        <div class="o1-slider-nav">
+          <span class="o1-reviews__count" aria-hidden="true"><b data-review-index>01</b> / {String(reviews.length).padStart(2, '0')}</span>
+          <button class="o1-round-btn" type="button" data-review-prev aria-label="Ulasan sebelumnya"><Icon name="arrow-left" /></button>
+          <button class="o1-round-btn" type="button" data-review-next aria-label="Ulasan berikutnya"><Icon name="arrow-right" /></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <dialog class="o1-dialog" data-proof-dialog aria-labelledby="o1-dialog-title">
+    <div class="o1-dialog__top">
+      <h2 id="o1-dialog-title">Ulasan pelanggan</h2>
+      <button class="o1-round-btn" type="button" data-proof-close aria-label="Tutup ulasan"><Icon name="close" /></button>
+    </div>
+    <img data-proof-img alt="" />
+    <p>Dokumentasi ulasan pelanggan yang diberikan oleh Hanasari.</p>
+  </dialog>
+</section>

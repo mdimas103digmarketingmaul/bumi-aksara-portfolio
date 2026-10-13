@@ -1,0 +1,44 @@
+---
+import Icon from './Icon.astro';
+import { asset, waLink } from './data';
+
+const links = [
+  { href: '#menu', label: 'Menu & Paket' },
+  { href: '#testimoni', label: 'Testimoni' },
+  { href: '#artikel', label: 'Artikel' },
+  { href: '#kontak', label: 'Kontak' }
+];
+---
+<a class="o1-skip" href="#utama">Lewati ke konten</a>
+<header class="o1-header" data-header>
+  <div class="o1-container o1-header__inner">
+    <a class="o1-brand" href="#beranda" aria-label="Hanasari Catering — kembali ke atas">
+      <span class="o1-brand__mark">
+        <img class="o1-brand__light" src={asset('hs-mark-white.webp')} alt="" width="306" height="246" />
+        <img class="o1-brand__color" src={asset('hs-mark.webp')} alt="" width="306" height="246" />
+      </span>
+      <span class="o1-brand__word">Hanasari<small>Catering</small></span>
+    </a>
+
+    <nav class="o1-nav" id="o1-nav" aria-label="Navigasi utama">
+      <ul>
+        {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+      <div class="o1-nav__mobile-extra">
+        <a class="o1-btn o1-btn--primary o1-btn--block" href={waLink('Saya ingin konsultasi kebutuhan catering.', 'Navigasi mobile')} target="_blank" rel="noopener noreferrer">
+          <Icon name="whatsapp" /> Konsultasi via WhatsApp
+        </a>
+        <p>Senang membantu merencanakan sajian untuk acara Anda.</p>
+      </div>
+    </nav>
+
+    <div class="o1-header__actions">
+      <a class="o1-btn o1-btn--primary o1-btn--sm o1-header__cta" href={waLink('Saya ingin konsultasi kebutuhan catering.', 'Navigasi')} target="_blank" rel="noopener noreferrer">
+        Konsultasi Acara <Icon name="arrow" size={16} />
+      </a>
+      <button class="o1-burger" type="button" aria-expanded="false" aria-controls="o1-nav" aria-label="Buka navigasi" data-nav-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

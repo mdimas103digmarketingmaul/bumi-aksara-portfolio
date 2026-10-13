@@ -1,19 +1,32 @@
+---
+interface Props {
+  articleMode?: boolean;
+}
+const { articleMode = false } = Astro.props;
+---
+<a class="skip-link" href="#utama">Lewati ke konten</a>
+<div class="announcement">
+  {articleMode ? 'Cerita, inspirasi, dan promo terbaru dari Hanasari.' : 'Dari dapur Hanasari, untuk setiap momen berarti.'}
+  {!articleMode && <a href="/#menu">Temukan menu Anda <span aria-hidden="true">↗</span></a>}
+</div>
 <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="/" aria-label="Hanasari Catering">
-      <img src="/assets/images/logo.webp" alt="Hanasari Catering" />
+  <div class="container nav-wrap">
+    <a class="brand" href="/#beranda" aria-label="Hanasari Catering — Beranda">
+      <img src="/assets/images/logo.webp" alt="Logo Hanasari" width="58" height="58" />
+      <span>HANASARI<small>C A T E R I N G</small></span>
     </a>
-
-    <nav class="nav" aria-label="Navigasi utama">
+    <button class="menu-toggle" aria-label="Buka navigasi" aria-expanded="false" aria-controls="navigasi">
+      <span></span><span></span>
+    </button>
+    <nav id="navigasi" aria-label="Navigasi utama">
       <a href="/#tentang">Tentang Kami</a>
       <a href="/#menu">Menu & Paket</a>
-      <a href="/artikel/">Artikel</a>
+      <a class={articleMode ? 'nav-active' : undefined} href="/artikel/">Artikel</a>
       <a href="/#testimoni">Testimoni</a>
       <a href="/#kontak">Kontak</a>
+      <a class="button button-small" href="https://wa.me/628563050300" data-wa="Saya ingin konsultasi kebutuhan catering." data-source="Navigasi">
+        Konsultasi Acara <span aria-hidden="true">↗</span>
+      </a>
     </nav>
-
-    <a class="button button-primary header-cta" href="https://wa.me/6280000000000" target="_blank" rel="noreferrer">
-      Konsultasi Acara <span aria-hidden="true">↗</span>
-    </a>
   </div>
 </header>

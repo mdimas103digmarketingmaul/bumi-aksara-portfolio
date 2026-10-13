@@ -2,89 +2,32 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import ArticleCard from '../components/ArticleCard.astro';
+import Hero from '../components/home/Hero.astro';
+import TrustStrip from '../components/home/TrustStrip.astro';
+import MenuSection from '../components/home/MenuSection.astro';
+import AboutSection from '../components/home/AboutSection.astro';
+import Testimonials from '../components/home/Testimonials.astro';
+import FeaturedArticles from '../components/home/FeaturedArticles.astro';
+import ConversionSections from '../components/home/ConversionSections.astro';
+import ContactFooter from '../components/home/ContactFooter.astro';
 
 const articles = (await getCollection('articles'))
   .filter(({ data }) => data.status === 'published')
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
-
 const featuredArticles = articles.filter(({ data }) => data.featured).slice(0, 3);
 ---
-<BaseLayout title="Hanasari Catering | Selera Nusantara, Sepenuh Hati">
+<BaseLayout title="Hanasari Catering — Harga Merakyat, Rasa Ningrat" description="Hidangan Nusantara untuk momen istimewa Anda. Pilih nasi box, snack box, dan tumpeng Hanasari Catering di Jakarta Timur. Konsultasikan acara Anda melalui WhatsApp.">
   <Header />
-
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow"><span></span> SELERA NUSANTARA, SEPENUH HATI</div>
-          <h1>Harga Merakyat.<br />Rasa <em>Ningrat.</em></h1>
-          <p>Hidangan yang akrab di lidah, istimewa di setiap acara. Dari makan siang kantor hingga perayaan keluarga, biarkan Hanasari menyiapkan sajian Anda.</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#menu">Jelajahi Menu <span>↗</span></a>
-            <a class="button button-secondary" href="https://wa.me/6280000000000">Chat WhatsApp <span>↗</span></a>
-          </div>
-          <div class="hero-note"><span class="spark">✳</span><div><strong>Untuk momen kecil. Untuk hari besar.</strong><br />Pilihan paket sesuai kebutuhan acara Anda.</div></div>
-        </div>
-        <div class="hero-media">
-          <img src="/assets/images/nasi-box-table.webp" alt="Nasi box Hanasari Catering" />
-          <div class="hero-badge">CITA RASA<br /><strong>NUSANTARA</strong></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="mini-section" id="tentang">
-      <div class="container split-copy">
-        <p class="section-kicker">Tentang Hanasari</p>
-        <h2>Catering yang terasa dekat, disiapkan dengan standar yang serius.</h2>
-        <p>Kami menyiapkan sajian Nusantara untuk kebutuhan kantor, keluarga, rapat, hingga acara spesial dengan pilihan paket yang mudah disesuaikan.</p>
-      </div>
-    </section>
-
-    <section class="menu-teaser" id="menu">
-      <div class="container">
-        <div class="section-head">
-          <div><p class="section-kicker">Menu & Paket</p><h2>Pilihan untuk berbagai kebutuhan.</h2></div>
-          <a class="text-link" href="#kontak">Konsultasikan kebutuhan <span>↗</span></a>
-        </div>
-        <div class="menu-grid">
-          <div class="menu-card"><img src="/assets/images/nasi-reguler.webp" alt="Nasi box reguler" /><strong>Nasi Box</strong><span>Praktis untuk rapat & acara kantor.</span></div>
-          <div class="menu-card"><img src="/assets/images/nasi-kuning.webp" alt="Nasi kuning" /><strong>Sajian Spesial</strong><span>Untuk perayaan dan momen keluarga.</span></div>
-          <div class="menu-card"><img src="/assets/images/tumpeng.webp" alt="Tumpeng Hanasari" /><strong>Tumpeng</strong><span>Pusat perhatian untuk hari istimewa.</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="articles-home" id="artikel">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <p class="section-kicker">Artikel, Promo & Resep</p>
-            <h2>Inspirasi dari dapur Hanasari.</h2>
-            <p class="section-description">Konten pilihan yang ditandai sebagai featured di CMS akan muncul otomatis di sini.</p>
-          </div>
-          <a class="button button-secondary" href="/artikel/">Lihat Semua Artikel <span>↗</span></a>
-        </div>
-
-        {featuredArticles.length > 0 ? (
-          <div class="article-grid">
-            {featuredArticles.map(({ data }) => <ArticleCard article={data} />)}
-          </div>
-        ) : (
-          <div class="empty-state">Belum ada artikel featured. Aktifkan “Tampilkan di Homepage” melalui CMS.</div>
-        )}
-      </div>
-    </section>
-
-    <section class="testimonial-placeholder" id="testimoni">
-      <div class="container callout">
-        <p class="section-kicker">Hanasari Catering</p>
-        <h2>Siap menyiapkan sajian untuk acara berikutnya?</h2>
-        <a class="button button-primary" href="https://wa.me/6280000000000">Konsultasi Sekarang <span>↗</span></a>
-      </div>
-    </section>
+  <main id="utama">
+    <Hero />
+    <TrustStrip />
+    <MenuSection />
+    <AboutSection />
+    <Testimonials />
+    <FeaturedArticles articles={featuredArticles} />
+    <ConversionSections />
+    <ContactFooter />
   </main>
-
-  <Footer />
+  <script is:inline defer src="/assets/js/home-content.js"></script>
+  <script is:inline defer src="/assets/js/home-app.js"></script>
 </BaseLayout>
