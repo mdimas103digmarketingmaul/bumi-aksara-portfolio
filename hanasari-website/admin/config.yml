@@ -1,0 +1,46 @@
+backend:
+  name: github
+  repo: mdimas103digmarketingmaul/bumi-aksara-portfolio
+  branch: main
+  base_url: https://decap-proxy.mdimas103.workers.dev
+  auth_endpoint: /auth
+
+local_backend: true
+
+collections:
+  - name: "website"
+    label: "Website"
+
+    files:
+      - name: "homepage"
+        label: "Homepage"
+        file: "hanasari-website/content/home.json"
+        format: "json"
+
+        fields:
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+
+            fields:
+              - label: "Eyebrow"
+                name: "eyebrow"
+                widget: "string"
+                hint: "Teks kecil di atas headline Hero."
+
+              - label: "Headline — Baris 1"
+                name: "headlinePrefix"
+                widget: "string"
+
+              - label: "Headline — Awal Baris 2"
+                name: "headlineBeforeHighlight"
+                widget: "string"
+
+              - label: "Headline — Kata Highlight"
+                name: "headlineHighlight"
+                widget: "string"
+                hint: "Kata yang diberi aksen garis pada desain Hero."
+
+              - label: "Deskripsi"
+                name: "description"
+                widget: "text"
