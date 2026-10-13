@@ -1,0 +1,65 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles
+    .filter(({ data }) => data.status === 'published')
+    .map((article) => ({ params: { slug: article.data.slug }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const formattedDate = new Intl.DateTimeFormat('id-ID', {
+  day: 'numeric', month: 'long', year: 'numeric'
+}).format(article.data.publishDate);
+
+const related = (await getCollection('articles'))
+  .filter(({ data }) => data.status === 'published' && data.slug !== article.data.slug)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 3);
+---
+<BaseLayout
+  title={article.data.seoTitle || `${article.data.title} | Hanasari Catering`}
+  description={article.data.seoDescription || article.data.excerpt}
+  image={article.data.thumbnail}
+>
+  <Header />
+  <main>
+    <article class="article-detail">
+      <header class="article-detail-header container narrow">
+        <a class="back-link" href="/artikel/">← Semua artikel</a>
+        <div class="article-meta">
+          <span class="article-category">{article.data.category}</span>
+          <time datetime={article.data.publishDate.toISOString()}>{formattedDate}</time>
+        </div>
+        <h1>{article.data.title}</h1>
+        <p class="article-lead">{article.data.excerpt}</p>
+      </header>
+
+      <div class="container article-cover">
+        <img src={article.data.thumbnail} alt={article.data.thumbnailAlt} />
+      </div>
+
+      <div class="container article-body narrow prose">
+        <Content />
+      </div>
+    </article>
+
+    {related.length > 0 && (
+      <section class="related-articles">
+        <div class="container">
+          <div class="section-head"><div><p class="section-kicker">Lanjut Membaca</p><h2>Artikel lainnya.</h2></div></div>
+          <div class="article-grid">
+            {related.map(({ data }) => <ArticleCard article={data} compact />)}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+  <Footer />
+</BaseLayout>

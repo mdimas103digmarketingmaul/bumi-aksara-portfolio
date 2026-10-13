@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+const articles = (await getCollection('articles'))
+  .filter(({ data }) => data.status === 'published')
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+---
+<BaseLayout title="Artikel | Hanasari Catering" description="Promo, resep, tips, dan inspirasi dari Hanasari Catering.">
+  <Header />
+  <main>
+    <section class="page-hero">
+      <div class="container narrow">
+        <p class="section-kicker">Hanasari Journal</p>
+        <h1>Artikel, promo, resep, dan inspirasi.</h1>
+        <p>Konten terbaru Hanasari yang dikelola langsung melalui Decap CMS.</p>
+      </div>
+    </section>
+
+    <section class="articles-index">
+      <div class="container">
+        <div class="filter-row" role="group" aria-label="Filter artikel">
+          <button class="filter-button active" data-filter="all">Semua</button>
+          <button class="filter-button" data-filter="Promo">Promo</button>
+          <button class="filter-button" data-filter="Resep">Resep</button>
+          <button class="filter-button" data-filter="Tips & Inspirasi">Tips & Inspirasi</button>
+        </div>
+        <div class="article-grid" id="article-grid">
+          {articles.map(({ data }) => <ArticleCard article={data} />)}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+
+  <script>
+    const buttons = document.querySelectorAll('.filter-button');
+    const cards = document.querySelectorAll('.article-card');
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+        buttons.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        cards.forEach((card) => {
+          const category = card.getAttribute('data-category');
+          card.classList.toggle('is-hidden', filter !== 'all' && category !== filter);
+        });
+      });
+    });
+  </script>
+</BaseLayout>

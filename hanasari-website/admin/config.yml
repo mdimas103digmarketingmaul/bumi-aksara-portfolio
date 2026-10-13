@@ -7,43 +7,128 @@ backend:
 
 local_backend: true
 
+# CMS UI / branding
+site_url: "https://bumi-aksara-portfolio.pages.dev/hanasari-website/"
+display_url: "https://bumi-aksara-portfolio.pages.dev/hanasari-website/"
+show_preview_links: false
+logo:
+  src: "https://bumi-aksara-portfolio.pages.dev/hanasari-website/assets/images/logo.webp"
+  show_in_header: true
+
 media_folder: "hanasari-website/assets/uploads"
 public_folder: "/hanasari-website/assets/uploads"
 
 collections:
   - name: "website"
     label: "Website"
-
+    editor:
+      preview: false
     files:
       - name: "homepage"
         label: "Homepage"
         file: "hanasari-website/content/home.json"
         format: "json"
-
         fields:
           - label: "Hero"
             name: "hero"
             widget: "object"
-
             fields:
               - label: "Eyebrow"
                 name: "eyebrow"
                 widget: "string"
                 hint: "Teks kecil di atas headline Hero."
-
               - label: "Headline — Baris 1"
-                name: "headlinePrefix"
+                name: "headlineLine1"
                 widget: "string"
-
               - label: "Headline — Awal Baris 2"
-                name: "headlineBeforeHighlight"
+                name: "headlineLine2Prefix"
                 widget: "string"
-
               - label: "Headline — Kata Highlight"
                 name: "headlineHighlight"
                 widget: "string"
                 hint: "Kata yang diberi aksen garis pada desain Hero."
-
               - label: "Deskripsi"
                 name: "description"
                 widget: "text"
+
+      - name: "articles"
+        label: "Artikel"
+        file: "hanasari-website/content/articles.json"
+        format: "json"
+        fields:
+          - label: "Daftar Artikel"
+            name: "articles"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.category}}"
+            minimize_collapsed: true
+            fields:
+              - label: "Judul"
+                name: "title"
+                widget: "string"
+              - label: "Slug URL"
+                name: "slug"
+                widget: "string"
+                hint: "Gunakan huruf kecil dan tanda hubung. Contoh: promo-nasi-box-kantor"
+                pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', "Gunakan huruf kecil, angka, dan tanda hubung saja."]
+              - label: "Kategori"
+                name: "category"
+                widget: "select"
+                options: ["Promo", "Resep", "Tips & Inspirasi"]
+              - label: "Tanggal Publish"
+                name: "publishDate"
+                widget: "datetime"
+                date_format: "YYYY-MM-DD"
+                time_format: false
+                format: "YYYY-MM-DD"
+              - label: "Status"
+                name: "status"
+                widget: "select"
+                options:
+                  - { label: "Published", value: "published" }
+                  - { label: "Draft", value: "draft" }
+                default: "published"
+              - label: "Tampilkan di Homepage"
+                name: "featured"
+                widget: "boolean"
+                default: false
+                hint: "Homepage menampilkan maksimal 3 artikel featured terbaru."
+              - label: "Ringkasan"
+                name: "excerpt"
+                widget: "text"
+                hint: "1–2 kalimat untuk kartu artikel dan meta description cadangan."
+              - label: "Thumbnail Artikel"
+                name: "thumbnail"
+                widget: "image"
+                choose_url: false
+                allow_multiple: false
+                hint: "Gunakan gambar horizontal 4:3. Maksimal upload 2 MB. Gambar JPEG/PNG/WebP yang diupload lewat CMS akan diproses menjadi WebP 1600 × 1200 px."
+                media_library:
+                  config:
+                    max_file_size: 2097152
+                media_processing:
+                  enabled: true
+                  format:
+                    enabled: true
+                    default: webp
+                  quality: 82
+                  strip_metadata: true
+                  width: 1600
+                  height: 1200
+                  aspect_ratio: 4x3
+              - label: "Alt Text Thumbnail"
+                name: "thumbnailAlt"
+                widget: "string"
+                hint: "Jelaskan isi gambar secara singkat untuk aksesibilitas dan SEO."
+              - label: "Isi Artikel"
+                name: "body"
+                widget: "markdown"
+              - label: "SEO Title"
+                name: "seoTitle"
+                widget: "string"
+                required: false
+                hint: "Opsional. Jika kosong, judul artikel digunakan."
+              - label: "SEO Description"
+                name: "seoDescription"
+                widget: "text"
+                required: false
+                hint: "Opsional. Disarankan sekitar 140–160 karakter."

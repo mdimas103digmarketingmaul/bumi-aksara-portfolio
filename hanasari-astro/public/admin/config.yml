@@ -1,0 +1,122 @@
+backend:
+  name: github
+  repo: mdimas103digmarketingmaul/bumi-aksara-portfolio
+  branch: main
+  base_url: https://decap-proxy.mdimas103.workers.dev
+  auth_endpoint: /auth
+
+local_backend: true
+
+media_folder: "hanasari-astro/public/assets/uploads"
+public_folder: "/assets/uploads"
+
+editor:
+  preview: false
+
+show_preview_links: false
+
+collections:
+  - name: "articles"
+    label: "Artikel"
+    label_singular: "Artikel"
+    folder: "hanasari-astro/src/content/articles"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{fields.slug}}"
+    summary: "{{title}} — {{category}} — {{publishDate}}"
+    sortable_fields: ["publishDate", "title", "category"]
+    view_filters:
+      - label: "Featured Homepage"
+        field: featured
+        pattern: true
+      - label: "Promo"
+        field: category
+        pattern: "Promo"
+      - label: "Resep"
+        field: category
+        pattern: "Resep"
+
+    fields:
+      - label: "Judul"
+        name: "title"
+        widget: "string"
+        hint: "Judul utama artikel yang akan terlihat oleh pembaca."
+
+      - label: "Slug URL"
+        name: "slug"
+        widget: "string"
+        pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Gunakan huruf kecil, angka, dan tanda strip. Contoh: promo-nasi-box-kantor"]
+        hint: "Menjadi URL artikel: /artikel/slug-url/. Sebaiknya jangan diubah setelah artikel sudah lama dipublikasikan."
+
+      - label: "Kategori"
+        name: "category"
+        widget: "select"
+        options: ["Promo", "Resep", "Tips & Inspirasi"]
+
+      - label: "Tanggal Publish"
+        name: "publishDate"
+        widget: "datetime"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        format: "YYYY-MM-DD"
+
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Published", value: "published" }
+          - { label: "Draft", value: "draft" }
+        default: "published"
+
+      - label: "Tampilkan di Homepage"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        hint: "Aktifkan jika artikel ingin muncul pada Featured Article di homepage. Maksimal 3 artikel terbaru akan ditampilkan."
+
+      - label: "Ringkasan"
+        name: "excerpt"
+        widget: "text"
+        hint: "Ringkasan pendek yang tampil pada card artikel. Rekomendasi 100–180 karakter."
+
+      - label: "Thumbnail Artikel"
+        name: "thumbnail"
+        widget: "image"
+        choose_url: false
+        hint: "Disarankan gambar horizontal rasio 4:3, contoh 1600 × 1200 px atau 1080 × 810 px. Maksimal upload 5 MB. Gambar akan otomatis di-crop ke 4:3, di-resize ke 1600 × 1200 px, dikonversi ke WebP, dan dikompres."
+        media_library:
+          config:
+            max_file_size: 5242880
+        media_processing:
+          enabled: true
+          format:
+            enabled: true
+            default: "webp"
+          quality: 82
+          strip_metadata: true
+          width: 1600
+          height: 1200
+          aspect_ratio: "4x3"
+
+      - label: "Alt Text Thumbnail"
+        name: "thumbnailAlt"
+        widget: "string"
+        hint: "Deskripsikan isi gambar secara singkat untuk aksesibilitas dan SEO."
+
+      - label: "SEO Title"
+        name: "seoTitle"
+        widget: "string"
+        required: false
+        hint: "Opsional. Jika kosong, judul artikel akan digunakan."
+
+      - label: "SEO Description"
+        name: "seoDescription"
+        widget: "text"
+        required: false
+        hint: "Opsional. Jika kosong, ringkasan artikel akan digunakan."
+
+      - label: "Isi Artikel"
+        name: "body"
+        widget: "markdown"

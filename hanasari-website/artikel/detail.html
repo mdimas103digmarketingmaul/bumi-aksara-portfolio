@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Artikel — Hanasari Catering</title>
+  <meta name="description" content="Artikel Hanasari Catering.">
+  <meta name="theme-color" content="#134745">
+  <link rel="icon" href="../favicon.png">
+  <link rel="stylesheet" href="../assets/fonts.css">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script defer src="../assets/articles.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#utama">Lewati ke konten</a>
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="../#beranda" aria-label="Hanasari Catering — Beranda"><img src="../assets/images/logo.webp" alt="Logo Hanasari" width="58" height="58"><span>HANASARI<small>C A T E R I N G</small></span></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="navigasi" aria-label="Buka navigasi"><span></span><span></span></button>
+    <nav id="navigasi" aria-label="Navigasi utama"><a href="../#tentang">Tentang Kami</a><a href="../#menu">Menu & Paket</a><a class="nav-active" href="./">Artikel</a><a href="../#testimoni">Testimoni</a><a href="../#kontak">Kontak</a><a class="button button-small" href="https://wa.me/628563050300">Konsultasi Acara <span aria-hidden="true">↗</span></a></nav>
+  </div>
+</header>
+<main id="utama">
+  <article id="article-shell" class="article-detail">
+    <div class="container article-detail-head">
+      <a class="article-back" href="./">← Semua Artikel</a>
+      <div class="article-detail-meta"><span id="article-category">Artikel</span><time id="article-date"></time></div>
+      <h1 id="article-title">Memuat artikel…</h1>
+      <p id="article-excerpt"></p>
+    </div>
+    <div class="container article-cover-wrap"><img id="article-image" class="article-cover" src="../assets/images/nasi-box-styled.webp" alt="" width="1200" height="720"></div>
+    <div class="container article-content-wrap">
+      <div id="article-body" class="article-body"></div>
+      <aside class="article-side-cta"><span>HANASARI CATERING</span><strong>Butuh sajian untuk acara Anda?</strong><p>Ceritakan kebutuhan Anda, kami bantu memilih pilihan yang sesuai.</p><a class="button" href="https://wa.me/628563050300">Konsultasi via WhatsApp <span aria-hidden="true">↗</span></a></aside>
+    </div>
+  </article>
+  <section id="article-not-found" class="section article-not-found" hidden><div class="container"><div class="eyebrow">ARTIKEL TIDAK DITEMUKAN</div><h1>Konten yang Anda cari<br>belum tersedia.</h1><a class="button" href="./">Lihat Semua Artikel <span aria-hidden="true">↗</span></a></div></section>
+  <section id="related-section" class="section related-section"><div class="container"><div class="section-heading"><div><div class="eyebrow">LANJUT MEMBACA</div><h2>Artikel <em>terkait.</em></h2></div><a class="text-link" href="./">Lihat semua artikel <span aria-hidden="true">↗</span></a></div><div id="related-articles" class="article-grid"></div></div></section>
+</main>
+<footer class="article-footer"><div class="container"><a href="../#beranda">← Kembali ke Hanasari Catering</a><span>Harga Merakyat, Rasa Ningrat.</span></div></footer>
+<script>
+  (()=>{const b=document.querySelector('.menu-toggle'),n=document.querySelector('#navigasi');if(!b||!n)return;b.addEventListener('click',()=>{const o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!o));n.classList.toggle('is-open',!o);});})();
+</script>
+</body>
+</html>

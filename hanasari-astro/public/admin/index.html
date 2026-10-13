@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Hanasari CMS</title>
+</head>
+<body>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <script>
+    (() => {
+      const hiddenButtonLabels = new Set([
+        'Copy Path',
+        'Remove Image',
+        'Remove image'
+      ]);
+
+      function hideClientIrrelevantButtons() {
+        document.querySelectorAll('button').forEach((button) => {
+          const label = (button.textContent || '')
+            .replace(/\s+/g, ' ')
+            .trim();
+
+          if (hiddenButtonLabels.has(label)) {
+            button.style.display = 'none';
+            button.setAttribute('aria-hidden', 'true');
+          }
+        });
+      }
+
+      const observer = new MutationObserver(hideClientIrrelevantButtons);
+
+      window.addEventListener('DOMContentLoaded', () => {
+        hideClientIrrelevantButtons();
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
