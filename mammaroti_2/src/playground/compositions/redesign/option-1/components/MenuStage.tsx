@@ -75,7 +75,8 @@ export function MenuStage() {
               width={pic.w}
               height={pic.h}
               alt={`${displayName(active.name)} MammaRoti`}
-              loading="lazy"
+              loading="eager"
+              decoding="async"
             />
             <p key={`n-${active.id}`} className={s.stageName}>{displayName(active.name)}</p>
             <p className={s.stageGroup}>{group.name}</p>

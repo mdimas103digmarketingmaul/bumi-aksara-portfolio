@@ -60,6 +60,7 @@
   min-height: clamp(420px, 44vw, 620px);
   overflow: hidden;
   border-radius: 36px;
+  background: #fde8d1; /* fallback for Safari < 16.2 without color-mix() */
   background: color-mix(in srgb, var(--flavour) 22%, #fffdf8);
   transition: background-color 500ms ease;
   isolation: isolate;
@@ -150,8 +151,14 @@
 .item[aria-pressed='true'] .dot { transform: scale(1.5); }
 
 @media (max-width: 900px) {
-  .body { grid-template-columns: minmax(0, 1fr); }
-  .stage { min-height: 0; aspect-ratio: 1 / 1; border-radius: 28px; }
+  .body { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  /*
+   * Every child of .stage is absolutely positioned, so the stage must get its height on its own.
+   * aspect-ratio on a stretched grid item can collapse to 0px in WebKit (iOS Safari), which also keeps the
+   * photo from ever loading. A padding-top spacer gives a square in every engine; min-height is a backstop.
+   */
+  .stage { min-height: 300px; border-radius: 28px; }
+  .stage::before { content: ''; display: block; padding-top: 100%; }
   .list { flex-direction: row; flex-wrap: wrap; gap: 8px; border-top: 0; }
   .list li, .list li:first-child { border: 0; }
   .item,
