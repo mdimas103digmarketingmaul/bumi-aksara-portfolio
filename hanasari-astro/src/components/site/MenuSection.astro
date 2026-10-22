@@ -13,7 +13,7 @@ const labelFor = { nasi: 'Nasi Box', snack: 'Snack Box', spesial: 'Sajian Spesia
         <h2 id="o1-menu-title" class="o1-h2">Ada sajian untuk <em>setiap kesempatan.</em></h2>
       </div>
       <div class="o1-heading__aside">
-        <p>Mau nasi box yang praktis atau tumpeng untuk merayakan? Mulai dari paket yang paling pas, lalu racik isinya bersama admin.</p>
+        <p>Mau nasi box yang praktis atau tumpeng untuk merayakan?</p>
         <a class="o1-link" href={CATALOG_URL} target="_blank" rel="noopener"><Icon name="doc" size={18} /> Unduh katalog lengkap (PDF)</a>
       </div>
     </div>
@@ -40,7 +40,7 @@ const labelFor = { nasi: 'Nasi Box', snack: 'Snack Box', spesial: 'Sajian Spesia
         const list = products.filter((p) => p.category === cat.id);
         return (
           <div class:list={['o1-tabs__panel', { 'is-active': i === 0 }]} role="tabpanel" id={`o1-panel-${cat.id}`} aria-labelledby={`o1-tab-${cat.id}`} data-panel={cat.id}>
-            <p class="o1-tabs__intro">{cat.intro}</p>
+            {cat.intro && <p class="o1-tabs__intro">{cat.intro}</p>}
             <ul class="o1-track" data-track tabindex="0" aria-label={`Pilihan ${cat.label}, geser untuk melihat lainnya`}>
               {list.map((product, index) => <ProductCard product={product} index={index} categoryLabel={labelFor[cat.id]} />)}
             </ul>
@@ -51,7 +51,7 @@ const labelFor = { nasi: 'Nasi Box', snack: 'Snack Box', spesial: 'Sajian Spesia
     </div>
 
     <p class="o1-menu__note">
-      Harga mengacu pada katalog Agustus 2026. Konfirmasikan harga, isi paket, dan ketersediaan kepada admin sebelum memesan. Foto merupakan contoh penyajian.
+      Konfirmasikan harga, isi paket, dan ketersediaan kepada admin.
     </p>
   </div>
 </section>

@@ -3,10 +3,10 @@ import Icon from './Icon.astro';
 import { clients, img } from './data';
 
 const features = [
-  { icon: 'leaf', title: 'Sajian halal', text: 'Untuk momen makan bersama' },
-  { icon: 'spark', title: 'Ragam rasa Nusantara', text: 'Pilihan lauk, sayur, dan sambal' },
-  { icon: 'users', title: 'Paket untuk setiap momen', text: 'Dari keluarga hingga korporasi' },
-  { icon: 'chat', title: 'Mudah pesan online', text: 'Konsultasikan langsung dengan kami', href: '#pesan-online' }
+  { icon: 'leaf', title: 'Sajian halal', text: 'Bahan terbaik, diolah higienis' },
+  { icon: 'spark', title: 'Ragam rasa Nusantara', text: 'Lauk, tumisan, dan sambal pilihan' },
+  { icon: 'users', title: 'Paket tiap momen', text: 'Dari keluarga hingga korporasi' },
+  { icon: 'box', title: 'Bebas pilih menu', text: 'Racik isi box sesuai selera acara', href: '#racik-isi-box' }
 ] as const;
 ---
 <section id="keunggulan" class="o1-trust" aria-label="Keunggulan dan pelanggan Hanasari">
@@ -31,11 +31,8 @@ const features = [
     </ul>
 
     <div class="o1-clients" data-reveal>
-      <div class="o1-clients__label">
-        <p class="o1-eyebrow">Telah dipercaya</p>
-        <p>Instansi, kampus, sekolah, dan perusahaan yang pernah menikmati sajian Hanasari.</p>
-      </div>
-      <div class="o1-marquee o1-clients__marquee" aria-label="Daftar pelanggan Hanasari">
+      <h2 class="o1-clients__title">Terima kasih untuk <em>kepercayaan Anda</em> selama ini.</h2>
+      <div class="o1-marquee o1-clients__marquee" aria-label="Pelanggan Hanasari">
         <ul class="o1-marquee__track">
           {clients.map((name) => <li>{name}</li>)}
         </ul>

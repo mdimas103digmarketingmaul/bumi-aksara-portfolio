@@ -1,28 +1,141 @@
 ---
+/*
+ * Daftar artikel — memakai design system utama website (src/styles/site.css).
+ * Data tetap dari Content Collection `articles`; detail artikel (/artikel/[slug]/) tidak berubah.
+ */
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import ArticleCard from '../../components/ArticleCard.astro';
-const articles = (await getCollection('articles')).filter(({ data }) => data.status === 'published').sort((a,b)=>b.data.publishDate.getTime()-a.data.publishDate.getTime());
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import SiteHeader from '../../components/site/SiteHeader.astro';
+import SiteFooter from '../../components/site/SiteFooter.astro';
+import ArticleCard from '../../components/site/ArticleCard.astro';
+import BatikMegaMendung from '../../components/site/BatikMegaMendung.astro';
+import Icon from '../../components/site/Icon.astro';
+
+const articles = (await getCollection('articles'))
+  .filter(({ data }) => data.status === 'published')
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const categories = [...new Set(articles.map(({ data }) => data.category))];
+
+/* Teks pencarian: judul, kategori, ringkasan, dan isi artikel (tanpa sintaks Markdown). */
+const plain = (md = '') =>
+  md
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/[#>*_`~|-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+const searchTextOf = (entry: (typeof articles)[number]) =>
+  [entry.data.title, entry.data.category, entry.data.excerpt, plain(entry.body)].join(' ');
 ---
-<BaseLayout title="Artikel — Hanasari Catering" description="Kumpulan promo, resep, dan inspirasi dari Hanasari Catering.">
-  <Header articleMode />
+<SiteLayout
+  title="Artikel — Hanasari Catering"
+  description="Kumpulan promo, resep, dan inspirasi dari Hanasari Catering."
+>
+  <SiteHeader onHome={false} current="artikel" />
   <main id="utama">
-    <section class="article-page-hero"><div class="container article-page-hero-grid"><div><div class="eyebrow">DARI DAPUR HANASARI</div><h1>Artikel, resep, dan<br /><span class="hero-highlight">promo terbaru.</span></h1></div><div><p>Temukan inspirasi sajian, resep sederhana, dan informasi promo Hanasari dalam satu tempat.</p><span class="article-count">{articles.length} artikel</span></div></div></section>
-    <section class="section article-list-section"><div class="container"><div class="article-toolbar" role="group" aria-label="Filter kategori artikel"><button class="article-filter active" data-category="Semua" aria-pressed="true">Semua</button><button class="article-filter" data-category="Promo" aria-pressed="false">Promo</button><button class="article-filter" data-category="Resep" aria-pressed="false">Resep</button><button class="article-filter" data-category="Tips & Inspirasi" aria-pressed="false">Tips & Inspirasi</button></div><div class="article-grid article-grid-all" id="article-list">{articles.map(({data}) => <ArticleCard article={data} />)}</div><p class="article-empty" id="article-empty" hidden>Belum ada artikel pada kategori ini.</p></div></section>
-    <section class="article-cta"><div class="container article-cta-inner"><div><div class="eyebrow">BUTUH BANTUAN MEMILIH MENU?</div><h2>Ceritakan kebutuhan<br /><em>acara Anda.</em></h2></div><a class="button button-light" href="https://wa.me/628563050300">Chat WhatsApp <span aria-hidden="true">↗</span></a></div></section>
+    <section class="o1-ahero" aria-labelledby="o1-ahero-title" data-float-anchor>
+      <BatikMegaMendung class="o1-ahero__batik" />
+      <div class="o1-container o1-ahero__inner">
+        <p class="o1-eyebrow o1-eyebrow--light">Cerita dari dapur Hanasari</p>
+        <h1 id="o1-ahero-title" class="o1-ahero__title">Artikel, resep, dan <em>promo terbaru.</em></h1>
+        <p class="o1-ahero__lead">Temukan inspirasi sajian, resep sederhana, dan kabar promo Hanasari dalam satu tempat.</p>
+
+        <form class="o1-search" role="search" action="/artikel/" method="get" data-article-search>
+          <label class="o1-visually-hidden" for="o1-search-input">Cari artikel</label>
+          <svg class="o1-search__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4" /></svg>
+          <input id="o1-search-input" class="o1-search__input" type="search" name="q" placeholder="Cari artikel, resep, tips, atau promo..." autocomplete="off" enterkeyhint="search" aria-controls="o1-article-list" />
+          <button class="o1-search__clear" type="button" data-search-clear aria-label="Hapus pencarian" hidden><Icon name="close" size={16} /></button>
+        </form>
+      </div>
+    </section>
+
+    <section class="o1-alist" aria-label="Daftar artikel">
+      <div class="o1-container">
+        <div class="o1-alist__bar">
+          <div class="o1-alist__filters" role="group" aria-label="Filter kategori artikel">
+            <button type="button" class="o1-alist__filter" data-category="Semua" aria-pressed="true">Semua</button>
+            {categories.map((cat) => <button type="button" class="o1-alist__filter" data-category={cat} aria-pressed="false">{cat}</button>)}
+          </div>
+          <p class="o1-alist__count" role="status" data-article-count>{articles.length} artikel</p>
+        </div>
+
+        <div class="o1-articles__grid o1-alist__grid" id="o1-article-list">
+          {articles.map((entry, i) => <ArticleCard article={entry.data} searchText={searchTextOf(entry)} delay={(i % 3) * 90} headingLevel="h2" />)}
+        </div>
+
+        <div class="o1-alist__empty" data-article-empty hidden>
+          <p><strong>Artikel yang Anda cari belum ditemukan.</strong> Coba kata kunci lain atau lihat semua artikel.</p>
+          <button type="button" class="o1-btn o1-btn--dark o1-btn--sm" data-search-reset>Tampilkan semua artikel</button>
+        </div>
+      </div>
+    </section>
   </main>
-  <Footer />
+  <SiteFooter onHome={false} />
+
   <script>
-    const buttons = document.querySelectorAll<HTMLButtonElement>('.article-filter');
-    const cards = document.querySelectorAll<HTMLElement>('.article-card');
-    const empty = document.querySelector<HTMLElement>('#article-empty');
-    buttons.forEach((button) => button.addEventListener('click', () => {
-      const category = button.dataset.category || 'Semua'; let shown = 0;
-      buttons.forEach((item) => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-pressed', String(active)); });
-      cards.forEach((card) => { const visible = category === 'Semua' || card.dataset.category === category; card.classList.toggle('is-hidden', !visible); if (visible) shown += 1; });
+    /*
+     * Pencarian + filter kategori sisi klien (tanpa dependency, tanpa reload).
+     * Indeks berasal dari atribut data-search yang dibangun saat build, jadi artikel baru
+     * dari Content Collection otomatis ikut setelah build berikutnya.
+     */
+    const form = document.querySelector<HTMLFormElement>('[data-article-search]');
+    const input = document.querySelector<HTMLInputElement>('#o1-search-input');
+    const clearBtn = document.querySelector<HTMLButtonElement>('[data-search-clear]');
+    const filters = Array.from(document.querySelectorAll<HTMLButtonElement>('.o1-alist__filter'));
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('#o1-article-list .o1-article'));
+    const empty = document.querySelector<HTMLElement>('[data-article-empty]');
+    const count = document.querySelector<HTMLElement>('[data-article-count]');
+
+    const normalize = (text: string) =>
+      text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
+    const index = new Map(cards.map((card) => [card, normalize(card.dataset.search || card.textContent || '')]));
+    let category = 'Semua';
+
+    // Placeholder panjang terpotong di layar kecil; pakai versi ringkas.
+    const compact = window.matchMedia('(max-width: 480px)');
+    const fullPlaceholder = input?.placeholder || '';
+    const syncPlaceholder = () => { if (input) input.placeholder = compact.matches ? 'Cari artikel...' : fullPlaceholder; };
+    compact.addEventListener('change', syncPlaceholder);
+    syncPlaceholder();
+
+    const render = () => {
+      const terms = normalize(input?.value || '').split(' ').filter(Boolean);
+      let shown = 0;
+      cards.forEach((card) => {
+        const text = index.get(card) || '';
+        const visible = (category === 'Semua' || card.dataset.category === category) && terms.every((t) => text.includes(t));
+        card.hidden = !visible;
+        if (visible) {
+          card.classList.add('is-in'); // pastikan kartu yang muncul kembali tidak tertahan animasi reveal
+          shown += 1;
+        }
+      });
       if (empty) empty.hidden = shown > 0;
+      if (count) count.textContent = terms.length || category !== 'Semua' ? `${shown} dari ${cards.length} artikel` : `${cards.length} artikel`;
+      if (clearBtn) clearBtn.hidden = !input?.value;
+    };
+
+    filters.forEach((btn) => btn.addEventListener('click', () => {
+      category = btn.dataset.category || 'Semua';
+      filters.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      render();
     }));
+    input?.addEventListener('input', render);
+    input?.addEventListener('keydown', (e) => { if (e.key === 'Escape' && input.value) { input.value = ''; render(); } });
+    form?.addEventListener('submit', (e) => { e.preventDefault(); render(); input?.blur(); });
+    clearBtn?.addEventListener('click', () => { if (input) { input.value = ''; render(); input.focus(); } });
+    document.querySelector('[data-search-reset]')?.addEventListener('click', () => {
+      if (input) input.value = '';
+      category = 'Semua';
+      filters.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.category === 'Semua')));
+      render();
+      input?.focus();
+    });
+
+    // Dukung tautan seperti /artikel/?q=sambal
+    const initial = new URLSearchParams(location.search).get('q');
+    if (initial && input) { input.value = initial; render(); }
   </script>
-</BaseLayout>
+</SiteLayout>

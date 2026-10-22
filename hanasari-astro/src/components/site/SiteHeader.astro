@@ -1,18 +1,27 @@
 ---
 import Icon from './Icon.astro';
-import { asset, waLink } from './data';
+import { HOME_PATH, asset, waLink } from './data';
 
+interface Props {
+  /** false di halaman selain homepage (mis. /artikel/): anchor section diarahkan ke homepage. */
+  onHome?: boolean;
+  current?: 'artikel';
+}
+const { onHome = true, current } = Astro.props;
+const base = onHome ? '' : HOME_PATH;
+
+/* Anchor (#) = section di homepage; path (/artikel/) = pindah halaman biasa. */
 const links = [
-  { href: '#menu', label: 'Menu & Paket' },
-  { href: '#testimoni', label: 'Testimoni' },
-  { href: '#artikel', label: 'Artikel' },
-  { href: '#kontak', label: 'Kontak' }
+  { href: `${base}#menu`, label: 'Menu & Paket' },
+  { href: `${base}#testimoni`, label: 'Testimoni' },
+  { href: '/artikel/', label: 'Artikel', key: 'artikel' },
+  { href: `${base}#tentang-kami`, label: 'Tentang Kami' }
 ];
 ---
 <a class="o1-skip" href="#utama">Lewati ke konten</a>
 <header class="o1-header" data-header>
   <div class="o1-container o1-header__inner">
-    <a class="o1-brand" href="#beranda" aria-label="Hanasari Catering — kembali ke atas">
+    <a class="o1-brand" href={onHome ? '#beranda' : HOME_PATH} aria-label={onHome ? 'Hanasari Catering — kembali ke atas' : 'Hanasari Catering — beranda'}>
       <span class="o1-brand__mark">
         <img class="o1-brand__light" src={asset('hs-mark-white.webp')} alt="" width="306" height="246" />
         <img class="o1-brand__color" src={asset('hs-mark.webp')} alt="" width="306" height="246" />
@@ -22,7 +31,7 @@ const links = [
 
     <nav class="o1-nav" id="o1-nav" aria-label="Navigasi utama">
       <ul>
-        {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        {links.map((link) => <li><a href={link.href} aria-current={link.key && link.key === current ? 'page' : undefined}>{link.label}</a></li>)}
       </ul>
       <div class="o1-nav__mobile-extra">
         <a class="o1-btn o1-btn--primary o1-btn--block" href={waLink('Saya ingin konsultasi kebutuhan catering.', 'Navigasi mobile')} target="_blank" rel="noopener noreferrer">

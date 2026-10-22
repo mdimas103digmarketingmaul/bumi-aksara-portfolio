@@ -10,14 +10,14 @@ const stats = [
   { value: count(['snack']), label: 'Snack & kue' }
 ];
 ---
-<section class="o1-dishes" aria-labelledby="o1-dishes-title">
+<section id="racik-isi-box" class="o1-dishes" aria-labelledby="o1-dishes-title">
   <div class="o1-dishes__decor" aria-hidden="true"></div>
   <div class="o1-container">
     <div class="o1-dishes__head" data-reveal>
       <div>
         <p class="o1-eyebrow o1-eyebrow--light">Racik isi box</p>
-        <h2 id="o1-dishes-title" class="o1-h2 o1-h2--light">Lauknya bisa dipilih. <em>Sesuai selera.</em></h2>
-        <p class="o1-dishes__lead">Setiap paket bisa diisi dengan lauk favorit Anda. Intip pilihan dari katalog Hanasari, lalu sampaikan kombinasi yang diinginkan ke admin.</p>
+        <h2 id="o1-dishes-title" class="o1-h2 o1-h2--light">Bebas pilih menu. <em>Sesuai selera.</em></h2>
+        <p class="o1-dishes__lead">Setiap paket bisa diisi dengan lauk, tumisan, dan sambal favorit Anda. Intip pilihannya di bawah, lalu sampaikan kombinasi yang diinginkan kepada admin.</p>
       </div>
       <ul class="o1-dishes__stats">
         {stats.map((s) => <li><strong data-count={s.value}>{s.value}</strong><span>{s.label}</span></li>)}

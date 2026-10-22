@@ -1,33 +1,47 @@
 ---
+/*
+ * Homepage Hanasari Catering.
+ * Komponen: src/components/site/ · data konten: src/components/site/data.ts
+ * Artikel pilihan dibaca dari Content Collection `articles` (featured: true).
+ */
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/home/Hero.astro';
-import TrustStrip from '../components/home/TrustStrip.astro';
-import MenuSection from '../components/home/MenuSection.astro';
-import AboutSection from '../components/home/AboutSection.astro';
-import Testimonials from '../components/home/Testimonials.astro';
-import FeaturedArticles from '../components/home/FeaturedArticles.astro';
-import ConversionSections from '../components/home/ConversionSections.astro';
-import ContactFooter from '../components/home/ContactFooter.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import SiteHeader from '../components/site/SiteHeader.astro';
+import Hero from '../components/site/Hero.astro';
+import TrustStrip from '../components/site/TrustStrip.astro';
+import MenuSection from '../components/site/MenuSection.astro';
+import DishExplorer from '../components/site/DishExplorer.astro';
+import AboutSection from '../components/site/AboutSection.astro';
+import Testimonials from '../components/site/Testimonials.astro';
+import FeaturedArticles from '../components/site/FeaturedArticles.astro';
+import HowToOrder from '../components/site/HowToOrder.astro';
+import Consultation from '../components/site/Consultation.astro';
+import Faq from '../components/site/Faq.astro';
+import SiteFooter from '../components/site/SiteFooter.astro';
 
-const articles = (await getCollection('articles'))
-  .filter(({ data }) => data.status === 'published')
-  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
-const featuredArticles = articles.filter(({ data }) => data.featured).slice(0, 3);
+const featuredArticles = (await getCollection('articles'))
+  .filter(({ data }) => data.status === 'published' && data.featured)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 3)
+  .map(({ data }) => data);
 ---
-<BaseLayout title="Hanasari Catering — Harga Merakyat, Rasa Ningrat" description="Hidangan Nusantara untuk momen istimewa Anda. Pilih nasi box, snack box, dan tumpeng Hanasari Catering di Jakarta Timur. Konsultasikan acara Anda melalui WhatsApp.">
-  <Header />
+<SiteLayout
+  title="Hanasari Catering — Harga Merakyat, Rasa Ningrat"
+  description="Hidangan Nusantara untuk momen istimewa Anda. Pilih nasi box, snack box, dan tumpeng Hanasari Catering di Jakarta Timur. Konsultasikan acara Anda melalui WhatsApp."
+  preloadHero
+>
+  <SiteHeader />
   <main id="utama">
     <Hero />
     <TrustStrip />
     <MenuSection />
+    <DishExplorer />
     <AboutSection />
     <Testimonials />
     <FeaturedArticles articles={featuredArticles} />
-    <ConversionSections />
-    <ContactFooter />
+    <HowToOrder />
+    <Consultation />
+    <Faq />
   </main>
-  <script is:inline defer src="/assets/js/home-content.js"></script>
-  <script is:inline defer src="/assets/js/home-app.js"></script>
-</BaseLayout>
+  <SiteFooter />
+</SiteLayout>

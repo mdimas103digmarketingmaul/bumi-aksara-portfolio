@@ -1,8 +1,6 @@
 /*
- * Hanasari — Visual Option 1 (playground)
- * Satu sumber data untuk halaman /playground/option-1/.
- * Konten disalin dari homepage production (home-content.js & komponen home)
- * dan katalog Agustus 2026. Edit di sini tanpa menyentuh production.
+ * Hanasari Catering — satu sumber data konten website (homepage & halaman artikel).
+ * Harga dan isi paket mengacu pada katalog Agustus 2026.
  */
 
 export const WA_NUMBER = '628563050300';
@@ -12,6 +10,9 @@ export const CATALOG_URL = '/assets/docs/katalog-hanasari-agustus-2026.pdf';
 export const LINKS_URL = 'https://berbagi.link/HanasariCatering';
 export const INSTAGRAM_URL = 'https://www.instagram.com/hanasaricatering/';
 export const TIKTOK_URL = 'https://www.tiktok.com/@hanasaricatering';
+export const PARTNERSHIP_EMAIL = 'marketing.hanasari@gmail.com';
+/** Homepage website. Dipakai header/footer di halaman selain homepage. */
+export const HOME_PATH = '/';
 
 /** Link WhatsApp dengan pesan pembuka yang sama seperti production. */
 export const waLink = (message: string, source: string) =>
@@ -37,7 +38,7 @@ export interface Product {
 }
 
 export const categories: { id: Category; label: string; short: string; intro: string }[] = [
-  { id: 'nasi', label: 'Nasi Box', short: 'Nasi Box', intro: 'Lima tingkatan paket, dari makan siang praktis sampai box paling lengkap dengan dua lauk utama.' },
+  { id: 'nasi', label: 'Nasi Box', short: 'Nasi Box', intro: '' },
   { id: 'snack', label: 'Snack Box', short: 'Snack', intro: 'Teman jeda rapat dan acara. Pilih jumlah snack sesuai kebutuhan Anda.' },
   { id: 'spesial', label: 'Tumpeng & Lainnya', short: 'Spesial', intro: 'Untuk syukuran, perayaan, dan bingkisan. Komposisi dan harga didiskusikan bersama admin.' }
 ];
@@ -69,25 +70,19 @@ export const dishGroups: { id: string; label: string; items: string[] }[] = [
   { id: 'snack', label: 'Snack', items: ['Pastel Sayur', 'Pastel Sayur Telur', 'Pastel Sayur Daging', 'Puding Mangga', 'Puding Coklat', 'Lemper Ayam', 'Pisang Molen', 'Risoles Mayo Beef', 'Sosis Solo', 'Donat Gula', 'Donat Mesis', 'Kue Soes', 'Lontong Isi Sayur', 'Lontong Isi Sayur Ayam', 'Lontong Isi Sayur Daging', 'Lontong Isi Oncom', 'Pai Buah', 'Martabak Telur Mini', 'Panada', 'Dadar Gulung', 'Lumpur Surga', 'Roti Coklat', 'Roti Kacang Merah', 'Roti Kacang Hijau', 'Roti Srikaya', 'Roti Keju', 'Roti Pisang Coklat', 'Roti Sosis'] }
 ];
 
-/** Daftar "Customer Kami" dari halaman terakhir katalog Agustus 2026. */
+/**
+ * Pelanggan yang di-highlight — daftar dari client (revisi Oktober 2026).
+ * Ditampilkan sebagai tipografi; jangan ganti dengan logo kecuali logo resminya tersedia.
+ */
 export const clients = [
-  'Kecamatan Matraman',
-  'Sudin Perindustrian, Perdagangan, Koperasi & UKM Jaktim',
-  'Kelurahan Utan Kayu Selatan',
-  'Puskesmas Utan Kayu Selatan 2',
-  'Universitas Negeri Jakarta',
-  'Institut Bisnis & Multimedia ASMI',
-  'SMKN 40',
-  'BNPB',
   'SLOG Polri',
-  'Mahkamah Agung',
-  'Kemenkeu',
-  'BPOM',
-  'Inotek',
-  'PT IMS Jakarta',
-  'Salsa Tour and Travel',
-  'PT Reasuransi Syariah Indonesia',
-  'Fitness Time'
+  'Firman Advisory',
+  'Kanwil Kemenag DKI Jakarta',
+  'BTN KC Menteng',
+  'Kecamatan Matraman',
+  'Puskesmas Kecamatan Matraman',
+  'Universitas Negeri Jakarta',
+  'UMM Travel'
 ];
 
 export const reviews = [
@@ -109,4 +104,4 @@ export const faqs = [
 ];
 
 export const img = (file: string) => `/assets/images/${file}`;
-export const asset = (file: string) => `/assets/playground/option-1/${file}`;
+export const asset = (file: string) => `/assets/site/${file}`;

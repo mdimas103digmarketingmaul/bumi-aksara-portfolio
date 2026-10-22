@@ -1,6 +1,11 @@
 ---
 import Icon from './Icon.astro';
-import { INSTAGRAM_URL, LINKS_URL, MAPS_URL, TIKTOK_URL, asset, waLink } from './data';
+import { HOME_PATH, INSTAGRAM_URL, LINKS_URL, MAPS_URL, PARTNERSHIP_EMAIL, TIKTOK_URL, asset, waLink } from './data';
+
+interface Props {
+  onHome?: boolean;
+}
+const { onHome = true } = Astro.props;
 ---
 <footer id="kontak" class="o1-footer" aria-labelledby="o1-footer-title">
   <div class="o1-container">
@@ -16,11 +21,16 @@ import { INSTAGRAM_URL, LINKS_URL, MAPS_URL, TIKTOK_URL, asset, waLink } from '.
       <div class="o1-footer__col">
         <p class="o1-footer__label">WhatsApp</p>
         <a class="o1-footer__big" href={waLink('Saya datang dari website dan ingin bertanya tentang catering.', 'Nomor kontak')} target="_blank" rel="noopener noreferrer">0856 3050 300 <Icon name="arrow" size={20} /></a>
-        <p class="o1-footer__muted">Konfirmasi jadwal layanan dan ketersediaan pesanan langsung dengan admin.</p>
+        <p class="o1-footer__muted">Untuk pesanan, jadwal, dan ketersediaan menu.</p>
+      </div>
+      <div class="o1-footer__col">
+        <p class="o1-footer__label">Kerja sama</p>
+        <p class="o1-footer__text">Hanasari terbuka untuk kolaborasi dan kemitraan, termasuk konsumsi rutin perusahaan.</p>
+        <a class="o1-footer__link" href={`mailto:${PARTNERSHIP_EMAIL}`}><Icon name="mail" size={16} /> {PARTNERSHIP_EMAIL}</a>
       </div>
       <div class="o1-footer__col">
         <p class="o1-footer__label">Dapur Hanasari</p>
-        <address>Jalan Nanas, Gang Flamboyan 8 No. 10<br />RT 011 / RW 003, Utan Kayu Selatan,<br />Matraman, Jakarta Timur.</address>
+        <address>Jalan Nanas, Gang Flamboyan 8 No. 10 RT 011 / RW 003, Utan Kayu Selatan, Matraman, Jakarta Timur.</address>
         <a class="o1-footer__link" href={MAPS_URL} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={16} /> Petunjuk arah di Google Maps</a>
       </div>
       <div class="o1-footer__col">
@@ -38,10 +48,8 @@ import { INSTAGRAM_URL, LINKS_URL, MAPS_URL, TIKTOK_URL, asset, waLink } from '.
     </p>
   </div>
 
-  <div class="o1-footer__word" aria-hidden="true">Hanasari</div>
-
   <div class="o1-container o1-footer__bottom">
-    <a class="o1-brand o1-brand--footer" href="#beranda">
+    <a class="o1-brand o1-brand--footer" href={onHome ? '#beranda' : HOME_PATH}>
       <span class="o1-brand__mark"><img src={asset('hs-mark-white.webp')} alt="" width="306" height="246" loading="lazy" /></span>
       <span class="o1-brand__word">Hanasari<small>Catering</small></span>
     </a>

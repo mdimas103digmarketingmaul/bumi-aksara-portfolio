@@ -1,0 +1,59 @@
+---
+/*
+ * Aksen batik (hero homepage & halaman artikel) — linework terinspirasi mega mendung (Cirebon),
+ * motif awan yang juga dipakai sebagai latar Compro Hanasari.
+ * Garis kontur dibuat dari cincin stroke di dalam mask (tebal → tipis) lalu
+ * dipotong oleh bentuk awan, sehingga menghasilkan garis-garis sejajar ke dalam.
+ * Warna mengikuti `color` (currentColor) dari CSS.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+/* Bentuk awan (viewBox 600×380): awan besar di atas, awan kecil menyusul di kanan bawah. */
+const clouds = [
+  {
+    id: 'a',
+    transform: 'translate(10 6) scale(.82)',
+    d: 'M70 262C26 262 22 204 70 200C56 156 104 128 146 152C146 98 214 70 262 104C290 56 372 54 398 112C436 82 500 100 498 152C548 146 584 190 556 226C598 232 600 286 548 288C420 294 200 296 70 262Z'
+  },
+  {
+    id: 'b',
+    transform: 'translate(272 34)',
+    d: 'M60 330C30 330 26 292 60 290C52 262 86 246 112 262C116 228 162 214 186 240C210 214 256 222 256 256C286 254 302 284 280 304C306 310 300 340 272 340C200 344 120 344 60 330Z'
+  }
+];
+const rings = [36, 28, 20, 12, 4]; // jarak kontur ke dalam (unit viewBox), dari terjauh
+const t = 1.15; // tebal garis
+---
+<svg class:list={['o1-mendung', className]} viewBox="0 0 600 380" aria-hidden="true" focusable="false">
+  <defs>
+    {clouds.map((c) => (
+      <>
+        <path id={`o1-mm-${c.id}`} d={c.d} transform={c.transform} />
+        <clipPath id={`o1-mm-clip-${c.id}`}><use href={`#o1-mm-${c.id}`} /></clipPath>
+        <mask id={`o1-mm-mask-${c.id}`} maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="380">
+          <g fill="none" stroke-linejoin="round">
+            {rings.map((r) => (
+              <>
+                <use href={`#o1-mm-${c.id}`} stroke="#fff" stroke-width={r * 2 + t} />
+                <use href={`#o1-mm-${c.id}`} stroke="#000" stroke-width={r * 2 - t} />
+              </>
+            ))}
+          </g>
+        </mask>
+      </>
+    ))}
+  </defs>
+
+  {clouds.map((c) => (
+    <g class={`o1-mendung__cloud o1-mendung__cloud--${c.id}`}>
+      <use href={`#o1-mm-${c.id}`} class="o1-mendung__fill" />
+      <g clip-path={`url(#o1-mm-clip-${c.id})`}>
+        <rect width="600" height="380" fill="currentColor" mask={`url(#o1-mm-mask-${c.id})`} />
+      </g>
+      <use href={`#o1-mm-${c.id}`} fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+    </g>
+  ))}
+</svg>

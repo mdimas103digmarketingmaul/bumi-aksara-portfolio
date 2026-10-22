@@ -2,13 +2,15 @@
 import Icon from './Icon.astro';
 import { img, waLink } from './data';
 
+/* Sumber: Compro B2B Hanasari (Tentang Kami, Mengapa Memilih Kami) & Brand Guide (Brand Statement). */
 const values = [
-  { title: 'Rasa yang selalu dirindukan', text: 'Ragam lauk dan sambal Nusantara untuk melengkapi selera Anda.' },
-  { title: 'Praktis untuk tuan rumah', text: 'Ceritakan kebutuhan acara, lalu diskusikan menu dan pengirimannya bersama kami.' },
-  { title: 'Hangat dalam pelayanan', text: 'Dari pertanyaan pertama hingga pilihan paket, kami siap membantu.' }
+  { title: 'Halal & berkualitas', text: 'Diolah dari bahan terbaik dan halal, dengan rasa yang konsisten dari satu acara ke acara berikutnya.' },
+  { title: 'Tepat waktu', text: 'Rapat, pelatihan, dan acara punya jadwal yang tak bisa menunggu. Ketepatan pengiriman jadi prioritas kami.' },
+  { title: 'Menu fleksibel', text: 'Paket dan pilihan lauk bisa disesuaikan dengan kebutuhan Anda, dengan harga yang transparan.' },
+  { title: 'Tumbuh bersama usaha lokal', text: 'Memilih Hanasari berarti ikut mendukung usaha lokal dan peluang ekonomi masyarakat.' }
 ];
 ---
-<section id="tentang" class="o1-section o1-about" aria-labelledby="o1-about-title">
+<section id="tentang-kami" class="o1-section o1-about" aria-labelledby="o1-about-title">
   <div class="o1-container o1-about__grid">
     <div class="o1-about__visual" data-reveal>
       <figure class="o1-about__main">
@@ -19,10 +21,10 @@ const values = [
 
     <div class="o1-about__copy">
       <div data-reveal>
-        <p class="o1-eyebrow">Kenal lebih dekat</p>
+        <p class="o1-eyebrow">Tentang Kami</p>
         <h2 id="o1-about-title" class="o1-h2">Bukan sekadar sajian. Bagian dari <em>kebersamaan.</em></h2>
-        <p class="o1-about__lead">Di Hanasari, kami percaya makanan punya cara sederhana untuk mendekatkan. Seporsi hidangan yang lezat bisa membuat makan siang lebih hangat dan perayaan terasa lebih istimewa.</p>
-        <p>Itulah semangat kami menghadirkan hidangan Nusantara: cita rasa yang akrab, sajian yang rapi, dan pilihan paket yang mudah dijangkau.</p>
+        <p class="o1-about__lead">Hanasari Catering, di bawah PT Hanasari Asa Nusantara, menghadirkan hidangan selera Nusantara dengan kualitas premium dan harga yang bersahabat. <strong>Harga Merakyat, Rasa Ningrat.</strong></p>
+        <p>Bagi kami, makanan adalah pengalaman kebersamaan. Karena itu setiap menu diolah dengan cita rasa terbaik dan disajikan dengan pelayanan yang profesional, dari makan siang kantor, rapat, dan pelatihan, hingga syukuran keluarga.</p>
       </div>
       <ol class="o1-values" data-reveal>
         {values.map((v, i) => (

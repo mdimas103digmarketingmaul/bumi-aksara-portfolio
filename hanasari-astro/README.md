@@ -1,6 +1,6 @@
-# Hanasari Astro Playground
+# Hanasari Catering — Website (Astro)
 
-Playground terpisah untuk belajar Astro + Decap CMS tanpa mengubah `hanasari-website` existing.
+Website utama Hanasari Catering: homepage, daftar artikel, dan detail artikel, dengan artikel dikelola lewat Decap CMS.
 
 ## Stack
 - Astro 6 (static site generation)
@@ -35,18 +35,29 @@ Lalu buka:
 ```text
 src/
 ├── components/
-│   ├── ArticleCard.astro
-│   ├── Header.astro
-│   └── Footer.astro
+│   └── site/              # semua section & komponen website
+│       ├── SiteHeader.astro, SiteFooter.astro, Hero.astro, …
+│       ├── ArticleCard.astro
+│       ├── data.ts        # konten: paket, menu, testimoni, kontak
+│       └── site.client.ts # interaksi (vanilla TS)
+├── layouts/
+│   └── SiteLayout.astro   # <head>, SEO, font, script
+├── styles/
+│   └── site.css           # design system (class berprefix `o1-`)
 ├── content/
 │   └── articles/
-│       └── *.md
+│       └── *.md           # artikel dari Decap CMS
 ├── pages/
-│   ├── index.astro
+│   ├── index.astro        # homepage
 │   └── artikel/
-│       ├── index.astro
-│       └── [slug].astro
+│       ├── index.astro    # daftar artikel + pencarian
+│       └── [slug].astro   # detail artikel
 └── content.config.ts
+
+public/assets/site/        # logo HS & font Montserrat
+public/assets/images/      # foto produk & thumbnail
+public/assets/uploads/     # unggahan dari CMS
+public/admin/              # Decap CMS
 ```
 
 ### Cara kerja artikel
@@ -57,8 +68,7 @@ src/
 5. Astro membuat HTML statis untuk setiap artikel.
 6. URL artikel menjadi `/artikel/<slug>/`.
 
-## Cloudflare Pages playground
-Buat Pages project baru dari repository yang sama.
+## Cloudflare Pages
 
 - Root directory: `hanasari-astro`
 - Production branch: `main`
@@ -66,4 +76,3 @@ Buat Pages project baru dari repository yang sama.
 - Build output directory: `dist`
 - Node.js: `22.12.0` atau lebih baru
 
-Jangan ubah Pages project existing `bumi-aksara-portfolio` dulu.

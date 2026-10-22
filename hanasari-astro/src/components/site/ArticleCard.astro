@@ -1,0 +1,35 @@
+---
+/* Kartu artikel — dipakai di homepage, halaman /artikel/, dan artikel terkait. */
+import Icon from './Icon.astro';
+
+interface Props {
+  article: {
+    title: string;
+    slug: string;
+    category: string;
+    publishDate: Date;
+    excerpt: string;
+    thumbnail: string;
+    thumbnailAlt: string;
+  };
+  /** Teks gabungan untuk pencarian sisi klien (halaman /artikel/). */
+  searchText?: string;
+  delay?: number;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { article, searchText, delay = 0, headingLevel: Heading = 'h3' } = Astro.props;
+const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+const href = `/artikel/${article.slug}/`;
+---
+<article class="o1-article" data-reveal style={`--d:${delay}ms`} data-category={article.category} data-search={searchText}>
+  <a class="o1-article__media" href={href} tabindex="-1" aria-hidden="true">
+    <img src={article.thumbnail} alt="" width="800" height="1000" loading="lazy" decoding="async" />
+  </a>
+  <div class="o1-article__body">
+    <p class="o1-article__meta"><span>{article.category}</span><time datetime={article.publishDate.toISOString()}>{fmt.format(article.publishDate)}</time></p>
+    <Heading class="o1-article__title"><a href={href}>{article.title}</a></Heading>
+    <p class="o1-article__excerpt">{article.excerpt}</p>
+    <span class="o1-article__more" aria-hidden="true">Baca selengkapnya <Icon name="arrow" size={16} /></span>
+  </div>
+</article>

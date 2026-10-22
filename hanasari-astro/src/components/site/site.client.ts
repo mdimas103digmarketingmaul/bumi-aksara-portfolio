@@ -1,5 +1,5 @@
 /*
- * Interaksi Visual Option 1 — vanilla TS, tanpa dependency.
+ * Interaksi website Hanasari Catering — vanilla TS, tanpa dependency.
  * Semua konten sudah dirender di server; skrip ini hanya menambah perilaku.
  */
 
@@ -46,8 +46,7 @@ document.addEventListener('keydown', (e) => {
 window.addEventListener('resize', () => { if (window.innerWidth > 1060) closeNav(); }, { passive: true });
 
 const floatWa = $('[data-float-wa]');
-const hero = $('.o1-hero');
-const pgBar = $('.o1-pgbar');
+const hero = $('.o1-hero') ?? $('[data-float-anchor]');
 // Sembunyikan tombol mengambang saat formulir konsultasi / footer terlihat agar tidak menutupi konten.
 let footerInView = false;
 const quietZones = $$('.o1-form, .o1-footer__bottom');
@@ -64,8 +63,7 @@ let ticking = false;
 const onScroll = () => {
   ticking = false;
   const y = window.scrollY;
-  const barHeight = pgBar ? pgBar.offsetHeight : 0;
-  header?.classList.toggle('is-scrolled', y > barHeight + 24);
+  header?.classList.toggle('is-scrolled', y > 24);
   if (floatWa && hero) floatWa.classList.toggle('is-visible', y > hero.offsetTop + hero.offsetHeight * 0.6 && !footerInView);
 };
 window.addEventListener('scroll', () => {
@@ -209,9 +207,41 @@ if (reviewWrap) {
     dots.forEach((d, n) => d.setAttribute('aria-pressed', String(n === current)));
     if (indexEl) indexEl.textContent = String(current + 1).padStart(2, '0');
   };
-  dots.forEach((d) => d.addEventListener('click', () => go(Number(d.dataset.reviewGo))));
-  $('[data-review-prev]', reviewWrap)?.addEventListener('click', () => go(current - 1));
-  $('[data-review-next]', reviewWrap)?.addEventListener('click', () => go(current + 1));
+  // Auto-slide: jalan saat section terlihat; berhenti sementara saat kursor/fokus di dalam,
+  // tab tidak aktif, atau dialog terbuka. Interaksi manual menunda autoplay beberapa detik.
+  const AUTOPLAY_MS = 6500;
+  const RESUME_MS = 12000;
+  let timer = 0;
+  let resumeTimer = 0;
+  let inView = false;
+  let hovering = false;
+  let manualHold = false;
+  const canPlay = () => !reduceMotion.matches && inView && !hovering && !manualHold && !document.hidden && !$<HTMLDialogElement>('[data-proof-dialog]')?.open;
+  const stop = () => { window.clearInterval(timer); timer = 0; reviewWrap.classList.remove('is-playing'); };
+  const restartBar = () => {
+    // Ulang animasi progress bar setiap pergantian slide
+    reviewWrap.classList.remove('is-playing');
+    void reviewWrap.offsetWidth;
+    reviewWrap.classList.add('is-playing');
+  };
+  const play = () => {
+    stop();
+    if (!canPlay()) return;
+    restartBar();
+    timer = window.setInterval(() => { go(current + 1); restartBar(); }, AUTOPLAY_MS);
+  };
+  const userGo = (i: number) => {
+    go(i);
+    stop();
+    manualHold = true;
+    window.clearTimeout(resumeTimer);
+    resumeTimer = window.setTimeout(() => { manualHold = false; play(); }, RESUME_MS);
+  };
+  reviewWrap.style.setProperty('--autoplay', `${AUTOPLAY_MS}ms`);
+
+  dots.forEach((d) => d.addEventListener('click', () => userGo(Number(d.dataset.reviewGo))));
+  $('[data-review-prev]', reviewWrap)?.addEventListener('click', () => userGo(current - 1));
+  $('[data-review-next]', reviewWrap)?.addEventListener('click', () => userGo(current + 1));
 
   // Geser (swipe) di layar sentuh
   const stage = $('.o1-reviews__slides', reviewWrap);
@@ -219,8 +249,22 @@ if (reviewWrap) {
   stage?.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
   stage?.addEventListener('touchend', (e) => {
     const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 50) go(current + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 50) userGo(current + (dx < 0 ? 1 : -1));
   }, { passive: true });
+
+  reviewWrap.addEventListener('mouseenter', () => { hovering = true; stop(); });
+  reviewWrap.addEventListener('mouseleave', () => { hovering = false; play(); });
+  // Hanya fokus keyboard yang menahan autoplay; fokus sisa klik mouse tidak.
+  reviewWrap.addEventListener('focusin', (e) => {
+    if ((e.target as Element).matches(':focus-visible')) { hovering = true; stop(); }
+  });
+  reviewWrap.addEventListener('focusout', (e) => {
+    if (!reviewWrap.contains(e.relatedTarget as Node | null)) { hovering = false; play(); }
+  });
+  document.addEventListener('visibilitychange', play);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; play(); }, { threshold: 0.35 }).observe(reviewWrap);
+  }
   go(0);
 
   // Dialog tangkapan layar ulasan
@@ -239,7 +283,7 @@ if (reviewWrap) {
   }));
   $('[data-proof-close]')?.addEventListener('click', () => dialog?.close());
   dialog?.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
-  dialog?.addEventListener('close', () => opener?.focus());
+  dialog?.addEventListener('close', () => { opener?.focus(); play(); });
 }
 
 /* ---------- Formulir konsultasi → WhatsApp (dengan pratinjau langsung) ---------- */

@@ -1,0 +1,53 @@
+---
+/*
+ * Layout utama website Hanasari Catering (homepage, daftar & detail artikel).
+ * Design system: src/styles/site.css · interaksi: src/components/site/site.client.ts
+ */
+import '../styles/site.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Gambar untuk og:image. */
+  image?: string;
+  /** Preload foto hero homepage (hanya untuk "/"). */
+  preloadHero?: boolean;
+  ogType?: 'website' | 'article';
+}
+
+const {
+  title,
+  description = 'Hanasari Catering — hidangan Nusantara untuk setiap momen. Harga Merakyat, Rasa Ningrat.',
+  image = '/assets/images/nasi-box-table.webp',
+  preloadHero = false,
+  ogType = 'website'
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+---
+<!doctype html>
+<html lang="id" class="o1-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta name="theme-color" content="#0c2f2e" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preload" href="/assets/site/fonts/montserrat-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/poppins-0.woff2" as="font" type="font/woff2" crossorigin />
+    {preloadHero && <link rel="preload" href="/assets/images/nasi-box-styled.webp" as="image" fetchpriority="high" />}
+    <title>{title}</title>
+    <script is:inline>document.documentElement.classList.add('o1-js');</script>
+  </head>
+  <body class="o1">
+    <slot />
+    <script>
+      import '../components/site/site.client.ts';
+    </script>
+  </body>
+</html>

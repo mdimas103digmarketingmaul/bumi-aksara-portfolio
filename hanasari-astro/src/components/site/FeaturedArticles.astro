@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import ArticleCard from './ArticleCard.astro';
 
 interface ArticleData {
   title: string;
@@ -16,7 +17,6 @@ interface Props {
 }
 
 const { articles } = Astro.props;
-const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 <section id="artikel" class="o1-section o1-articles" aria-labelledby="o1-articles-title">
   <div class="o1-container">
@@ -33,19 +33,7 @@ const fmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', ye
 
     {articles.length > 0 ? (
       <div class="o1-articles__grid">
-        {articles.map((article, i) => (
-          <article class="o1-article" data-reveal style={`--d:${i * 100}ms`}>
-            <a class="o1-article__media" href={`/artikel/${article.slug}/`} tabindex="-1" aria-hidden="true">
-              <img src={article.thumbnail} alt="" width="800" height="1000" loading="lazy" decoding="async" />
-            </a>
-            <div class="o1-article__body">
-              <p class="o1-article__meta"><span>{article.category}</span><time datetime={article.publishDate.toISOString()}>{fmt.format(article.publishDate)}</time></p>
-              <h3><a href={`/artikel/${article.slug}/`}>{article.title}</a></h3>
-              <p class="o1-article__excerpt">{article.excerpt}</p>
-              <span class="o1-article__more" aria-hidden="true">Baca selengkapnya <Icon name="arrow" size={16} /></span>
-            </div>
-          </article>
-        ))}
+        {articles.map((article, i) => <ArticleCard article={article} delay={i * 100} />)}
       </div>
     ) : (
       <p class="o1-articles__empty">Belum ada artikel pilihan untuk ditampilkan.</p>

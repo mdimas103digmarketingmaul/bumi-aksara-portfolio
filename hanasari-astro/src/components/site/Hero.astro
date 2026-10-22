@@ -1,12 +1,11 @@
 ---
 import Icon from './Icon.astro';
+import BatikMegaMendung from './BatikMegaMendung.astro';
 import { asset, img, waLink } from './data';
 ---
 <section id="beranda" class="o1-hero" aria-labelledby="o1-hero-title">
   <div class="o1-hero__bg" aria-hidden="true">
     <svg class="o1-hero__grid" viewBox="0 0 400 400"><defs><pattern id="o1-grid" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><path d="M0 0H40M0 0V40" stroke="currentColor" stroke-width="2.4" fill="none" /></pattern></defs><rect width="400" height="400" fill="url(#o1-grid)" /></svg>
-    <span class="o1-hero__pill o1-hero__pill--1"></span>
-    <span class="o1-hero__pill o1-hero__pill--2"></span>
     <span class="o1-hero__glow"></span>
   </div>
 
@@ -32,6 +31,7 @@ import { asset, img, waLink } from './data';
     </div>
 
     <div class="o1-hero__visual">
+      <BatikMegaMendung class="o1-hero__batik" />
       <div class="o1-hero__arch-outline" aria-hidden="true"></div>
       <figure class="o1-hero__arch">
         <img src={img('nasi-box-styled.webp')} alt="Nasi box Hanasari berisi ayam, sayuran, sambal, dan buah dalam kemasan khas Hanasari" width="778" height="1066" fetchpriority="high" />
