@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="on" data-intensity="normal">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Motion Lab — Interactive Dictionary of Web Motion</title>
+  <meta name="description" content="An interactive dictionary of motion, interaction and visual effects for modern websites: 50 live demos with motion anatomy and reusable prompt recipes." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0a0b0d" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/effects.css" />
+  <link rel="stylesheet" href="css/learn.css" />
+  <script>
+    /* Apply the saved motion setting before first paint to avoid a flash of animation. */
+    (function () {
+      try {
+        var saved = localStorage.getItem('wml:motion');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.documentElement.dataset.motion = saved || (reduce ? 'reduced' : 'on');
+      } catch (e) { /* storage blocked */ }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#directory">Skip to the effect directory</a>
+  <div class="page-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="#top" aria-label="Web Motion Lab — back to top">
+        <svg class="brand__mark" viewBox="0 0 26 26" aria-hidden="true">
+          <circle cx="13" cy="13" r="12" fill="none" stroke="rgba(236,235,230,.22)" />
+          <g class="orbit" style="transform-origin:13px 13px"><circle cx="13" cy="1" r="2.4" fill="#e9b872" /></g>
+          <circle cx="13" cy="13" r="4.5" fill="#ecebe6" />
+        </svg>
+        <span class="brand__name">Web Motion Lab</span>
+        <span class="brand__sub">interactive dictionary · v1</span>
+      </a>
+
+      <button class="btn btn--small controls-toggle" type="button" aria-expanded="false" aria-controls="lab-controls">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 4h12M2 12h12" /><circle cx="6" cy="4" r="1.8" fill="var(--bg)" /><circle cx="10" cy="12" r="1.8" fill="var(--bg)" /></svg>
+        Lab controls
+      </button>
+
+      <div class="controls" id="lab-controls" role="group" aria-label="Lab controls">
+        <div class="control">
+          <span class="control__label" id="motion-label">Motion</span>
+          <div class="seg" role="group" aria-labelledby="motion-label" data-setting="motion">
+            <button type="button" data-value="on" aria-pressed="true">On</button>
+            <button type="button" data-value="reduced" aria-pressed="false">Reduced</button>
+          </div>
+        </div>
+        <div class="control">
+          <span class="control__label" id="intensity-label">Intensity</span>
+          <div class="seg" role="group" aria-labelledby="intensity-label" data-setting="intensity">
+            <button type="button" data-value="subtle" aria-pressed="false">Subtle</button>
+            <button type="button" data-value="normal" aria-pressed="true">Normal</button>
+            <button type="button" data-value="strong" aria-pressed="false">Strong</button>
+          </div>
+        </div>
+        <button class="btn btn--small" type="button" id="replay-visible">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2.5v3h-3" /></svg>
+          Replay visible
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <p class="eyebrow">Personal learning laboratory</p>
+        <h1 class="hero__title" id="hero-title"><span class="hero__split">Web Motion</span> <em class="hero__split">Lab</em></h1>
+        <p class="hero__lead">Interactive dictionary of motion, interaction, and visual effects for modern websites.</p>
+        <p class="hero__body">Every effect here is a working demo, broken down the same way: what <strong>triggers</strong> it, which <strong>target</strong> moves, what <strong>transforms</strong>, and the <strong>character</strong> of the motion. Learn the vocabulary, then copy the prompt recipe when you want an AI tool to build it for you.</p>
+        <div class="hero__stats">
+          <div><strong>50</strong>live demos</div>
+          <div><strong>9</strong>categories</div>
+          <div><strong>6</strong>trigger types</div>
+          <div><strong>0</strong>JS libraries</div>
+        </div>
+      </div>
+
+      <div class="anatomy-map" id="anatomy-map">
+        <div class="anatomy-map__head">
+          <div>
+            <h2>Motion anatomy: four questions describe any effect</h2>
+            <p>Pick an example. Each node answers one question about it.</p>
+          </div>
+          <div class="seg" role="group" aria-label="Anatomy example" data-anatomy-tabs>
+            <button type="button" data-example="magnetic" aria-pressed="true">Magnetic button</button>
+            <button type="button" data-example="reveal" aria-pressed="false">Scroll reveal</button>
+            <button type="button" data-example="scramble" aria-pressed="false">Text scramble</button>
+          </div>
+        </div>
+        <div class="anatomy-map__flow">
+          <div class="node node--trigger">
+            <span class="node__num">01 → </span>
+            <span class="node__label">Trigger</span>
+            <span class="node__question">What starts the motion?</span>
+            <span class="node__value" data-node="trigger"></span>
+          </div>
+          <div class="node node--target">
+            <span class="node__num">02 → </span>
+            <span class="node__label">Target</span>
+            <span class="node__question">What actually moves?</span>
+            <span class="node__value" data-node="target"></span>
+          </div>
+          <div class="node node--transform">
+            <span class="node__num">03 → </span>
+            <span class="node__label">Transformation</span>
+            <span class="node__question">Which property changes?</span>
+            <span class="node__value" data-node="transform"></span>
+          </div>
+          <div class="node node--character">
+            <span class="node__num">04</span>
+            <span class="node__label">Motion Character</span>
+            <span class="node__question">How does it feel over time?</span>
+            <span class="node__value" data-node="character"></span>
+          </div>
+        </div>
+        <div class="anatomy-map__specimen">
+          <div class="specimen__stage stage-plain" id="specimen-stage">
+            <div class="specimen" data-specimen="magnetic"><button class="specimen-btn" type="button">Hover near me</button></div>
+            <div class="specimen" data-specimen="reveal" hidden>
+              <div class="specimen-reveal"><span></span><span></span><span></span></div>
+              <button class="btn btn--small specimen-replay" type="button">Replay entrance</button>
+            </div>
+            <div class="specimen" data-specimen="scramble" hidden><button class="specimen-scramble" type="button">DECODE ME</button></div>
+          </div>
+          <div class="specimen__panel">
+            <p><strong>Read it as one sentence.</strong> When you describe motion this way, designers, developers and AI tools all build the same thing.</p>
+            <p class="specimen__sentence" data-node="sentence" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout" id="directory">
+      <aside class="sidebar" aria-label="Effect directory">
+        <div class="sidebar__inner">
+          <div class="sidebar__bar">
+            <button class="btn btn--small sidebar__toggle" type="button" aria-expanded="false" aria-controls="sidebar-filters">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5" /><path d="m10.5 10.5 3 3" /></svg>
+              Filter
+            </button>
+            <nav class="nav" aria-label="Categories">
+              <div class="nav__group">
+                <p class="nav__title">Effects</p>
+                <a class="nav__link" href="#cursor"><span class="nav__num">01</span>Cursor &amp; Pointer<span class="nav__count" data-count="cursor"></span></a>
+                <a class="nav__link" href="#hover"><span class="nav__num">02</span>Hover Interactions<span class="nav__count" data-count="hover"></span></a>
+                <a class="nav__link" href="#scroll"><span class="nav__num">03</span>Scroll Motion<span class="nav__count" data-count="scroll"></span></a>
+                <a class="nav__link" href="#typography"><span class="nav__num">04</span>Typography Motion<span class="nav__count" data-count="typography"></span></a>
+                <a class="nav__link" href="#media"><span class="nav__num">05</span>Image &amp; Media<span class="nav__count" data-count="media"></span></a>
+                <a class="nav__link" href="#ambient"><span class="nav__num">06</span>Ambient Motion<span class="nav__count" data-count="ambient"></span></a>
+                <a class="nav__link" href="#micro"><span class="nav__num">07</span>Microinteractions<span class="nav__count" data-count="micro"></span></a>
+                <a class="nav__link" href="#perspective"><span class="nav__num">08</span>3D &amp; Perspective<span class="nav__count" data-count="perspective"></span></a>
+                <a class="nav__link" href="#advanced"><span class="nav__num">09</span>Advanced / Experimental<span class="nav__count" data-count="advanced"></span></a>
+              </div>
+              <div class="nav__group">
+                <p class="nav__title">Learn</p>
+                <a class="nav__link" href="#vocabulary"><span class="nav__num">A</span>Motion Vocabulary</a>
+                <a class="nav__link" href="#describe"><span class="nav__num">B</span>How to Describe Motion</a>
+                <a class="nav__link" href="#intensity"><span class="nav__num">C</span>Motion Intensity</a>
+                <a class="nav__link" href="#signature"><span class="nav__num">D</span>Signature Motion</a>
+              </div>
+            </nav>
+          </div>
+
+          <div class="sidebar__filters" id="sidebar-filters">
+            <label class="search">
+              <span class="visually-hidden">Search effects</span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5" /><path d="m10.5 10.5 3 3" /></svg>
+              <input type="search" id="effect-search" placeholder="Search 50 effects…" autocomplete="off" />
+            </label>
+            <div>
+              <span class="filter-label" id="trigger-filter-label">Filter by trigger</span>
+              <div class="chips" role="group" aria-labelledby="trigger-filter-label" id="trigger-filter">
+                <button class="chip" type="button" data-trigger="mouse" aria-pressed="false">Mouse</button>
+                <button class="chip" type="button" data-trigger="hover" aria-pressed="false">Hover</button>
+                <button class="chip" type="button" data-trigger="scroll" aria-pressed="false">Scroll</button>
+                <button class="chip" type="button" data-trigger="click" aria-pressed="false">Click</button>
+                <button class="chip" type="button" data-trigger="load" aria-pressed="false">Load</button>
+                <button class="chip" type="button" data-trigger="time" aria-pressed="false">Time</button>
+              </div>
+            </div>
+            <p class="filter-status" id="filter-status" aria-live="polite"></p>
+          </div>
+        </div>
+      </aside>
+
+      <div class="content">
+        <p class="empty-state" id="empty-state" hidden>No effects match that search. Try a trigger like “scroll” or a word like “spring”.</p>
+
+        <!-- ============================== 01 CURSOR & POINTER ============================== -->
+        <section class="category" id="cursor" data-category="cursor" aria-labelledby="cat-cursor">
+          <header class="category__head">
+            <span class="category__num" aria-hidden="true">01</span>
+            <h2 class="category__title" id="cat-cursor">Cursor &amp; Pointer</h2>
+            <p class="category__intro">Motion driven by <em>where</em> the pointer is, not only what it touches. Good implementations listen inside a scoped area, smooth the raw coordinates, and never take the real cursor away from the rest of the page.</p>
+          </header>
+
+          <article class="effect" id="cursor-spotlight" data-effect="cursor-spotlight">
+            <div class="stage spotlight">
+              <div class="spotlight__content" aria-hidden="true">
+                <p class="spotlight__kicker mono">// hidden in the dark</p>
+                <p class="spotlight__headline">Light reveals<br />what <em>matters.</em></p>
+                <ul class="spotlight__labels">
+                  <li>radial-gradient()</li><li>--x: pointer</li><li>--y: pointer</li><li>mask</li><li>1:1 tracking</li><li>no rAF needed</li>
+                </ul>
+              </div>
+              <div class="spotlight__shade" aria-hidden="true"></div>
+            </div>
+          </article>
+
+          <article class="effect" id="cursor-glow" data-effect="cursor-glow">
+            <div class="stage glow">
+              <div class="glow__blob" aria-hidden="true"></div>
+              <div class="glow__cards">
+                <div class="glow-card"><span class="mono">01 / Analytics</span><strong>Realtime</strong><p>Border light follows the pointer per card.</p></div>
+                <div class="glow-card"><span class="mono">02 / Deploy</span><strong>Edge-ready</strong><p>The soft glow trails behind the cursor.</p></div>
+                <div class="glow-card"><span class="mono">03 / Security</span><strong>Encrypted</strong><p>Light, not movement, carries the motion.</p></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect" id="cursor-follower" data-effect="cursor-follower">
+            <div class="stage follower">
+              <div class="follower__ring" aria-hidden="true"><span class="follower__label"></span></div>
+              <div class="follower__dot" aria-hidden="true"></div>
+              <p class="stage-caption">Custom cursor only exists inside this frame</p>
+              <div class="follower__tiles">
+                <button type="button" class="follower__tile" data-cursor="View"><span class="mono">Project</span>Aurora Studio</button>
+                <button type="button" class="follower__tile" data-cursor="Play"><span class="mono">Reel</span>Showreel 2026</button>
+                <button type="button" class="follower__tile" data-cursor="Drag"><span class="mono">Gallery</span>Archive</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect" id="cursor-trail" data-effect="cursor-trail">
+            <div class="stage trail">
+              <canvas class="trail__canvas" aria-hidden="true"></canvas>
+              <p class="trail__hint" aria-hidden="true">Draw with your pointer</p>
+            </div>
+          </article>
+
+          <article class="effect" id="mouse-parallax" data-effect="mouse-parallax">
+            <div class="stage parallax">
+              <div class="px-layer" data-depth="0.06"><div class="px-sky"></div></div>
+              <div class="px-layer" data-depth="0.18"><div class="px-sun"></div><span class="px-tag" style="left:62%;top:16%">depth 0.18</span></div>
+              <div class="px-layer" data-depth="0.38">
+                <svg class="px-hills" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0 210 C120 120 210 160 300 130 S470 60 560 120 700 150 800 110 V300 H0Z" fill="#2a2f3a" /></svg>
+                <span class="px-tag" style="left:18%;top:46%">depth 0.38</span>
+              </div>
+              <div class="px-layer" data-depth="0.7">
+                <svg class="px-hills px-hills--near" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0 250 C140 190 240 230 360 200 S560 150 660 205 760 220 800 200 V300 H0Z" fill="#1c2027" /></svg>
+                <span class="px-tag" style="left:70%;top:66%">depth 0.70</span>
+              </div>
+              <div class="px-layer" data-depth="1.15">
+                <div class="px-fg">
+                  <span class="px-orb px-orb--a"></span><span class="px-orb px-orb--b"></span><span class="px-orb px-orb--c"></span>
+                  <span class="px-tag" style="left:10%;top:16%">depth 1.15 · foreground</span>
+                </div>
+              </div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect" id="tilt-3d" data-effect="tilt-3d">
+            <div class="stage stage--center tilt">
+              <div class="tilt__card">
+                <div class="tilt__glare" aria-hidden="true"></div>
+                <div class="tilt__row"><span class="tilt__chip" aria-hidden="true"></span><span class="mono">MOTION / PASS</span></div>
+                <p class="tilt__title">Member 0042</p>
+                <div class="tilt__row tilt__row--bottom"><span class="mono">perspective: 900px</span><span class="mono">∞</span></div>
+              </div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect" id="magnetic-button" data-effect="magnetic-button">
+            <div class="stage stage--center magnetic">
+              <div class="magnetic__row">
+                <div class="magnetic__item">
+                  <span class="magnetic__field" aria-hidden="true"></span>
+                  <button class="magnetic__btn" type="button"><span>Start a project</span></button>
+                </div>
+                <div class="magnetic__item">
+                  <span class="magnetic__field magnetic__field--round" aria-hidden="true"></span>
+                  <button class="magnetic__btn magnetic__btn--round" type="button" aria-label="Next"><span>→</span></button>
+                </div>
+              </div>
+              <label class="magnetic__toggle"><input type="checkbox" checked /> Show magnetic field</label>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect" id="pointer-repulsion" data-effect="pointer-repulsion">
+            <div class="stage repulsion">
+              <div class="repulsion__grid" aria-hidden="true"></div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ============================== 02 HOVER INTERACTIONS ============================== -->
+        <section class="category" id="hover" data-category="hover" aria-labelledby="cat-hover">
+          <header class="category__head">
+            <span class="category__num" aria-hidden="true">02</span>
+            <h2 class="category__title" id="cat-hover">Hover Interactions</h2>
+            <p class="category__intro">State changes when the pointer rests on an element. Hover motion should confirm “this is interactive” in under 300ms. Every hover here also responds to keyboard focus, because hover alone never reaches keyboard or touch users.</p>
+          </header>
+
+          <article class="effect" id="hover-lift" data-effect="hover-lift">
+            <div class="stage lift">
+              <div class="lift__grid">
+                <button type="button" class="lift-card"><span class="lift-card__img" style="background-image:url(assets/dunes.svg)"></span><span class="lift-card__body"><span class="mono">Case study</span><strong>Desert Light</strong></span></button>
+                <button type="button" class="lift-card"><span class="lift-card__img" style="background-image:url(assets/city.svg)"></span><span class="lift-card__body"><span class="mono">Architecture</span><strong>Concrete Rhythm</strong></span></button>
+                <button type="button" class="lift-card"><span class="lift-card__img" style="background-image:url(assets/ocean.svg)"></span><span class="lift-card__body"><span class="mono">Editorial</span><strong>Night Tide</strong></span></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect" id="sheen" data-effect="sheen">
+            <div class="stage stage--center sheen">
+              <div class="sheen__wrap">
+                <div class="sheen-card" tabindex="0">
+                  <span class="mono">Membership</span>
+                  <strong>Studio Pro</strong>
+                  <span class="sheen-card__price">$24<small>/mo</small></span>
+                </div>
+                <button type="button" class="sheen-btn">Upgrade now</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect" id="image-zoom-pan" data-effect="image-zoom-pan">
+            <div class="stage zoompan">
+              <figure class="zoompan__frame zoompan__frame--zoom" tabindex="0">
+                <img src="assets/city.svg" alt="Illustrated modern buildings at dusk" width="1200" height="800" />
+                <figcaption class="mono">zoom only (CSS)</figcaption>
+              </figure>
+              <figure class="zoompan__frame zoompan__frame--pan" tabindex="0">
+                <img src="assets/city.svg" alt="" width="1200" height="800" />
+                <figcaption class="mono">zoom + pan (pointer)</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="effect" id="mask-reveal" data-effect="mask-reveal">
+            <div class="stage maskreveal">
+              <figure class="mask-frame mask-frame--circle" tabindex="0">
+                <img class="mask-frame__base" src="assets/dunes.svg" alt="Illustrated desert dunes at sunset" width="1200" height="800" />
+                <div class="mask-frame__reveal"><img src="assets/dunes.svg" alt="" width="1200" height="800" /></div>
+                <figcaption class="mono">clip-path: circle() from entry point</figcaption>
+              </figure>
+              <figure class="mask-frame mask-frame--inset" tabindex="0">
+                <img class="mask-frame__base" src="assets/botanic.svg" alt="Illustrated leaves and a flower" width="1200" height="800" />
+                <div class="mask-frame__reveal mask-frame__reveal--color"><span>Explore the collection →</span></div>
+                <figcaption class="mono">clip-path: inset() wipe</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="effect" id="rolling-text" data-effect="rolling-text">
+            <div class="stage stage--center roll">
+              <nav class="roll__nav" aria-label="Rolling text demo">
+                <a class="roll__link" href="#rolling-text">Work</a>
+                <a class="roll__link" href="#rolling-text">Studio</a>
+                <a class="roll__link" href="#rolling-text">Journal</a>
+                <a class="roll__link" href="#rolling-text">Contact</a>
+              </nav>
+              <a class="roll__cta" href="#rolling-text"><span class="roll__cta-text">Start a project</span><span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+
+          <article class="effect" id="animated-border" data-effect="animated-border">
+            <div class="stage border-demo">
+              <div class="border-demo__grid">
+                <div class="draw-card" tabindex="0">
+                  <span class="draw-card__line draw-card__line--t"></span><span class="draw-card__line draw-card__line--r"></span><span class="draw-card__line draw-card__line--b"></span><span class="draw-card__line draw-card__line--l"></span>
+                  <span class="mono">Variant A</span><strong>Draw</strong><p>Four edges scale in sequence, like a pen tracing the box.</p>
+                </div>
+                <div class="flow-card" tabindex="0">
+                  <span class="mono">Variant B</span><strong>Flow</strong><p>A conic-gradient highlight travels around the border.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ============================== 03 SCROLL MOTION ============================== -->
+        <section class="category" id="scroll" data-category="scroll" aria-labelledby="cat-scroll">
+          <header class="category__head">
+            <span class="category__num" aria-hidden="true">03</span>
+            <h2 class="category__title" id="cat-scroll">Scroll Motion</h2>
+            <p class="category__intro">Two families: <strong>triggered</strong> motion plays once a threshold is crossed, while <strong>scrubbed</strong> motion is glued to scroll position and reverses when you scroll back. These demos use the real page scroll, so scroll slowly and watch the readouts.</p>
+            <p class="category__meta"><span>Triggered → 15</span><span>Scrubbed → 16, 17, 22, 23</span><span>Pinned → 18, 19</span><span>Velocity → 20, 21</span></p>
+          </header>
+
+          <article class="effect effect--wide" id="scroll-reveal" data-effect="scroll-reveal">
+            <div class="stage stage--auto sreveal">
+              <div class="sreveal__controls">
+                <div class="seg" role="group" aria-label="Reveal mode">
+                  <button type="button" data-mode="once" aria-pressed="true">Once</button>
+                  <button type="button" data-mode="always" aria-pressed="false">Every time</button>
+                </div>
+              </div>
+              <div class="sreveal__grid">
+                <div class="sreveal__item"><span class="mono">01</span><strong>Threshold</strong><p>Nothing happens until the item’s top crosses the trigger line.</p></div>
+                <div class="sreveal__item"><span class="mono">02</span><strong>One-shot</strong><p>Then it plays a normal time-based transition.</p></div>
+                <div class="sreveal__item"><span class="mono">03</span><strong>Not scrubbed</strong><p>Scrolling faster doesn’t make it faster.</p></div>
+                <div class="sreveal__item"><span class="mono">04</span><strong>Opacity</strong><p>0 → 1 so the content fades in.</p></div>
+                <div class="sreveal__item"><span class="mono">05</span><strong>translateY</strong><p>40px → 0 so it rises into place.</p></div>
+                <div class="sreveal__item"><span class="mono">06</span><strong>Stagger</strong><p>Items in the same row start 80ms apart.</p></div>
+              </div>
+              <div class="sreveal__line" aria-hidden="true"><span>trigger line · 80% of viewport height</span></div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="layered-parallax" data-effect="layered-parallax">
+            <div class="stage lparallax">
+              <div class="lp-layer lp-layer--sky" data-speed="0.15"></div>
+              <div class="lp-layer lp-layer--moon" data-speed="0.25"><span></span></div>
+              <div class="lp-layer lp-layer--far" data-speed="0.4">
+                <svg viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true"><path d="M0 260 L120 170 L230 230 L360 120 L480 220 L600 140 L740 240 L860 150 L1000 230 L1100 170 L1200 220 V400 H0Z" fill="#2d3445" /></svg>
+              </div>
+              <div class="lp-layer lp-layer--title" data-speed="0.6"><p>Depth through <em>speed.</em></p></div>
+              <div class="lp-layer lp-layer--mid" data-speed="0.8">
+                <svg viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true"><path d="M0 300 C160 220 300 280 460 240 S760 200 900 260 1100 250 1200 230 V400 H0Z" fill="#1e2330" /></svg>
+              </div>
+              <div class="lp-layer lp-layer--near" data-speed="1.15">
+                <svg viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true"><path d="M0 340 C200 300 380 350 600 320 S1000 300 1200 330 V400 H0Z" fill="#12151c" /><g fill="#12151c"><path d="M140 330 l18 -70 l18 70z" /><path d="M170 335 l14 -50 l14 50z" /><path d="M980 322 l20 -80 l20 80z" /><path d="M1012 326 l14 -52 l14 52z" /></g></svg>
+              </div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="scroll-scrub" data-effect="scroll-scrub">
+            <div class="stage scrub">
+              <div class="scrub__track">
+                <div class="scrub__object"><span>→</span></div>
+              </div>
+              <div class="scrub__timeline" aria-hidden="true">
+                <div class="scrub__bar"><span class="scrub__fill"></span><span class="scrub__head"></span></div>
+                <div class="scrub__keys"><span style="left:0%">0% · x 0 · scale 0.8 · 0°</span><span style="left:50%">50% · scale 1.15</span><span style="left:100%">100% · x end · 360°</span></div>
+              </div>
+              <div class="readout readout--top" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="pinned-story" data-effect="pinned-story">
+            <div class="stage stage--auto pin">
+              <div class="pin__sticky">
+                <ol class="pin__steps">
+                  <li class="pin__step is-current"><span class="mono">Step 01</span><strong>Capture</strong><p>The section pins. Scroll now drives the story instead of moving the page.</p></li>
+                  <li class="pin__step"><span class="mono">Step 02</span><strong>Transform</strong><p>The product scales and rotates in direct proportion to scroll progress.</p></li>
+                  <li class="pin__step"><span class="mono">Step 03</span><strong>Release</strong><p>At 100% the pin releases and normal scrolling continues.</p></li>
+                </ol>
+                <div class="pin__visual" aria-hidden="true">
+                  <div class="pin__product"><span class="pin__product-label">01</span></div>
+                  <div class="pin__progress"><span></span></div>
+                </div>
+                <div class="readout" data-readout></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="horizontal-gallery" data-effect="horizontal-gallery">
+            <div class="stage stage--auto hgallery">
+              <div class="hgallery__sticky">
+                <div class="hgallery__head"><p class="mono">Selected work</p><p class="hgallery__count mono"><b>01</b> / 06</p></div>
+                <div class="hgallery__viewport">
+                  <ul class="hgallery__track">
+                    <li class="hg-panel"><img src="assets/dunes.svg" alt="" width="1200" height="800" loading="lazy" /><div><span class="mono">01 — Brand film</span><strong>Desert Light</strong></div></li>
+                    <li class="hg-panel"><img src="assets/city.svg" alt="" width="1200" height="800" loading="lazy" /><div><span class="mono">02 — Architecture</span><strong>Concrete Rhythm</strong></div></li>
+                    <li class="hg-panel"><img src="assets/ocean.svg" alt="" width="1200" height="800" loading="lazy" /><div><span class="mono">03 — Editorial</span><strong>Night Tide</strong></div></li>
+                    <li class="hg-panel"><img src="assets/botanic.svg" alt="" width="1200" height="800" loading="lazy" /><div><span class="mono">04 — Packaging</span><strong>Greenhouse</strong></div></li>
+                    <li class="hg-panel"><img src="assets/studio.svg" alt="" width="1200" height="800" loading="lazy" /><div><span class="mono">05 — Product</span><strong>Object No. 5</strong></div></li>
+                    <li class="hg-panel hg-panel--end"><div><span class="mono">06 — Next</span><strong>Keep scrolling ↓</strong><p>The pin releases and vertical scrolling resumes.</p></div></li>
+                  </ul>
+                </div>
+                <div class="readout" data-readout></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="scroll-marquee" data-effect="scroll-marquee">
+            <div class="stage marquee">
+              <div class="marquee__row"><div class="marquee__inner">Motion <i>✦</i> Interaction <i>✦</i> Rhythm <i>✦</i> Velocity <i>✦</i></div></div>
+              <div class="marquee__row marquee__row--alt"><div class="marquee__inner">Scroll down → forward <i>·</i> Scroll up → reverse <i>·</i> Faster → faster <i>·</i></div></div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="scroll-velocity" data-effect="scroll-velocity">
+            <div class="stage velocity">
+              <div class="velocity__grid">
+                <div class="velocity__card" style="background-image:url(assets/ocean.svg)"></div>
+                <div class="velocity__card" style="background-image:url(assets/studio.svg)"></div>
+                <div class="velocity__card" style="background-image:url(assets/botanic.svg)"></div>
+              </div>
+              <div class="readout readout--top" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="scroll-zoom" data-effect="scroll-zoom">
+            <div class="stage szoom">
+              <div class="szoom__frame"><img src="assets/studio.svg" alt="Illustrated golden sphere on a plinth" width="1200" height="800" loading="lazy" /></div>
+              <div class="readout readout--top" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="scroll-rotation" data-effect="scroll-rotation">
+            <div class="stage stage--center srotate">
+              <div class="srotate__badge" aria-hidden="true">
+                <svg viewBox="0 0 200 200">
+                  <defs><path id="badge-circle" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0" /></defs>
+                  <text><textPath href="#badge-circle">SCROLL TO ROTATE • SCROLL TO ROTATE • </textPath></text>
+                </svg>
+                <span class="srotate__core">↓</span>
+              </div>
+              <div class="srotate__gear" aria-hidden="true"></div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="scroll-progress" data-effect="scroll-progress">
+            <div class="stage sprogress">
+              <div class="sprogress__item">
+                <p class="mono">Whole page</p>
+                <div class="sprogress__bar"><span></span></div>
+                <p class="sprogress__value" data-page>0%</p>
+                <p class="sprogress__note">Same value as the 2px bar fixed to the top of this page.</p>
+              </div>
+              <div class="sprogress__item">
+                <p class="mono">This section: Scroll Motion</p>
+                <svg class="sprogress__ring" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" /><circle class="sprogress__arc" cx="60" cy="60" r="52" pathLength="1" /></svg>
+                <p class="sprogress__value" data-section>0%</p>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ============================== 04 TYPOGRAPHY MOTION ============================== -->
+        <section class="category" id="typography" data-category="typography" aria-labelledby="cat-typography">
+          <header class="category__head">
+            <span class="category__num" aria-hidden="true">04</span>
+            <h2 class="category__title" id="cat-typography">Typography Motion</h2>
+            <p class="category__intro">Text as a moving element. The technique behind most of these is <em>splitting</em>: wrapping characters, words or lines in their own elements so each can be animated with a delay. Always keep one accessible copy of the real text for screen readers.</p>
+          </header>
+
+          <article class="effect" id="split-text" data-effect="split-text">
+            <div class="stage split-demo">
+              <div class="split-demo__controls">
+                <div class="seg" role="group" aria-label="Split by">
+                  <button type="button" data-by="chars" aria-pressed="true">Characters</button>
+                  <button type="button" data-by="words" aria-pressed="false">Words</button>
+                </div>
+              </div>
+              <p class="split-demo__title" data-by="chars">Motion is a language, not decoration.</p>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect" id="masked-lines" data-effect="masked-lines">
+            <div class="stage masklines">
+              <label class="masklines__toggle"><input type="checkbox" /> Show masks</label>
+              <p class="masklines__text">
+                <span class="mline"><span class="mline__inner">Every line rises</span></span>
+                <span class="mline"><span class="mline__inner">from behind its own</span></span>
+                <span class="mline"><span class="mline__inner"><em>invisible edge.</em></span></span>
+              </p>
+            </div>
+          </article>
+
+          <article class="effect" id="typewriter" data-effect="typewriter">
+            <div class="stage stage--center typewriter">
+              <p class="typewriter__line">
+                <span class="mono typewriter__prompt" aria-hidden="true">&gt;</span>
+                <span class="typewriter__text" aria-hidden="true"></span><span class="typewriter__caret" aria-hidden="true"></span>
+                <span class="visually-hidden">Design with intent. Animate with purpose. Describe it precisely.</span>
+              </p>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect" id="text-scramble" data-effect="text-scramble">
+            <div class="stage stage--center scramble">
+              <div class="scramble__wrap">
+                <p class="scramble__headline mono" data-final="DECRYPTING MOTION SIGNAL">DECRYPTING MOTION SIGNAL</p>
+                <ul class="scramble__list">
+                  <li><button type="button" class="scramble__item" data-final="Prototype">Prototype</button></li>
+                  <li><button type="button" class="scramble__item" data-final="Interface">Interface</button></li>
+                  <li><button type="button" class="scramble__item" data-final="Algorithm">Algorithm</button></li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect" id="gradient-text" data-effect="gradient-text">
+            <div class="stage stage--center gradtext">
+              <div class="gradtext__wrap">
+                <p class="gradtext__big">Colour in motion</p>
+                <p class="gradtext__small">The gradient moves; the letters stay perfectly still.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="kinetic-type" data-effect="kinetic-type">
+            <div class="stage kinetic">
+              <div class="kt__band" aria-hidden="true"><span>TYPE IN MOTION · TYPE IN MOTION · TYPE IN MOTION · TYPE IN MOTION · </span><span>TYPE IN MOTION · TYPE IN MOTION · TYPE IN MOTION · TYPE IN MOTION · </span></div>
+              <div class="kt__main">
+                <p class="kt__stretch">MOVE</p>
+                <p class="kt__slotline">with <span class="kt__slot" aria-hidden="true"><span>rhythm</span><span>intent</span><span>tension</span><span>rhythm</span></span><span class="visually-hidden">rhythm, intent and tension</span></p>
+                <p class="kt__weight">weight · width · <span>breath</span></p>
+              </div>
+              <div class="kt__ring" aria-hidden="true">
+                <svg viewBox="0 0 120 120"><defs><path id="kt-circle" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0" /></defs><text><textPath href="#kt-circle">KINETIC · TYPE · KINETIC · TYPE · </textPath></text></svg>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ============================== 05 IMAGE & MEDIA ============================== -->
+        <section class="category" id="media" data-category="media" aria-labelledby="cat-media">
+          <header class="category__head">
+            <span class="category__num" aria-hidden="true">05</span>
+            <h2 class="category__title" id="cat-media">Image &amp; Media</h2>
+            <p class="category__intro">Images rarely move on their own. Motion here comes from <em>framing</em>: zooming within a crop, revealing through a mask, or bringing focus. Keep the frame fixed and move what’s inside it, and the layout never jumps.</p>
+          </header>
+
+          <article class="effect" id="ken-burns" data-effect="ken-burns">
+            <div class="stage kenburns">
+              <div class="kb-slide" style="--tx:-4%;--ty:-2%"><img src="assets/dunes.svg" alt="" width="1200" height="800" loading="lazy" /></div>
+              <div class="kb-slide" style="--tx:3%;--ty:-3%"><img src="assets/ocean.svg" alt="" width="1200" height="800" loading="lazy" /></div>
+              <div class="kb-slide" style="--tx:-2%;--ty:3%"><img src="assets/city.svg" alt="" width="1200" height="800" loading="lazy" /></div>
+              <p class="kenburns__caption mono" aria-hidden="true">scale 1 → 1.18 · pan · crossfade</p>
+            </div>
+          </article>
+
+          <article class="effect" id="curtain-reveal" data-effect="curtain-reveal">
+            <div class="stage curtain">
+              <figure class="curtain__frame curtain__frame--split">
+                <img src="assets/botanic.svg" alt="Illustrated leaves and a flower" width="1200" height="800" loading="lazy" />
+                <span class="curtain__panel curtain__panel--l" aria-hidden="true"></span><span class="curtain__panel curtain__panel--r" aria-hidden="true"></span>
+                <figcaption class="mono">Curtain · split panels</figcaption>
+              </figure>
+              <figure class="curtain__frame curtain__frame--wipe">
+                <img src="assets/studio.svg" alt="Illustrated golden sphere on a plinth" width="1200" height="800" loading="lazy" />
+                <span class="curtain__block" aria-hidden="true"></span>
+                <figcaption class="mono">Wipe · colour block</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="effect" id="image-hover-reveal" data-effect="image-hover-reveal">
+            <div class="stage hreveal">
+              <ul class="hreveal__list">
+                <li><button type="button" class="hreveal__row" data-img="assets/dunes.svg"><span class="hreveal__name">Desert Light</span><span class="mono">Brand film</span><span class="mono">2026</span></button></li>
+                <li><button type="button" class="hreveal__row" data-img="assets/city.svg"><span class="hreveal__name">Concrete Rhythm</span><span class="mono">Architecture</span><span class="mono">2025</span></button></li>
+                <li><button type="button" class="hreveal__row" data-img="assets/ocean.svg"><span class="hreveal__name">Night Tide</span><span class="mono">Editorial</span><span class="mono">2025</span></button></li>
+                <li><button type="button" class="hreveal__row" data-img="assets/botanic.svg"><span class="hreveal__name">Greenhouse</span><span class="mono">Packaging</span><span class="mono">2024</span></button></li>
+              </ul>
+              <div class="hreveal__preview" aria-hidden="true"><img src="assets/dunes.svg" alt="" width="1200" height="800" /></div>
+            </div>
+          </article>
+
+          <article class="effect" id="blur-focus" data-effect="blur-focus">
+            <div class="stage blurfocus">
+              <div class="blurfocus__frame"><img src="assets/ocean.svg" alt="Illustrated moonlit sea with a sailboat" width="1200" height="800" loading="lazy" /></div>
+              <div class="readout" data-readout>filter: blur(18px) → blur(0) · scale 1.12 → 1 · opacity 0.4 → 1</div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ============================== 06 AMBIENT MOTION ============================== -->
+        <section class="category" id="ambient" data-category="ambient" aria-labelledby="cat-ambient">
+          <header class="category__head">
+            <span class="category__num" aria-hidden="true">06</span>
+            <h2 class="category__title" id="cat-ambient">Ambient Motion</h2>
+            <p class="category__intro">Motion that runs on its own, driven by time rather than the user. It should be slow, low-contrast and easy to ignore: atmosphere, not a call to action. Every loop here pauses when off-screen and freezes under reduced motion.</p>
+          </header>
+
+          <article class="effect" id="floating" data-effect="floating">
+            <div class="stage floating">
+              <span class="float-obj float-obj--a" style="--dur:5.2s;--delay:0s"><i>5.2s</i></span>
+              <span class="float-obj float-obj--b" style="--dur:6.8s;--delay:-2.1s"><i>6.8s</i></span>
+              <span class="float-obj float-obj--c" style="--dur:4.4s;--delay:-1.3s"><i>4.4s</i></span>
+              <span class="float-obj float-obj--d" style="--dur:7.6s;--delay:-3.7s"><i>7.6s</i></span>
+              <span class="float-obj float-obj--e" style="--dur:5.9s;--delay:-0.6s"><i>5.9s</i></span>
+              <p class="stage-caption">Different durations + negative delays = never in sync</p>
+            </div>
+          </article>
+
+          <article class="effect" id="orbit" data-effect="orbit">
+            <div class="stage stage--center orbit">
+              <div class="orbit__system" aria-hidden="true">
+                <div class="orbit__ring orbit__ring--1"><span class="orbit__body"></span></div>
+                <div class="orbit__ring orbit__ring--2"><span class="orbit__body orbit__body--b"></span></div>
+                <div class="orbit__ring orbit__ring--3"><span class="orbit__body orbit__body--c"><b>AI</b></span></div>
+                <div class="orbit__core"></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect" id="aurora" data-effect="aurora">
+            <div class="stage aurora">
+              <div class="aurora__blob aurora__blob--1"></div>
+              <div class="aurora__blob aurora__blob--2"></div>
+              <div class="aurora__blob aurora__blob--3"></div>
+              <div class="aurora__blob aurora__blob--4"></div>
+              <div class="aurora__content">
+                <p class="mono">Ambient background</p>
+                <p class="aurora__title">Calm, slow,<br /><em>always moving.</em></p>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect" id="morph-blob" data-effect="morph-blob">
+            <div class="stage stage--center blob">
+              <label class="blob__toggle"><input type="checkbox" /> Show control points</label>
+              <svg class="blob__svg" viewBox="0 0 400 400" aria-hidden="true">
+                <defs><linearGradient id="blob-fill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9b872" /><stop offset="0.55" stop-color="#f0a6b8" /><stop offset="1" stop-color="#92b2ff" /></linearGradient></defs>
+                <path class="blob__path" fill="url(#blob-fill)" />
+                <g class="blob__points"></g>
+              </svg>
+            </div>
+          </article>
+
+          <article class="effect" id="grain" data-effect="grain">
+            <div class="stage grain">
+              <div class="grain__content">
+                <p class="mono">Texture</p>
+                <p class="grain__title">Film grain adds<br />warmth to <em>flat</em> gradients.</p>
+                <label class="grain__toggle"><input type="checkbox" checked /> Grain overlay</label>
+              </div>
+              <div class="grain__overlay" aria-hidden="true"></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ============================== 07 MICROINTERACTIONS ============================== -->
+        <section class="category" id="micro" data-category="micro" aria-labelledby="cat-micro">
+          <header class="category__head">
+            <span class="category__num" aria-hidden="true">07</span>
+            <h2 class="category__title" id="cat-micro">Microinteractions</h2>
+            <p class="category__intro">Small, functional feedback for a single action: a press, a toggle, an expand. Good microinteractions are fast (150–600ms), explain what just changed, and work the same with mouse, touch and keyboard.</p>
+          </header>
+
+          <article class="effect" id="ripple" data-effect="ripple">
+            <div class="stage stage--center ripple-demo">
+              <div class="ripple-demo__wrap">
+                <div class="ripple-demo__buttons">
+                  <button type="button" class="rbtn rbtn--primary" data-ripple>Confirm order</button>
+                  <button type="button" class="rbtn rbtn--ghost" data-ripple>Cancel</button>
+                  <button type="button" class="rbtn rbtn--icon" data-ripple aria-label="Like">♥</button>
+                </div>
+                <button type="button" class="ripple-surface" data-ripple><span class="mono">Tap anywhere on this surface</span><strong>The ripple starts where you press.</strong></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect" id="icon-morph" data-effect="icon-morph">
+            <div class="stage stage--center morph">
+              <div class="morph__row">
+                <div class="morph__item">
+                  <button type="button" class="menu-icon" aria-label="Open menu" aria-pressed="false"><span></span><span></span><span></span></button>
+                  <span class="mono">menu ↔ close</span>
+                </div>
+                <div class="morph__item">
+                  <button type="button" class="play-icon" aria-label="Play" aria-pressed="false"><span class="play-icon__l"></span><span class="play-icon__r"></span></button>
+                  <span class="mono">play ↔ pause</span>
+                </div>
+                <div class="morph__item">
+                  <button type="button" class="plus-icon" aria-label="Expand" aria-pressed="false"><span></span><span></span></button>
+                  <span class="mono">plus ↔ minus</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="effect" id="spring-toggle" data-effect="spring-toggle">
+            <div class="stage stage--center toggles">
+              <ul class="toggles__list">
+                <li><span id="tg-1">Notifications</span><button type="button" class="switch" role="switch" aria-checked="true" aria-labelledby="tg-1"><span class="switch__knob"></span></button></li>
+                <li><span id="tg-2">Autoplay previews</span><button type="button" class="switch" role="switch" aria-checked="false" aria-labelledby="tg-2"><span class="switch__knob"></span></button></li>
+                <li class="toggles__compare"><span id="tg-3">Without spring <span class="mono">(linear, for comparison)</span></span><button type="button" class="switch switch--linear" role="switch" aria-checked="false" aria-labelledby="tg-3"><span class="switch__knob"></span></button></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="effect" id="accordion" data-effect="accordion">
+            <div class="stage stage--auto accordion-demo">
+              <div class="acc">
+                <div class="acc__item">
+                  <h4 class="acc__heading"><button type="button" class="acc__trigger" aria-expanded="true" aria-controls="acc-1" id="acc-1-btn">What makes motion feel “premium”?<span class="acc__icon" aria-hidden="true"></span></button></h4>
+                  <div class="acc__panel" id="acc-1" role="region" aria-labelledby="acc-1-btn"><div class="acc__inner"><p>Restraint. Short distances, ease-out curves, consistent timing and very few things moving at once.</p></div></div>
+                </div>
+                <div class="acc__item">
+                  <h4 class="acc__heading"><button type="button" class="acc__trigger" aria-expanded="false" aria-controls="acc-2" id="acc-2-btn">Why not animate height directly?<span class="acc__icon" aria-hidden="true"></span></button></h4>
+                  <div class="acc__panel" id="acc-2" role="region" aria-labelledby="acc-2-btn"><div class="acc__inner"><p>You can’t transition to height: auto in most browsers. Animating grid-template-rows from 0fr to 1fr reaches the natural height without measuring anything.</p></div></div>
+                </div>
+                <div class="acc__item">
+                  <h4 class="acc__heading"><button type="button" class="acc__trigger" aria-expanded="false" aria-controls="acc-3" id="acc-3-btn">Is this accessible?<span class="acc__icon" aria-hidden="true"></span></button></h4>
+                  <div class="acc__panel" id="acc-3" role="region" aria-labelledby="acc-3-btn"><div class="acc__inner"><p>Yes: real buttons, aria-expanded, aria-controls, and collapsed content is hidden from screen readers with visibility, not just squeezed.</p></div></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ============================== 08 3D & PERSPECTIVE ============================== -->
+        <section class="category" id="perspective" data-category="perspective" aria-labelledby="cat-perspective">
+          <header class="category__head">
+            <span class="category__num" aria-hidden="true">08</span>
+            <h2 class="category__title" id="cat-perspective">3D &amp; Perspective</h2>
+            <p class="category__intro">CSS can place flat elements in 3D space. <code class="mono">perspective</code> sets the camera distance, <code class="mono">transform-style: preserve-3d</code> lets children keep their depth, and <code class="mono">translateZ</code> moves things toward you. No WebGL required.</p>
+          </header>
+
+          <article class="effect" id="perspective-card" data-effect="perspective-card">
+            <div class="stage stage--center pcard">
+              <div class="pcard__card">
+                <div class="pcard__layer pcard__bg" style="background-image:url(assets/dunes.svg)"></div>
+                <div class="pcard__layer pcard__shade"></div>
+                <span class="pcard__layer pcard__sun"></span>
+                <p class="pcard__layer pcard__title">Dune<br />Collection</p>
+                <span class="pcard__layer pcard__badge mono">NEW · 2026</span>
+              </div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect" id="layer-stack" data-effect="layer-stack">
+            <div class="stage stage--center lstack">
+              <label class="lstack__control"><span class="mono">Z separation</span><input type="range" min="0" max="100" value="45" /></label>
+              <div class="lstack__scene">
+                <div class="lstack__plane lstack__plane--bg" style="--z:0"><span class="lstack__label mono">Background · z 0</span></div>
+                <div class="lstack__plane lstack__plane--content" style="--z:1"><span class="lstack__label mono">Content · z 1</span><i></i><i></i><i></i></div>
+                <div class="lstack__plane lstack__plane--fg" style="--z:2"><span class="lstack__label mono">Foreground · z 2</span><b>Buy now</b></div>
+              </div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect" id="carousel-3d" data-effect="carousel-3d">
+            <div class="stage carousel">
+              <div class="carousel__viewport" tabindex="0" role="group" aria-roledescription="carousel" aria-label="3D carousel. Use left and right arrow keys.">
+                <div class="carousel__ring">
+                  <figure class="carousel__card"><img src="assets/dunes.svg" alt="" width="1200" height="800" loading="lazy" /><figcaption>Desert Light</figcaption></figure>
+                  <figure class="carousel__card"><img src="assets/city.svg" alt="" width="1200" height="800" loading="lazy" /><figcaption>Concrete Rhythm</figcaption></figure>
+                  <figure class="carousel__card"><img src="assets/ocean.svg" alt="" width="1200" height="800" loading="lazy" /><figcaption>Night Tide</figcaption></figure>
+                  <figure class="carousel__card"><img src="assets/botanic.svg" alt="" width="1200" height="800" loading="lazy" /><figcaption>Greenhouse</figcaption></figure>
+                  <figure class="carousel__card"><img src="assets/studio.svg" alt="" width="1200" height="800" loading="lazy" /><figcaption>Object No. 5</figcaption></figure>
+                  <figure class="carousel__card"><img src="assets/dunes.svg" alt="" width="1200" height="800" loading="lazy" style="filter:hue-rotate(150deg)" /><figcaption>Blue Hour</figcaption></figure>
+                </div>
+              </div>
+              <div class="carousel__controls">
+                <button type="button" class="btn btn--small" data-dir="-1" aria-label="Previous card">←</button>
+                <span class="carousel__status mono" aria-live="polite">1 / 6</span>
+                <button type="button" class="btn btn--small" data-dir="1" aria-label="Next card">→</button>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ============================== 09 ADVANCED / EXPERIMENTAL ============================== -->
+        <section class="category" id="advanced" data-category="advanced" aria-labelledby="cat-advanced">
+          <header class="category__head">
+            <span class="category__num" aria-hidden="true">09</span>
+            <h2 class="category__title" id="cat-advanced">Advanced / Experimental</h2>
+            <p class="category__intro">Effects that draw pixels themselves with Canvas or WebGL, or imitate optical phenomena. They are heavier, so each one starts only when you scroll near it, pauses off-screen, and labels honestly what is real and what is an approximation.</p>
+          </header>
+
+          <article class="effect effect--wide" id="particle-field" data-effect="particle-field">
+            <div class="stage particles">
+              <canvas class="particles__canvas" aria-hidden="true"></canvas>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect" id="rgb-split" data-effect="rgb-split">
+            <div class="stage stage--center rgb">
+              <div class="rgb__word" aria-hidden="true">
+                <span class="rgb__layer rgb__layer--r">SIGNAL</span>
+                <span class="rgb__layer rgb__layer--g">SIGNAL</span>
+                <span class="rgb__layer rgb__layer--b">SIGNAL</span>
+              </div>
+              <span class="visually-hidden">SIGNAL</span>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect" id="glass-lens" data-effect="glass-lens">
+            <div class="stage lens-demo">
+              <div class="lens-demo__scene" aria-hidden="true">
+                <div class="lens-scene">
+                  <p class="lens-scene__title">Refraction<br /><em>bends light.</em></p>
+                  <ul class="lens-scene__grid"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+                  <p class="lens-scene__small mono">A lens magnifies because light changes direction as it passes through curved glass.</p>
+                </div>
+              </div>
+              <div class="lens" aria-hidden="true"><div class="lens__inner"></div><span class="lens__rim"></span></div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+
+          <article class="effect effect--wide" id="displacement" data-effect="displacement">
+            <div class="stage displace">
+              <canvas class="displace__canvas" aria-hidden="true"></canvas>
+              <div class="displace__controls">
+                <div class="seg" role="group" aria-label="Displacement view">
+                  <button type="button" data-view="result" aria-pressed="true">Result</button>
+                  <button type="button" data-view="map" aria-pressed="false">Displacement map</button>
+                </div>
+              </div>
+              <div class="readout" data-readout></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ============================== A · MOTION VOCABULARY ============================== -->
+        <section class="learn" id="vocabulary" aria-labelledby="vocab-title">
+          <div class="learn__head">
+            <p class="eyebrow">A · Learn</p>
+            <h2 id="vocab-title">Motion <em>vocabulary</em></h2>
+            <p>The words designers and developers use to describe motion. Precise words lead to precise results, from people and from AI tools.</p>
+          </div>
+
+          <div class="panel easing" id="easing-playground">
+            <div class="panel__head">
+              <div><h3>Easing playground</h3><p>Same distance, same duration, different character. Press play and compare.</p></div>
+              <button type="button" class="btn btn--small btn--primary" id="easing-play">Play</button>
+            </div>
+            <div class="panel__body easing__rows" id="easing-rows">
+              <div class="easing__row" style="--ease:linear"><span class="easing__name">Linear</span><span class="easing__track"><i></i></span><code class="mono">linear</code></div>
+              <div class="easing__row" style="--ease:cubic-bezier(0.55,0,1,0.45)"><span class="easing__name">Ease-in</span><span class="easing__track"><i></i></span><code class="mono">cubic-bezier(.55,0,1,.45)</code></div>
+              <div class="easing__row" style="--ease:cubic-bezier(0.22,1,0.36,1)"><span class="easing__name">Ease-out</span><span class="easing__track"><i></i></span><code class="mono">cubic-bezier(.22,1,.36,1)</code></div>
+              <div class="easing__row" style="--ease:cubic-bezier(0.65,0,0.35,1)"><span class="easing__name">Ease-in-out</span><span class="easing__track"><i></i></span><code class="mono">cubic-bezier(.65,0,.35,1)</code></div>
+              <div class="easing__row" style="--ease:cubic-bezier(0.34,1.56,0.64,1)"><span class="easing__name">Overshoot</span><span class="easing__track"><i></i></span><code class="mono">cubic-bezier(.34,1.56,.64,1)</code></div>
+              <div class="easing__row" style="--ease:var(--spring)"><span class="easing__name">Spring</span><span class="easing__track"><i></i></span><code class="mono">linear(…) sampled spring</code></div>
+              <div class="easing__row" style="--ease:var(--elastic, var(--ease-back))"><span class="easing__name">Elastic</span><span class="easing__track"><i></i></span><code class="mono">linear(…) low damping</code></div>
+            </div>
+          </div>
+
+          <div class="vocab-tools">
+            <label class="search search--inline"><span class="visually-hidden">Filter vocabulary</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5" /><path d="m10.5 10.5 3 3" /></svg><input type="search" id="vocab-search" placeholder="Filter 25 terms…" autocomplete="off" /></label>
+          </div>
+          <div class="vocab" id="vocab-list">
+            <div class="vocab__item"><p class="vocab__term">Trigger <span>concept</span></p><p class="vocab__def">The event that starts motion: hover, click, page load, time, pointer movement, or an element reaching a scroll position.</p><a class="vocab__see" href="#scroll-reveal">See: Scroll-Triggered Reveal →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Scrub <span>scroll</span></p><p class="vocab__def">Linking animation progress directly to scroll position. Scroll down and it plays forward, scroll up and it rewinds. There is no duration.</p><a class="vocab__see" href="#scroll-scrub">See: Scroll-Scrubbed Animation →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Pin <span>scroll</span></p><p class="vocab__def">Holding an element in place in the viewport (usually with position: sticky) while the user scrolls through a taller section.</p><a class="vocab__see" href="#pinned-story">See: Pinned Storytelling →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Parallax <span>depth</span></p><p class="vocab__def">Layers moving at different speeds in response to scroll or pointer, so the eye reads the difference as depth.</p><a class="vocab__see" href="#layered-parallax">See: Layered Scroll Parallax →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Stagger <span>timing</span></p><p class="vocab__def">Running the same animation on several elements with a small delay between each, turning one movement into a wave.</p><a class="vocab__see" href="#split-text">See: Split Text →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Timeline <span>timing</span></p><p class="vocab__def">A sequence of animations placed on one time (or scroll) axis, each with its own start point and duration.</p><a class="vocab__see" href="#kinetic-type">See: Kinetic Typography →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Loop <span>timing</span></p><p class="vocab__def">An animation that repeats forever, either restarting from the beginning or alternating back and forth.</p><a class="vocab__see" href="#floating">See: Floating / Bobbing →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Marquee <span>pattern</span></p><p class="vocab__def">Content moving continuously in one direction, duplicated so it can loop without a visible seam.</p><a class="vocab__see" href="#scroll-marquee">See: Scroll-Reactive Marquee →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Mask <span>technique</span></p><p class="vocab__def">A shape or container that decides which parts of an element are visible. Content can move behind it to appear or disappear.</p><a class="vocab__see" href="#masked-lines">See: Masked Line Reveal →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Clip-path <span>CSS</span></p><p class="vocab__def">A CSS property that cuts an element to a shape (circle, inset, polygon). Animating the shape creates reveals without moving content.</p><a class="vocab__see" href="#mask-reveal">See: Mask / Clip-Path Reveal →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Morph <span>technique</span></p><p class="vocab__def">Smoothly turning one shape into another. Works best when both shapes have the same number of points.</p><a class="vocab__see" href="#icon-morph">See: Icon Morph →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Perspective <span>3D</span></p><p class="vocab__def">The distance of the virtual camera in CSS 3D. Smaller values exaggerate depth; larger values flatten it.</p><a class="vocab__see" href="#perspective-card">See: Perspective Card →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Inertia <span>physics</span></p><p class="vocab__def">A sense of mass: the object lags behind its target and catches up smoothly instead of snapping to it.</p><a class="vocab__see" href="#cursor-follower">See: Cursor Follower →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Momentum <span>physics</span></p><p class="vocab__def">Motion that continues after the input stops and gradually slows, like a flicked list or a fast scroll settling.</p><a class="vocab__see" href="#scroll-velocity">See: Scroll Velocity Effect →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Spring <span>physics</span></p><p class="vocab__def">Motion defined by stiffness and damping instead of duration. It reacts naturally to interruptions and can overshoot slightly.</p><a class="vocab__see" href="#spring-toggle">See: Spring Toggle →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Elastic <span>easing</span></p><p class="vocab__def">A loosely damped spring that wobbles several times before settling. Playful, and easy to overdo.</p><a class="vocab__see" href="#easing-playground">See: Easing playground →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Overshoot <span>easing</span></p><p class="vocab__def">Passing the target value briefly before coming back to rest. A small overshoot makes UI feel alive.</p><a class="vocab__see" href="#magnetic-button">See: Magnetic Button →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Ease-in <span>easing</span></p><p class="vocab__def">Starts slow and finishes fast, like something accelerating away. Best for elements leaving the screen.</p><a class="vocab__see" href="#easing-playground">See: Easing playground →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Ease-out <span>easing</span></p><p class="vocab__def">Starts fast and lands softly. The best default for entrances and responses to user input.</p><a class="vocab__see" href="#easing-playground">See: Easing playground →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Ease-in-out <span>easing</span></p><p class="vocab__def">Slow at both ends and fast in the middle. Good for objects travelling from one on-screen position to another.</p><a class="vocab__see" href="#easing-playground">See: Easing playground →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Linear <span>easing</span></p><p class="vocab__def">Constant speed. Feels mechanical for UI, but is right for loops, rotation, marquees and anything scrubbed by scroll.</p><a class="vocab__see" href="#scroll-rotation">See: Scroll Rotation →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Velocity <span>physics</span></p><p class="vocab__def">Speed with a direction. Effects can react to how fast you move or scroll, not just where you are.</p><a class="vocab__see" href="#rgb-split">See: RGB Split →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Displacement <span>graphics</span></p><p class="vocab__def">Moving each pixel according to the values of a map image, which produces warps, ripples and liquid distortion.</p><a class="vocab__see" href="#displacement">See: Distortion / Displacement →</a></div>
+            <div class="vocab__item"><p class="vocab__term">Shader <span>graphics</span></p><p class="vocab__def">A small program that runs on the GPU for every vertex or every pixel. That’s how per-pixel effects stay fast.</p><a class="vocab__see" href="#displacement">See: Distortion / Displacement →</a></div>
+            <div class="vocab__item"><p class="vocab__term">WebGL <span>graphics</span></p><p class="vocab__def">The browser API for GPU-accelerated graphics on a canvas. Libraries like Three.js and OGL are built on top of it.</p><a class="vocab__see" href="#displacement">See: Distortion / Displacement →</a></div>
+          </div>
+          <p class="vocab-empty" id="vocab-empty" hidden>No terms match.</p>
+        </section>
+
+        <!-- ============================== B · HOW TO DESCRIBE MOTION ============================== -->
+        <section class="learn" id="describe" aria-labelledby="describe-title">
+          <div class="learn__head">
+            <p class="eyebrow">B · Learn</p>
+            <h2 id="describe-title">How to <em>describe</em> motion</h2>
+            <p>A good motion brief answers seven questions. Together they form a sentence that a developer, a designer, or an AI coding tool can build without guessing.</p>
+          </div>
+
+          <ol class="formula" aria-label="Motion description formula">
+            <li class="formula__part" style="--c:var(--t-scroll)"><b>Target</b><span>What moves?</span></li>
+            <li class="formula__part" style="--c:var(--t-mouse)"><b>Trigger</b><span>What starts it?</span></li>
+            <li class="formula__part" style="--c:var(--accent)"><b>Transformation</b><span>Which property changes?</span></li>
+            <li class="formula__part" style="--c:var(--t-click)"><b>Relationship</b><span>How is it tied to input or to other elements?</span></li>
+            <li class="formula__part" style="--c:var(--t-load)"><b>Motion Character</b><span>Ease, spring, inertia, linear…</span></li>
+            <li class="formula__part" style="--c:var(--t-time)"><b>Intensity</b><span>Subtle, expressive or experimental?</span></li>
+            <li class="formula__part" style="--c:var(--text-muted)"><b>Fallback</b><span>Touch and reduced motion?</span></li>
+          </ol>
+
+          <div class="compare">
+            <div class="compare__card compare__card--bad">
+              <p class="compare__label mono">✕ Bad</p>
+              <p class="compare__text">Make the hero animation cool.</p>
+              <p class="compare__why">No target detail, no trigger, no property, no character. Every reader will imagine something different.</p>
+            </div>
+            <div class="compare__card compare__card--good" data-copy-scope>
+              <p class="compare__label mono">✓ Better</p>
+              <p class="compare__text" data-copy-text>Add layered mouse-driven parallax to the hero artwork. Foreground objects should move more strongly than background elements. Use smooth inertia and subtle spring settling, keeping the total movement restrained and premium.</p>
+              <button type="button" class="btn btn--small" data-copy><span>Copy</span></button>
+            </div>
+            <div class="compare__card compare__card--good" data-copy-scope>
+              <p class="compare__label mono">✓ Scroll example</p>
+              <p class="compare__text" data-copy-text>Create a pinned scroll storytelling section. Link the product scale and rotation directly to scroll progress using scrubbed motion, and stagger supporting text as each stage becomes active.</p>
+              <button type="button" class="btn btn--small" data-copy><span>Copy</span></button>
+            </div>
+          </div>
+
+          <div class="panel builder" id="prompt-builder">
+            <div class="panel__head">
+              <div><h3>Prompt builder</h3><p>Pick one answer per question. The sentence updates live.</p></div>
+            </div>
+            <div class="panel__body builder__grid">
+              <label class="builder__field"><span style="--c:var(--t-scroll)">Target</span><select data-part="target"></select></label>
+              <label class="builder__field"><span style="--c:var(--t-mouse)">Trigger</span><select data-part="trigger"></select></label>
+              <label class="builder__field"><span style="--c:var(--accent)">Transformation</span><select data-part="transform"></select></label>
+              <label class="builder__field"><span style="--c:var(--t-click)">Relationship</span><select data-part="relationship"></select></label>
+              <label class="builder__field"><span style="--c:var(--t-load)">Motion character</span><select data-part="character"></select></label>
+              <label class="builder__field"><span style="--c:var(--t-time)">Intensity</span><select data-part="intensity"></select></label>
+              <label class="builder__field"><span style="--c:var(--text-muted)">Fallback</span><select data-part="fallback"></select></label>
+            </div>
+            <div class="prompt builder__out">
+              <div class="prompt__head"><span class="prompt__title">Generated prompt</span><button class="btn btn--small" type="button" data-copy><span>Copy prompt</span></button></div>
+              <p class="prompt__text" id="builder-output" aria-live="polite"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================== C · MOTION INTENSITY ============================== -->
+        <section class="learn" id="intensity" aria-labelledby="intensity-title">
+          <div class="learn__head">
+            <p class="eyebrow">C · Learn</p>
+            <h2 id="intensity-title">Motion <em>intensity</em></h2>
+            <p>Not every website needs extreme motion. Choose the level that fits the brand and its audience, then stay inside it. The intensity tag on every card above uses these same three levels.</p>
+          </div>
+          <div class="levels">
+            <article class="level" style="--c:var(--t-scroll)">
+              <div class="level__meter" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+              <p class="mono level__num">Level 1</p>
+              <h3>Subtle / Premium</h3>
+              <p class="level__desc">Motion confirms and guides. Short distances, ease-out, nothing loops for attention.</p>
+              <p class="level__label mono">Examples</p>
+              <ul class="level__links"><li><a href="#scroll-reveal">Fade reveal</a></li><li><a href="#hover-lift">Hover lift</a></li><li><a href="#mouse-parallax">Gentle parallax</a></li><li><a href="#magnetic-button">Slight magnetic button</a></li><li><a href="#accordion">Smooth transitions</a></li></ul>
+              <p class="level__label mono">Good for</p>
+              <p class="level__for">Corporate · Finance · Banking · Luxury · Professional services</p>
+            </article>
+            <article class="level" style="--c:var(--accent)">
+              <div class="level__meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></div>
+              <p class="mono level__num">Level 2</p>
+              <h3>Expressive</h3>
+              <p class="level__desc">Motion is part of the storytelling. Scroll drives scenes, type becomes visual, interactions have personality.</p>
+              <p class="level__label mono">Examples</p>
+              <ul class="level__links"><li><a href="#pinned-story">Pinned scrolling</a></li><li><a href="#horizontal-gallery">Horizontal gallery</a></li><li><a href="#mouse-parallax">Mouse parallax</a></li><li><a href="#kinetic-type">Large typography</a></li><li><a href="#image-hover-reveal">Interactive image reveal</a></li></ul>
+              <p class="level__label mono">Good for</p>
+              <p class="level__for">Agency · Portfolio · Campaign · Lifestyle brand</p>
+            </article>
+            <article class="level" style="--c:var(--t-click)">
+              <div class="level__meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+              <p class="mono level__num">Level 3</p>
+              <h3>Experimental</h3>
+              <p class="level__desc">Motion <em>is</em> the experience. GPU effects, simulations and unconventional typography, with heavier performance budgets.</p>
+              <p class="level__label mono">Examples</p>
+              <ul class="level__links"><li><a href="#displacement">Shader distortion</a></li><li><a href="#displacement">WebGL</a></li><li><a href="#glass-lens">Fluid / lens interaction</a></li><li><a href="#particle-field">Particle simulation</a></li><li><a href="#kinetic-type">Unconventional kinetic type</a></li></ul>
+              <p class="level__label mono">Good for</p>
+              <p class="level__for">Creative showcase · Art · Fashion · Experimental campaign</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- ============================== D · SIGNATURE MOTION ============================== -->
+        <section class="learn" id="signature" aria-labelledby="signature-title">
+          <div class="learn__head">
+            <p class="eyebrow">D · Learn</p>
+            <h2 id="signature-title">Signature <em>interaction</em></h2>
+            <p>A great website doesn’t use every effect. It picks <strong>one signature motion</strong> that people remember, and everything else quietly supports it. That is motion hierarchy.</p>
+          </div>
+          <div class="panel signature">
+            <div class="signature__grid">
+              <div class="sig-site" aria-hidden="true">
+                <div class="sig-site__bg"></div>
+                <div class="sig-site__nav"><i></i><i></i><i></i><i></i></div>
+                <div class="sig-zone sig-zone--hero" data-zone="hero">
+                  <div class="sig-hero__copy"><i></i><i></i><i class="short"></i></div>
+                  <div class="sig-hero__product"></div>
+                  <span class="sig-dot sig-dot--a"></span><span class="sig-dot sig-dot--b"></span><span class="sig-dot sig-dot--c"></span>
+                </div>
+                <div class="sig-zone sig-zone--cta" data-zone="cta"><span class="sig-cta">Get started</span></div>
+                <div class="sig-cards" data-zone="cards"><span class="sig-card"></span><span class="sig-card"></span><span class="sig-card"></span></div>
+              </div>
+              <ol class="sig-list">
+                <li data-zone="hero" style="--w:100%"><span class="mono">Hero</span><strong>Strong scroll-driven product motion</strong><span class="sig-role">Signature · 1 per page</span><i class="sig-bar"></i></li>
+                <li data-zone="dots" style="--w:42%"><span class="mono">Supporting objects</span><strong>Subtle pointer parallax</strong><span class="sig-role">Supporting</span><i class="sig-bar"></i></li>
+                <li data-zone="cta" style="--w:30%"><span class="mono">CTA</span><strong>Magnetic interaction</strong><span class="sig-role">Accent</span><i class="sig-bar"></i></li>
+                <li data-zone="cards" style="--w:20%"><span class="mono">Cards</span><strong>Simple hover lift</strong><span class="sig-role">Feedback</span><i class="sig-bar"></i></li>
+                <li data-zone="bg" style="--w:10%"><span class="mono">Background</span><strong>Slow ambient movement</strong><span class="sig-role">Atmosphere</span><i class="sig-bar"></i></li>
+              </ol>
+            </div>
+            <p class="signature__rule"><strong>Rule of thumb:</strong> one signature, two or three supporting behaviours, everything else still. If everything moves, nothing stands out. Hover the list to see each layer in the wireframe; move the pointer over the wireframe to feel how they combine.</p>
+          </div>
+        </section>
+
+      </div><!-- /.content -->
+    </div><!-- /.layout -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p>Web Motion Lab — a personal learning laboratory. Vanilla HTML, CSS &amp; JavaScript, no build step.</p>
+      <p><a href="#top">Back to top ↑</a></p>
+    </div>
+  </footer>
+
+  <noscript>
+    <p style="position:fixed;bottom:16px;left:16px;right:16px;padding:14px 16px;border-radius:12px;background:#1a1b1f;color:#ecebe6;font:14px/1.5 system-ui;z-index:99">The live demos need JavaScript. The category structure is still readable, but enable JavaScript to see the effects and prompt recipes.</p>
+  </noscript>
+
+  <script src="js/core.js" defer></script>
+  <script src="js/cursor-effects.js" defer></script>
+  <script src="js/hover-effects.js" defer></script>
+  <script src="js/scroll-effects.js" defer></script>
+  <script src="js/text-effects.js" defer></script>
+  <script src="js/media-effects.js" defer></script>
+  <script src="js/ambient-effects.js" defer></script>
+  <script src="js/micro-effects.js" defer></script>
+  <script src="js/perspective-effects.js" defer></script>
+  <script src="js/advanced-effects.js" defer></script>
+  <script src="js/learn.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

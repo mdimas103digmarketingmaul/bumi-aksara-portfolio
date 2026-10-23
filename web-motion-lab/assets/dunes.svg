@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b1d2e"/><stop offset=".55" stop-color="#b8644a"/><stop offset="1" stop-color="#f1b77a"/></linearGradient>
+    <linearGradient id="d1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d98a52"/><stop offset="1" stop-color="#8a4430"/></linearGradient>
+    <linearGradient id="d2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a9553a"/><stop offset="1" stop-color="#4c2322"/></linearGradient>
+    <linearGradient id="d3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a1c1f"/><stop offset="1" stop-color="#1c0f14"/></linearGradient>
+    <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff1d0"/><stop offset=".6" stop-color="#ffd08a"/><stop offset="1" stop-color="#ffd08a" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="820" cy="390" r="170" fill="url(#sun)"/>
+  <circle cx="820" cy="390" r="78" fill="#fff4dc"/>
+  <g stroke="#ffe3b8" stroke-opacity=".35" stroke-width="2" fill="none">
+    <path d="M0 470 H1200"/><path d="M0 492 H1200" stroke-opacity=".22"/><path d="M0 512 H1200" stroke-opacity=".14"/>
+  </g>
+  <path d="M0 520 C200 430 360 470 520 440 S860 380 1200 470 V800 H0Z" fill="url(#d1)"/>
+  <g fill="none" stroke="#f3b27c" stroke-opacity=".45" stroke-width="2">
+    <path d="M60 560 C240 500 380 540 560 500 S900 450 1160 520"/>
+    <path d="M40 590 C230 535 390 570 570 535 S910 490 1180 555"/>
+    <path d="M20 620 C220 570 400 600 580 570 S920 530 1200 590"/>
+  </g>
+  <path d="M0 640 C260 560 480 640 700 590 S1000 540 1200 610 V800 H0Z" fill="url(#d2)"/>
+  <g fill="none" stroke="#e08a5f" stroke-opacity=".4" stroke-width="2">
+    <path d="M0 680 C260 610 480 680 700 640 S1000 600 1200 660"/>
+    <path d="M0 712 C260 650 480 712 700 676 S1000 640 1200 698"/>
+  </g>
+  <path d="M0 730 C300 680 600 760 900 700 S1150 690 1200 700 V800 H0Z" fill="url(#d3)"/>
+  <g fill="#1c0f14"><rect x="300" y="470" width="4" height="40"/><rect x="292" y="486" width="20" height="3"/><circle cx="302" cy="466" r="6"/></g>
+</svg>

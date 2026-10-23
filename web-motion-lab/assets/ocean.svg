@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05121c"/><stop offset=".55" stop-color="#11384a"/><stop offset="1" stop-color="#0b2533"/></linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#bfe9dc" stop-opacity=".55"/><stop offset="1" stop-color="#bfe9dc" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <g fill="#cfeee4"><circle cx="140" cy="90" r="2"/><circle cx="260" cy="160" r="1.5"/><circle cx="420" cy="70" r="2"/><circle cx="620" cy="130" r="1.5"/><circle cx="980" cy="60" r="2"/><circle cx="1100" cy="170" r="1.5"/><circle cx="760" cy="40" r="1.5"/><circle cx="60" cy="220" r="1.5"/></g>
+  <circle cx="400" cy="250" r="160" fill="url(#glow)"/>
+  <circle cx="400" cy="250" r="64" fill="#e6f6f0"/>
+  <circle cx="380" cy="236" r="10" fill="#c9e5dc"/><circle cx="420" cy="270" r="7" fill="#c9e5dc"/>
+  <rect x="0" y="420" width="1200" height="380" fill="#0a2230"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M330 440 H470" stroke="#e6f6f0" stroke-width="5" stroke-opacity=".8"/>
+    <path d="M300 470 H500" stroke="#e6f6f0" stroke-width="4" stroke-opacity=".55"/>
+    <path d="M340 500 H460" stroke="#e6f6f0" stroke-width="4" stroke-opacity=".4"/>
+    <path d="M280 535 H520" stroke="#e6f6f0" stroke-width="3" stroke-opacity=".28"/>
+  </g>
+  <g fill="none" stroke="#2f7d84" stroke-width="3" stroke-opacity=".75">
+    <path d="M0 560 Q75 540 150 560 T300 560 T450 560 T600 560 T750 560 T900 560 T1050 560 T1200 560"/>
+    <path d="M0 610 Q75 588 150 610 T300 610 T450 610 T600 610 T750 610 T900 610 T1050 610 T1200 610"/>
+    <path d="M0 665 Q75 640 150 665 T300 665 T450 665 T600 665 T750 665 T900 665 T1050 665 T1200 665"/>
+    <path d="M0 725 Q75 698 150 725 T300 725 T450 725 T600 725 T750 725 T900 725 T1050 725 T1200 725"/>
+  </g>
+  <path d="M760 420 L800 300 L840 420Z" fill="#081a24"/><path d="M800 300 V250" stroke="#081a24" stroke-width="4"/><path d="M800 252 L840 270 L800 285Z" fill="#8fd6bd"/>
+</svg>
