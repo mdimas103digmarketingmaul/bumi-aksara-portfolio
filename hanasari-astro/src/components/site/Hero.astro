@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import BatikMegaMendung from './BatikMegaMendung.astro';
-import { asset, img, waLink } from './data';
+import { asset, img, productImg, waLink } from './data';
 ---
 <section id="beranda" class="o1-hero" aria-labelledby="o1-hero-title">
   <div class="o1-hero__bg" aria-hidden="true">
@@ -46,8 +46,8 @@ import { asset, img, waLink } from './data';
         </svg>
         <img class="o1-hero__seal-mark" src={asset('hs-mark-white.webp')} alt="" width="306" height="246" />
       </div>
-      <a class="o1-hero__ticket" href="#menu" data-tab-link="spesial">
-        <img src={img('tumpeng.webp')} alt="" width="64" height="64" loading="lazy" />
+      <a class="o1-hero__ticket" href="#menu" data-tab-link="tumpeng">
+        <img src={productImg('kategori/tumpeng.webp')} alt="" width="64" height="64" loading="lazy" />
         <span><small>Rayakan kebersamaan</small><strong>Tumpeng untuk<br />hari istimewa</strong></span>
         <Icon name="arrow" size={16} />
       </a>

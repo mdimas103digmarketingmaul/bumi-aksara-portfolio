@@ -110,15 +110,17 @@ const menuTabs = $('[data-tabs]');
 if (menuTabs) {
   const tabs = $$<HTMLButtonElement>('[data-tab]', menuTabs);
   const panels = $$('[data-panel]', menuTabs);
-  const prev = $<HTMLButtonElement>('[data-slide-prev]', menuTabs);
-  const next = $<HTMLButtonElement>('[data-slide-next]', menuTabs);
+  const activePanel = () => $<HTMLElement>('.o1-tabs__panel.is-active', menuTabs);
   const activeTrack = () => $<HTMLElement>('.o1-tabs__panel.is-active [data-track]', menuTabs);
 
   const update = () => {
+    const panel = activePanel();
     const track = activeTrack();
-    if (!track) return;
+    if (!panel || !track) return;
     const max = track.scrollWidth - track.clientWidth;
-    const bar = $<HTMLElement>('[data-progress]', track.parentElement!);
+    const bar = $<HTMLElement>('[data-progress]', panel);
+    const prev = $<HTMLButtonElement>('[data-slide-prev]', panel);
+    const next = $<HTMLButtonElement>('[data-slide-next]', panel);
     if (prev) prev.disabled = track.scrollLeft <= 4;
     if (next) next.disabled = track.scrollLeft >= max - 4;
     if (bar) {
@@ -129,12 +131,17 @@ if (menuTabs) {
     }
   };
 
+  const catRail = $<HTMLElement>('[data-cats]', menuTabs);
   const select = (id: string, focus = false) => {
     tabs.forEach((tab) => {
       const on = tab.dataset.tab === id;
       tab.setAttribute('aria-selected', String(on));
       tab.tabIndex = on ? 0 : -1;
       if (on && focus) tab.focus();
+      // Rail kategori bisa digeser di layar kecil; geser tanpa ikut menggulir halaman.
+      if (on && catRail && catRail.scrollWidth > catRail.clientWidth) {
+        catRail.scrollTo({ left: tab.offsetLeft - (catRail.clientWidth - tab.offsetWidth) / 2, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      }
     });
     panels.forEach((panel) => panel.classList.toggle('is-active', panel.dataset.panel === id));
     const track = activeTrack();
@@ -142,7 +149,7 @@ if (menuTabs) {
     requestAnimationFrame(update);
   };
 
-  wireTabKeys({ tabs, select, idOf: (t) => t.dataset.tab || 'nasi' });
+  wireTabKeys({ tabs, select, idOf: (t) => t.dataset.tab || 'nasi-box' });
 
   const step = (dir: number) => {
     const track = activeTrack();
@@ -152,8 +159,8 @@ if (menuTabs) {
     const amount = card ? (card.offsetWidth + gap) * Math.max(1, Math.floor(track.clientWidth / (card.offsetWidth + gap))) : track.clientWidth * 0.8;
     track.scrollBy({ left: dir * amount, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
   };
-  prev?.addEventListener('click', () => step(-1));
-  next?.addEventListener('click', () => step(1));
+  $$('[data-slide-prev]', menuTabs).forEach((btn) => btn.addEventListener('click', () => step(-1)));
+  $$('[data-slide-next]', menuTabs).forEach((btn) => btn.addEventListener('click', () => step(1)));
 
   $$<HTMLElement>('[data-track]', menuTabs).forEach((track) => {
     track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
@@ -166,8 +173,21 @@ if (menuTabs) {
   if ('ResizeObserver' in window) new ResizeObserver(update).observe(menuTabs);
   update();
 
-  // Tautan lain (mis. kartu tumpeng di hero) bisa langsung membuka tab tertentu.
-  $$<HTMLAnchorElement>('[data-tab-link]').forEach((link) => link.addEventListener('click', () => select(link.dataset.tabLink || 'nasi')));
+  // Tautan lain (mis. kartu tumpeng di hero, daftar paket di Racik isi box) bisa langsung
+  // membuka tab tertentu, dan opsional menggeser slider ke kartu paketnya (data-card).
+  $$<HTMLAnchorElement>('[data-tab-link]').forEach((link) => link.addEventListener('click', (e) => {
+    select(link.dataset.tabLink || 'nasi-box');
+    const card = link.dataset.card ? document.getElementById(link.dataset.card) : null;
+    const track = activeTrack();
+    if (!card || !track) return;
+    e.preventDefault();
+    menuTabs.scrollIntoView({ block: 'start', behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    requestAnimationFrame(() => {
+      const pad = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
+      const left = track.scrollLeft + card.getBoundingClientRect().left - track.getBoundingClientRect().left - pad;
+      track.scrollTo({ left, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    });
+  }));
 }
 
 /* ---------- Racik isi box: tab chip ---------- */

@@ -55,10 +55,17 @@ src/
 └── content.config.ts
 
 public/assets/site/        # logo HS & font Montserrat
-public/assets/images/      # foto produk & thumbnail
+public/assets/images/      # cut-out paket dari katalog, foto hero & thumbnail
+public/assets/products/    # foto produk dari dokumentasi (per kategori menu)
 public/assets/uploads/     # unggahan dari CMS
 public/admin/              # Decap CMS
 ```
+
+### Menambah produk / foto menu
+Semua produk homepage ada di `src/components/site/data.ts` (`categories`, `products`).
+1. Tambahkan objek ke `products` dengan `category` yang sesuai. Isi `price` hanya bila ada di katalog resmi; `null` menampilkan "Tanya admin".
+2. Simpan foto WebP ±800×600 di `public/assets/products/<kategori>/<produk>.webp`.
+3. Isi `image: productImg('<kategori>/<produk>.webp')` dan `imageAlt`. Tanpa `image`, kartu tampil sebagai placeholder bermotif.
 
 ### Cara kerja artikel
 1. Client membuat artikel lewat `/admin/`.

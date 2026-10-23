@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { asset, WA_NUMBER } from './data';
+import { asset, categories, WA_NUMBER } from './data';
 ---
 <section id="konsultasi" class="o1-section o1-consult" aria-labelledby="o1-consult-title">
   <div class="o1-consult__bg" aria-hidden="true"></div>
@@ -49,10 +49,8 @@ import { asset, WA_NUMBER } from './data';
           <label for="o1-paket">Pilihan menu</label>
           <select id="o1-paket" name="paket">
             <option>Belum tahu, bantu pilihkan</option>
-            <option>Nasi Box</option>
-            <option>Snack Box</option>
-            <option>Tumpeng</option>
-            <option>Hampers / lainnya</option>
+            {categories.map((cat) => <option>{cat.label}</option>)}
+            <option>Kebutuhan khusus / lainnya</option>
           </select>
         </div>
         <div class="o1-field">

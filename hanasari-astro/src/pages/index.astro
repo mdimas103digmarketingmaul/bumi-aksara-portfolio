@@ -11,6 +11,7 @@ import Hero from '../components/site/Hero.astro';
 import TrustStrip from '../components/site/TrustStrip.astro';
 import MenuSection from '../components/site/MenuSection.astro';
 import DishExplorer from '../components/site/DishExplorer.astro';
+import CustomOrder from '../components/site/CustomOrder.astro';
 import AboutSection from '../components/site/AboutSection.astro';
 import Testimonials from '../components/site/Testimonials.astro';
 import FeaturedArticles from '../components/site/FeaturedArticles.astro';
@@ -27,7 +28,7 @@ const featuredArticles = (await getCollection('articles'))
 ---
 <SiteLayout
   title="Hanasari Catering — Harga Merakyat, Rasa Ningrat"
-  description="Hidangan Nusantara untuk momen istimewa Anda. Pilih nasi box, snack box, dan tumpeng Hanasari Catering di Jakarta Timur. Konsultasikan acara Anda melalui WhatsApp."
+  description="Hidangan Nusantara untuk momen istimewa Anda. Pilih nasi box, snack box, tumpeng, nasi liwet, hingga hantaran Hanasari Catering di Jakarta Timur. Konsultasikan acara Anda melalui WhatsApp."
   preloadHero
 >
   <SiteHeader />
@@ -36,6 +37,7 @@ const featuredArticles = (await getCollection('articles'))
     <TrustStrip />
     <MenuSection />
     <DishExplorer />
+    <CustomOrder />
     <AboutSection />
     <Testimonials />
     <FeaturedArticles articles={featuredArticles} />
