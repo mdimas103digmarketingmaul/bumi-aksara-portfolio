@@ -1,43 +1,35 @@
 ---
-import Icon from './Icon.astro';
-import { img, waLink } from './data';
+/*
+ * Tentang Hanasari: menceritakan orang di balik Hanasari.
+ * Foto tim menjadi visual utama (srcset 960/1600), diikuti pita kesempatan.
+ */
+import { img } from './data';
 
-/* Sumber: Compro B2B Hanasari (Tentang Kami, Mengapa Memilih Kami) & Brand Guide (Brand Statement). */
-const values = [
-  { title: 'Halal & berkualitas', text: 'Diolah dari bahan terbaik dan halal, dengan rasa yang konsisten dari satu acara ke acara berikutnya.' },
-  { title: 'Tepat waktu', text: 'Rapat, pelatihan, dan acara punya jadwal yang tak bisa menunggu. Ketepatan pengiriman jadi prioritas kami.' },
-  { title: 'Menu fleksibel', text: 'Paket dan pilihan lauk bisa disesuaikan dengan kebutuhan Anda, dengan harga yang transparan.' },
-  { title: 'Tumbuh bersama usaha lokal', text: 'Memilih Hanasari berarti ikut mendukung usaha lokal dan peluang ekonomi masyarakat.' }
-];
+const photo = img('tim-hanasari');
 ---
 <section id="tentang-kami" class="o1-section o1-about" aria-labelledby="o1-about-title">
-  <div class="o1-container o1-about__grid">
-    <div class="o1-about__visual" data-reveal>
-      <figure class="o1-about__main">
-        <img src={img('tumpeng.webp')} alt="Tumpeng Hanasari, nasi kuning dengan beragam lauk untuk dinikmati bersama" width="1050" height="1400" loading="lazy" decoding="async" />
-      </figure>
-      <div class="o1-about__stamp" aria-hidden="true">Dibuat untuk<strong>dinikmati bersama.</strong></div>
+  <div class="o1-container">
+    <div class="o1-about__copy" data-reveal>
+      <div>
+        <p class="o1-eyebrow">Tentang Hanasari</p>
+        <h2 id="o1-about-title" class="o1-h2 o1-about__title"><span>Dari dapur kami,</span> <span>untuk <em>banyak momen.</em></span></h2>
+      </div>
+      <div class="o1-about__body">
+        <p>PT Hanasari Asa Nusantara hadir dengan satu prinsip sederhana: menyajikan makanan yang enak, konsisten, dan tiba tepat waktu.</p>
+        <p>Berbekal pengalaman melayani perusahaan, institusi, hingga berbagai acara, kami terus menjaga semangat <strong>“Harga Merakyat, Rasa Ningrat”</strong>—sajian berkualitas yang tetap terasa dekat dan dapat diandalkan.</p>
+      </div>
     </div>
 
-    <div class="o1-about__copy">
-      <div data-reveal>
-        <p class="o1-eyebrow">Tentang Kami</p>
-        <h2 id="o1-about-title" class="o1-h2">Bukan sekadar sajian. Bagian dari <em>kebersamaan.</em></h2>
-        <p class="o1-about__lead">Hanasari Catering, di bawah PT Hanasari Asa Nusantara, menghadirkan hidangan selera Nusantara dengan kualitas premium dan harga yang bersahabat. <strong>Harga Merakyat, Rasa Ningrat.</strong></p>
-        <p>Bagi kami, makanan adalah pengalaman kebersamaan. Karena itu setiap menu diolah dengan cita rasa terbaik dan disajikan dengan pelayanan yang profesional, dari makan siang kantor, rapat, dan pelatihan, hingga syukuran keluarga.</p>
-      </div>
-      <ol class="o1-values" data-reveal>
-        {values.map((v, i) => (
-          <li>
-            <span class="o1-values__num">{String(i + 1).padStart(2, '0')}</span>
-            <div><h3>{v.title}</h3><p>{v.text}</p></div>
-          </li>
-        ))}
-      </ol>
-      <a class="o1-link" href={waLink('Saya ingin berdiskusi tentang kebutuhan acara saya.', 'Tentang kami')} target="_blank" rel="noopener noreferrer" data-reveal>
-        Mari ceritakan rencana acara Anda <Icon name="arrow" size={18} />
-      </a>
-    </div>
+    <figure class="o1-about__photo" data-reveal>
+      <img
+        src={`${photo}-1600.webp`}
+        srcset={`${photo}-960.webp 960w, ${photo}-1600.webp 1600w`}
+        sizes="(max-width: 720px) 100vw, min(1240px, 92vw)"
+        alt="Tim Hanasari Catering berfoto bersama di taman, mengenakan seragam bernuansa krem dan cokelat"
+        width="1600" height="1067" loading="lazy" decoding="async"
+      />
+      <figcaption>Tim Hanasari</figcaption>
+    </figure>
   </div>
 </section>
 

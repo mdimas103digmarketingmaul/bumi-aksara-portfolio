@@ -1,6 +1,7 @@
 ---
 /*
- * Detail artikel — memakai layout, header, dan footer utama website.
+ * Detail artikel — memakai layout, header, dan footer utama website; kepala artikel memakai
+ * latar grid emas dan motion yang sama dengan hero homepage.
  * Konten tetap dari Content Collection `articles` (Markdown, dikelola lewat Decap CMS).
  */
 import { getCollection, render } from 'astro:content';
@@ -36,6 +37,9 @@ const related = (await getCollection('articles'))
   <main id="utama">
     <article class="o1-post">
       <header class="o1-post__head" data-float-anchor>
+        <div class="o1-ahero__bg" aria-hidden="true">
+          <svg class="o1-hero__grid" viewBox="0 0 400 400"><defs><pattern id="o1-post-grid" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><path d="M0 0H40M0 0V40" stroke="currentColor" stroke-width="2.4" fill="none" /></pattern></defs><rect width="400" height="400" fill="url(#o1-post-grid)" /></svg>
+        </div>
         <div class="o1-container o1-post__head-inner">
           <a class="o1-post__back" href="/artikel/"><Icon name="arrow-left" size={16} /> Semua artikel</a>
           <p class="o1-post__meta"><span>{article.data.category}</span><time datetime={article.data.publishDate.toISOString()}>{formattedDate}</time></p>

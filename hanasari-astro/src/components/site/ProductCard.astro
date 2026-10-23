@@ -18,7 +18,6 @@ const alt = product.imageAlt ?? `${product.name} Hanasari — contoh penyajian`;
 <li id={`menu-${product.id}`} class:list={['o1-card', { 'is-featured': product.featured && product.price, 'is-text': !product.image, 'is-photo': isPhoto }]}>
   <div class="o1-card__media">
     <span class="o1-card__tier">{String(index + 1).padStart(2, '0')}</span>
-    <span class="o1-card__tag">{product.featured && product.price ? <><Icon name="star" size={12} /> Paling lengkap</> : product.tag}</span>
     {product.image ? (
       <img src={product.image} alt={alt} width={isPhoto ? 800 : 420} height={isPhoto ? 600 : 320} loading="lazy" decoding="async" />
     ) : (

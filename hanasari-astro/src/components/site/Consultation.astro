@@ -7,8 +7,8 @@ import { asset, categories, WA_NUMBER } from './data';
   <div class="o1-container o1-consult__grid">
     <div class="o1-consult__intro" data-reveal>
       <p class="o1-eyebrow o1-eyebrow--light">Mulai dari cerita Anda</p>
-      <h2 id="o1-consult-title" class="o1-h2 o1-h2--light">Ada acara? <em>Kita siapkan bersama.</em></h2>
-      <p>Isi kebutuhan awal Anda. Kami merangkumnya menjadi pesan WhatsApp agar konsultasi lebih cepat dan jelas.</p>
+      <h2 id="o1-consult-title" class="o1-h2 o1-h2--light">Ceritakan kebutuhan <em>Anda</em></h2>
+      <p>Isi rencana Anda, lalu lanjutkan ke WhatsApp.</p>
 
       <div class="o1-chat" aria-hidden="true">
         <div class="o1-chat__head">
@@ -17,7 +17,7 @@ import { asset, categories, WA_NUMBER } from './data';
         </div>
         <div class="o1-chat__body">
           <div class="o1-chat__bubble">
-            <p data-preview>Halo Hanasari Catering, saya datang dari website Hanasari.<br /><br />Saya ingin konsultasi catering. Detail akan muncul di sini saat Anda mengisi formulir.</p>
+            <p data-preview>Halo Hanasari, saya ingin konsultasi catering.</p>
             <span class="o1-chat__time">Belum terkirim</span>
           </div>
         </div>
@@ -26,7 +26,7 @@ import { asset, categories, WA_NUMBER } from './data';
 
     <form class="o1-form" data-inquiry data-wa-number={WA_NUMBER} novalidate data-reveal>
       <div class="o1-form__head">
-        <h3>Ceritakan kebutuhan Anda</h3>
+        <h3>Rencana pesanan</h3>
         <span>Isi ±1 menit</span>
       </div>
 
@@ -77,7 +77,7 @@ import { asset, categories, WA_NUMBER } from './data';
 
       <p class="o1-form__error" data-form-error role="alert" hidden></p>
       <button class="o1-btn o1-btn--primary o1-btn--block" type="submit"><Icon name="whatsapp" /> Lanjutkan ke WhatsApp</button>
-      <p class="o1-form__note">Belum merupakan pemesanan. Pesan baru terkirim setelah Anda menekan Kirim di WhatsApp. Data formulir tidak disimpan di website.</p>
+      <p class="o1-form__note">Kirim pesan di WhatsApp untuk memulai konsultasi. Data formulir tidak disimpan.</p>
       <p class="o1-form__result" data-form-result role="status" hidden>Pesan sudah disiapkan. <a data-form-fallback target="_blank" rel="noopener noreferrer">Buka WhatsApp di sini</a> jika tab belum terbuka.</p>
     </form>
   </div>

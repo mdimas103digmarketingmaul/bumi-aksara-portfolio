@@ -54,7 +54,6 @@ export interface Product {
   name: string;
   /** Harga per box dari Flyer. `null` = tampil "Tanya admin" (jangan isi tanpa sumber resmi). */
   price: number | null;
-  tag: string;
   /** Isi paket / pilihan menu, tampil sebagai chip. */
   items: string[];
   /** Judul kecil di atas `items`, mis. "Pilih salah satu". */
@@ -72,52 +71,50 @@ export interface Product {
 }
 
 export const categories: CategoryInfo[] = [
-  { id: 'nasi-box', label: 'Nasi Box', thumb: productImg('kategori/nasi-box.webp'), intro: 'Lima tingkat paket untuk makan siang kantor, rapat, hingga acara. Isi lauknya bebas Anda racik.' },
-  { id: 'snack-box', label: 'Snack Box', thumb: productImg('kategori/snack-box.webp'), intro: 'Teman jeda rapat, pelatihan, dan acara. Pilih jumlah snack sesuai kebutuhan Anda.' },
-  { id: 'sarapan', label: 'Sarapan & Harian', thumb: productImg('kategori/sarapan.webp'), intro: 'Untuk briefing pagi dan kebutuhan konsumsi rutin kantor maupun institusi. Harga dan jadwal disepakati bersama admin.' },
-  { id: 'tumpeng', label: 'Tumpeng', thumb: productImg('kategori/tumpeng.webp'), intro: 'Untuk syukuran, ulang tahun, dan perayaan bersama. Ukuran, lauk, dan hiasan bisa didiskusikan.' },
-  { id: 'liwet-bowl', label: 'Liwet & Rice Bowl', thumb: productImg('kategori/liwet-bowl.webp'), intro: 'Sajian Nusantara dalam kemasan yang berbeda, dari besek bambu hingga bowl praktis.' },
-  { id: 'hantaran', label: 'Hantaran & Bingkisan', thumb: productImg('kategori/hantaran.webp'), intro: 'Untuk lamaran, pernikahan, dan hadiah. Isi serta kemasan dikonfirmasi saat pemesanan.' }
+  { id: 'nasi-box', label: 'Nasi Box', thumb: productImg('kategori/nasi-box.webp'), intro: 'Lima paket nasi box dengan lauk pilihan Anda.' },
+  { id: 'snack-box', label: 'Snack Box', thumb: productImg('kategori/snack-box.webp'), intro: 'Snack pilihan untuk jeda rapat dan acara.' },
+  { id: 'sarapan', label: 'Sarapan & Harian', thumb: productImg('kategori/sarapan.webp'), intro: 'Sarapan dan konsumsi rutin untuk kantor dan institusi.' },
+  { id: 'tumpeng', label: 'Tumpeng', thumb: productImg('kategori/tumpeng.webp'), intro: 'Tumpeng sesuai selera untuk syukuran dan perayaan.' },
+  { id: 'liwet-bowl', label: 'Liwet & Rice Bowl', thumb: productImg('kategori/liwet-bowl.webp'), intro: 'Sajian Nusantara dalam besek dan bowl praktis.' },
+  { id: 'hantaran', label: 'Lainnya', thumb: productImg('kategori/hantaran.webp'), intro: 'Hantaran, bingkisan, dan pelengkap sajian Anda.' }
 ];
 
 export const products: Product[] = [
   /* Nasi Box — Flyer 082026. Cut-out mengikuti katalog; Mantap memakai foto dokumentasi
      karena katalog memakai gambar yang sama untuk Mantap & Juragan. */
-  { id: 'nasi-hemat', category: 'nasi-box', name: 'Paket Hemat', price: 23000, image: img('nasi-hemat.webp'), imageFit: 'cutout', tag: 'Praktis & hemat', items: ['Nasi', 'Lauk utama', 'Lalapan', 'Sambal'], pack: 'Box coklat / motif basic' },
-  { id: 'nasi-reguler', category: 'nasi-box', name: 'Paket Reguler', price: 26000, image: img('nasi-reguler.webp'), imageFit: 'cutout', tag: 'Teman makan siang', items: ['Nasi', 'Lauk utama', 'Tumisan', 'Sambal', 'Kerupuk', 'Air mineral Zoom'], pack: 'Box coklat / motif basic' },
-  { id: 'nasi-mantap', category: 'nasi-box', name: 'Paket Mantap', price: 35000, image: productImg('nasi-box/nasi-box-mantap.webp'), imageAlt: 'Paket Mantap Hanasari dalam Hanasari Lunch Box berisi lauk, tumisan, gorengan, sambal, kerupuk, dan jeruk', tag: 'Box spesial Hanasari', items: ['Nasi', 'Lauk utama', 'Tumisan', 'Gorengan', 'Sambal', 'Kerupuk', 'Buah / air mineral Le Minerale'], pack: 'Box spesial Hanasari' },
-  { id: 'nasi-juragan', category: 'nasi-box', name: 'Paket Juragan', price: 40000, image: img('nasi-juragan.webp'), imageFit: 'cutout', tag: 'Box spesial Hanasari', items: ['Nasi', 'Lauk utama', 'Tumisan', 'Gorengan', 'Sambal', 'Kerupuk', 'Buah', 'Air mineral Le Minerale'], pack: 'Box spesial Hanasari' },
-  { id: 'nasi-ningrat', category: 'nasi-box', name: 'Paket Ningrat', price: 45000, image: img('nasi-ningrat.webp'), imageFit: 'cutout', tag: 'Dengan 2 lauk utama', items: ['Nasi', '2 lauk utama', 'Tumisan', 'Gorengan', 'Sambal', 'Kerupuk', 'Buah', 'Air mineral Le Minerale'], pack: 'Box spesial Hanasari', featured: true },
+  { id: 'nasi-hemat', category: 'nasi-box', name: 'Paket Hemat', price: 23000, image: img('nasi-hemat.webp'), imageFit: 'cutout', items: ['Nasi', 'Lauk utama', 'Lalapan', 'Sambal'], pack: 'Box coklat / motif basic' },
+  { id: 'nasi-reguler', category: 'nasi-box', name: 'Paket Reguler', price: 26000, image: img('nasi-reguler.webp'), imageFit: 'cutout', items: ['Nasi', 'Lauk utama', 'Tumisan', 'Sambal', 'Kerupuk', 'Air mineral Zoom'], pack: 'Box coklat / motif basic' },
+  { id: 'nasi-mantap', category: 'nasi-box', name: 'Paket Mantap', price: 35000, image: productImg('nasi-box/nasi-box-mantap.webp'), imageAlt: 'Paket Mantap Hanasari dalam Hanasari Lunch Box berisi lauk, tumisan, gorengan, sambal, kerupuk, dan jeruk', items: ['Nasi', 'Lauk utama', 'Tumisan', 'Gorengan', 'Sambal', 'Kerupuk', 'Buah / air mineral Le Minerale'], pack: 'Box spesial Hanasari' },
+  { id: 'nasi-juragan', category: 'nasi-box', name: 'Paket Juragan', price: 40000, image: img('nasi-juragan.webp'), imageFit: 'cutout', items: ['Nasi', 'Lauk utama', 'Tumisan', 'Gorengan', 'Sambal', 'Kerupuk', 'Buah', 'Air mineral Le Minerale'], pack: 'Box spesial Hanasari' },
+  { id: 'nasi-ningrat', category: 'nasi-box', name: 'Paket Ningrat', price: 45000, image: img('nasi-ningrat.webp'), imageFit: 'cutout', items: ['Nasi', '2 lauk utama', 'Tumisan', 'Gorengan', 'Sambal', 'Kerupuk', 'Buah', 'Air mineral Le Minerale'], pack: 'Box spesial Hanasari', featured: true },
 
   /* Snack Box — Flyer 082026 (Compro: "Paket Meeting & Training"). */
-  { id: 'snack-reguler', category: 'snack-box', name: 'Snack Reguler', price: 14000, image: img('snack-reguler.webp'), imageFit: 'cutout', tag: 'Teman jeda acara', items: ['2 pilihan snack', 'Minuman'], pack: 'Box putih / coklat' },
-  { id: 'snack-mantap', category: 'snack-box', name: 'Snack Mantap', price: 18000, image: img('snack-mantap.webp'), imageFit: 'cutout', tag: 'Pilihan lebih beragam', items: ['3 pilihan snack', 'Minuman'], pack: 'Box Hanasari' },
-  { id: 'snack-juragan', category: 'snack-box', name: 'Snack Juragan', price: 23000, image: img('snack-juragan.webp'), imageFit: 'cutout', tag: 'Lengkapi kebersamaan', items: ['4 pilihan snack', 'Air mineral'], pack: 'Box Hanasari', featured: true },
+  { id: 'snack-reguler', category: 'snack-box', name: 'Snack Reguler', price: 14000, image: img('snack-reguler.webp'), imageFit: 'cutout', items: ['2 pilihan snack', 'Minuman'], pack: 'Box putih / coklat' },
+  { id: 'snack-mantap', category: 'snack-box', name: 'Snack Mantap', price: 18000, image: img('snack-mantap.webp'), imageFit: 'cutout', items: ['3 pilihan snack', 'Minuman'], pack: 'Box Hanasari' },
+  { id: 'snack-juragan', category: 'snack-box', name: 'Snack Juragan', price: 23000, image: img('snack-juragan.webp'), imageFit: 'cutout', items: ['4 pilihan snack', 'Air mineral'], pack: 'Box Hanasari', featured: true },
 
   /* Sarapan & harian — Compro B2B Okt 2026. Compro mencantumkan harga khusus B2B
      (Reguler Rp15.000, Premium Rp20.000, kukusan mulai Rp10.000/pax); belum ditampilkan
      sampai harga untuk umum dikonfirmasi client. */
-  { id: 'sarapan-reguler', category: 'sarapan', name: 'Sarapan Reguler', price: null, motif: 'Reguler', tag: 'Paket sarapan karyawan', itemsLabel: 'Pilihan menu', items: ['Lontong Sayur', 'Lontong Kari Ayam', 'Nasi Uduk', 'Nasi Kuning', 'Nasi Ulam'], pack: 'Min. 20 pax · air mineral, sendok, tisu' },
-  { id: 'sarapan-premium', category: 'sarapan', name: 'Sarapan Premium', price: null, motif: 'Premium', tag: 'Paket sarapan karyawan', itemsLabel: 'Pilihan menu', items: ['Lontong Sayur Spesial', 'Nasi Uduk Ayam Goreng', 'Nasi Kuning Ayam Suwir', 'Nasi Liwet Spesial'], pack: 'Min. 20 pax · air mineral, buah, tisu premium' },
-  { id: 'kukusan', category: 'sarapan', name: 'Kukusan', price: null, tag: 'Teman rapat pagi', itemsLabel: 'Pilihan kukusan', items: ['Kacang Tanah', 'Ubi', 'Singkong', 'Pisang Rebus', 'Telur Rebus', 'Edamame'] },
-  { id: 'catering-harian', category: 'sarapan', name: 'Catering Harian', price: null, image: productImg('sarapan/catering-harian.webp'), imageAlt: 'Catering harian Hanasari dalam ompreng bersekat berisi nasi, ayam goreng tepung, sayur, dan puding', tag: 'Makan siang rutin', items: [], note: 'Menu harian dalam ompreng bersekat untuk kebutuhan rutin kantor maupun institusi. Menu rotasi, jadwal, dan jumlah porsi disepakati bersama admin.' },
+  { id: 'sarapan-reguler', category: 'sarapan', name: 'Sarapan Reguler', price: null, image: productImg('sarapan/sarapan-reguler.webp'), imageAlt: 'Paket sarapan Hanasari dalam wadah bersekat', items: [], note: 'Sarapan praktis dengan menu sesuai kebutuhan.' },
+  { id: 'sarapan-premium', category: 'sarapan', name: 'Sarapan Premium', price: null, image: productImg('sarapan/sarapan-premium.webp'), imageAlt: 'Paket sarapan premium Hanasari dalam wadah bersekat', items: [], note: 'Sarapan premium dengan menu sesuai kebutuhan.' },
+  { id: 'kukusan', category: 'sarapan', name: 'Kukusan', price: null, image: productImg('sarapan/kukusan.webp'), imageAlt: 'Contoh penyajian Hanasari dalam besek bambu dengan bungkusan daun pisang dan lauk pendamping', itemsLabel: 'Pilihan kukusan', items: ['Kacang Tanah', 'Ubi', 'Singkong', 'Pisang Rebus', 'Telur Rebus', 'Edamame'] },
+  { id: 'catering-harian', category: 'sarapan', name: 'Catering Harian', price: null, image: productImg('sarapan/catering-harian.webp'), imageAlt: 'Catering harian Hanasari dalam ompreng bersekat berisi nasi, ayam goreng tepung, sayur, dan puding', items: [], note: 'Menu harian dalam ompreng bersekat untuk kebutuhan rutin kantor maupun institusi. Menu rotasi, jadwal, dan jumlah porsi disepakati bersama admin.' },
 
   /* Tumpeng — Flyer 082026 + dokumentasi. Foto Tumpeng Pecel dari folder "Tumpeng Tampah". */
-  { id: 'tumpeng-nasi-kuning', category: 'tumpeng', name: 'Tumpeng Nasi Kuning', price: null, image: productImg('tumpeng/tumpeng-nasi-kuning.webp'), imageAlt: 'Tumpeng nasi kuning Hanasari dikelilingi aneka lauk di atas daun pisang', tag: 'Untuk hari istimewa', items: [], note: 'Nasi kuning dengan aneka lauk untuk syukuran dan perayaan bersama. Hiasan dapat menyesuaikan tema acara. Diskusikan lauk, ukuran, dan porsi dengan admin.' },
-  { id: 'mini-tumpeng', category: 'tumpeng', name: 'Mini Tumpeng', price: null, image: productImg('tumpeng/mini-tumpeng.webp'), imageAlt: 'Mini tumpeng nasi kuning Hanasari dengan hiasan wortel dan lauk pendamping', tag: 'Ulang tahun & syukuran kecil', items: [], note: 'Tumpeng ukuran kecil untuk ulang tahun dan syukuran keluarga, lengkap dengan lauk pendamping. Hiasan bisa disesuaikan.' },
-  { id: 'tumpeng-pecel', category: 'tumpeng', name: 'Tumpeng Pecel', price: null, image: productImg('tumpeng/tumpeng-pecel.webp'), imageAlt: 'Tumpeng pecel Hanasari di atas tampah berisi sayuran, lontong, tahu dan tempe bacem, serta bumbu pecel', tag: 'Disajikan di tampah', itemsLabel: 'Isi tampah', items: ['Lontong', 'Tahu Bacem', 'Tempe Bacem', 'Kangkung', 'Toge', 'Kacang Panjang', 'Kol', 'Bumbu Pecel'] },
+  { id: 'tumpeng-nasi-kuning', category: 'tumpeng', name: 'Tumpeng Nasi Kuning', price: null, image: productImg('tumpeng/tumpeng-nasi-kuning.webp'), imageAlt: 'Tumpeng nasi kuning Hanasari dikelilingi aneka lauk di atas daun pisang', items: [], note: 'Nasi kuning dengan aneka lauk untuk syukuran dan perayaan bersama. Hiasan dapat menyesuaikan tema acara. Diskusikan lauk, ukuran, dan porsi dengan admin.' },
+  { id: 'mini-tumpeng', category: 'tumpeng', name: 'Mini Tumpeng', price: null, image: productImg('tumpeng/mini-tumpeng.webp'), imageAlt: 'Mini tumpeng nasi kuning Hanasari dengan hiasan wortel dan lauk pendamping', items: [], note: 'Tumpeng ukuran kecil untuk ulang tahun dan syukuran keluarga, lengkap dengan lauk pendamping. Hiasan bisa disesuaikan.' },
+  { id: 'tumpeng-pecel', category: 'tumpeng', name: 'Tumpeng Pecel', price: null, image: productImg('tumpeng/tumpeng-pecel.webp'), imageAlt: 'Tumpeng pecel Hanasari di atas tampah berisi sayuran, lontong, tahu dan tempe bacem, serta bumbu pecel', itemsLabel: 'Isi tampah', items: ['Lontong', 'Tahu Bacem', 'Tempe Bacem', 'Kangkung', 'Toge', 'Kacang Panjang', 'Kol', 'Bumbu Pecel'] },
 
   /* Liwet & rice bowl — folder dokumentasi "Nasi Liwet", "Ricebowl". */
-  { id: 'nasi-liwet', category: 'liwet-bowl', name: 'Nasi Liwet', price: null, image: productImg('liwet-bowl/nasi-liwet.webp'), imageAlt: 'Paket nasi liwet Hanasari dalam besek bambu dengan ikan, tahu, tempe, tumisan, dan sambal', tag: 'Dalam besek bambu', items: [], note: 'Nasi liwet dengan lauk pendamping seperti ikan, tahu, tempe, tumisan, dan sambal, dikemas dalam besek bambu. Komposisi dan porsi dikonfirmasi bersama admin.' },
-  { id: 'rice-bowl', category: 'liwet-bowl', name: 'Rice Bowl', price: null, image: productImg('liwet-bowl/rice-bowl.webp'), imageAlt: 'Rice bowl Hanasari berisi ayam berbumbu dengan wijen, selada, dan mentimun', tag: 'Praktis & kekinian', items: [], note: 'Nasi dengan lauk pilihan dalam bowl praktis, cocok untuk acara santai maupun kantor. Tanyakan pilihan lauk dan jumlah pesanan kepada admin.' },
+  { id: 'nasi-liwet', category: 'liwet-bowl', name: 'Nasi Liwet', price: null, image: productImg('liwet-bowl/nasi-liwet.webp'), imageAlt: 'Paket nasi liwet Hanasari dalam besek bambu dengan ikan, tahu, tempe, tumisan, dan sambal', items: [], note: 'Nasi liwet dengan lauk pendamping seperti ikan, tahu, tempe, tumisan, dan sambal, dikemas dalam besek bambu. Komposisi dan porsi dikonfirmasi bersama admin.' },
+  { id: 'rice-bowl', category: 'liwet-bowl', name: 'Rice Bowl', price: null, image: productImg('liwet-bowl/rice-bowl.webp'), imageAlt: 'Rice bowl Hanasari berisi ayam berbumbu dengan wijen, selada, dan mentimun', items: [], note: 'Nasi dengan lauk pilihan dalam bowl praktis, cocok untuk acara santai maupun kantor. Tanyakan pilihan lauk dan jumlah pesanan kepada admin.' },
 
-  /* Hantaran & bingkisan — folder "Hantaran Nikah", "kue kering", "Kembang Goyang";
-     Hampers Buah & Sambal Botol dari Flyer (belum ada dokumentasi foto). */
-  { id: 'hantaran', category: 'hantaran', name: 'Hantaran', price: null, image: productImg('hantaran/hantaran.webp'), imageAlt: 'Hantaran Hanasari berisi bihun goreng, ayam bakar, nasi kuning, dan lauk dalam wadah', tag: 'Lamaran & pernikahan', items: [], note: 'Nasi dan aneka lauk untuk hantaran lamaran atau pernikahan, dikemas dalam besek berpita. Isi, jumlah, dan dekorasi didiskusikan bersama admin.' },
-  { id: 'hampers-kue', category: 'hantaran', name: 'Hampers Kue Kering', price: null, image: productImg('hantaran/hampers-kue-kering.webp'), imageAlt: 'Kue kering nastar Hanasari dalam toples bening', tag: 'Manisnya berbagi', items: [], note: 'Nastar dan aneka kue kering dalam toples untuk bingkisan atau hadiah. Tanyakan varian dan kemasan yang tersedia kepada admin.' },
-  { id: 'kembang-goyang', category: 'hantaran', name: 'Kembang Goyang', price: null, image: productImg('hantaran/kembang-goyang.webp'), imageAlt: 'Kembang goyang Hanasari dalam kemasan plastik berlabel', tag: 'Camilan tradisional', items: [], note: 'Kue kembang goyang renyah dalam kemasan berlabel, untuk suguhan, oleh-oleh, maupun bingkisan.' },
-  { id: 'hampers-buah', category: 'hantaran', name: 'Hampers Buah', price: null, tag: 'Bingkisan penuh perhatian', items: [], note: 'Pilihan bingkisan buah untuk orang terdekat. Jenis buah dan kemasan dikonfirmasi saat pemesanan.' },
-  { id: 'sambal', category: 'hantaran', name: 'Sambal Botol', price: null, tag: 'Pelengkap selera', items: [], note: 'Cita rasa sambal untuk melengkapi hidangan. Tanyakan varian, ukuran, dan harga yang tersedia.' }
+  /* Lainnya — folder "Hantaran Nikah", "kue kering", "Kembang Goyang", "Photo Sambal". */
+  { id: 'hantaran', category: 'hantaran', name: 'Hantaran', price: null, image: productImg('hantaran/hantaran.webp'), imageAlt: 'Hantaran Hanasari berisi bihun goreng, ayam bakar, nasi kuning, dan lauk dalam wadah', items: [], note: 'Nasi dan aneka lauk untuk hantaran lamaran atau pernikahan, dikemas dalam besek berpita. Isi, jumlah, dan dekorasi didiskusikan bersama admin.' },
+  { id: 'hampers-kue', category: 'hantaran', name: 'Hampers Kue Kering', price: null, image: productImg('hantaran/hampers-kue-kering.webp'), imageAlt: 'Kue kering nastar Hanasari dalam toples bening', items: [], note: 'Nastar dan aneka kue kering dalam toples untuk bingkisan atau hadiah. Tanyakan varian dan kemasan yang tersedia kepada admin.' },
+  { id: 'kembang-goyang', category: 'hantaran', name: 'Kembang Goyang', price: null, image: productImg('hantaran/kembang-goyang.webp'), imageAlt: 'Kembang goyang Hanasari dalam kemasan plastik berlabel', items: [], note: 'Kue kembang goyang renyah dalam kemasan berlabel, untuk suguhan, oleh-oleh, maupun bingkisan.' },
+  { id: 'sambal', category: 'hantaran', name: 'Sambal Botol', price: null, image: productImg('hantaran/sambal-botol.webp'), imageAlt: 'Aneka sambal Hanasari dalam botol berlabel merah', items: [], note: 'Cita rasa sambal untuk melengkapi hidangan. Tanyakan varian, ukuran, dan harga yang tersedia.' }
 ];
 
 export const categoryOf = (id: Category) => categories.find((c) => c.id === id)!;
@@ -162,7 +159,7 @@ export const reviews = [
 ];
 
 export const faqs = [
-  { q: 'Apa saja pilihan menu Hanasari?', a: 'Hanasari menyediakan nasi box, snack box, paket sarapan, catering harian, tumpeng nasi kuning, mini tumpeng, tumpeng pecel, nasi liwet, rice bowl, hantaran, hampers kue kering, kembang goyang, hampers buah, serta sambal botol. Untuk kebutuhan di luar daftar tersebut, ceritakan rencana Anda kepada admin. Ketersediaan menu dikonfirmasi saat pemesanan.' },
+  { q: 'Apa saja pilihan menu Hanasari?', a: 'Nasi box, snack box, sarapan, catering harian, tumpeng, nasi liwet, rice bowl, hantaran, kue kering, kembang goyang, dan sambal botol. Menu dapat disesuaikan dengan kebutuhan Anda.' },
   { q: 'Apakah bisa menyesuaikan menu dan anggaran?', a: 'Ceritakan kebutuhan dan kisaran anggaran Anda melalui WhatsApp. Admin akan membantu mendiskusikan pilihan paket, lauk, serta penyesuaian yang tersedia.' },
   { q: 'Berapa minimum pesanan dan kapan harus memesan?', a: 'Minimum pesanan dan waktu persiapan dapat berbeda menurut menu, jumlah, serta tanggal acara. Hubungi admin untuk memastikan sebelum memesan. Katalog mencantumkan minimum 40 pcs khusus roti untuk paket premium.' },
   { q: 'Apakah harga sudah termasuk ongkos kirim?', a: 'Belum. Harga dalam katalog belum termasuk pajak dan ongkos kirim. Total biaya, cakupan pengiriman, dan jadwal akan dikonfirmasi berdasarkan rincian pesanan Anda.' },

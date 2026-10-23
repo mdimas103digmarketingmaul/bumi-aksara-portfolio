@@ -1,7 +1,15 @@
 ---
+/*
+ * Hero homepage:
+ * - label lokasi di atas judul dapat diklik (Google Maps, tab baru);
+ * - baris harga mulai (data resmi Flyer) di bawah tombol, agar harga terlihat tanpa scroll;
+ * - motion: judul masuk per baris, piring nasi kuning berputar sangat pelan (lihat site.css).
+ */
 import Icon from './Icon.astro';
 import BatikMegaMendung from './BatikMegaMendung.astro';
-import { asset, img, productImg, waLink } from './data';
+import { MAPS_URL, asset, img, productImg, products, rupiah, waLink } from './data';
+
+const from = (category: string) => Math.min(...products.filter((p) => p.category === category && p.price).map((p) => p.price as number));
 ---
 <section id="beranda" class="o1-hero" aria-labelledby="o1-hero-title">
   <div class="o1-hero__bg" aria-hidden="true">
@@ -11,23 +19,25 @@ import { asset, img, productImg, waLink } from './data';
 
   <div class="o1-container o1-hero__grid-layout">
     <div class="o1-hero__copy">
-      <p class="o1-eyebrow o1-eyebrow--light"><span class="o1-eyebrow__dot"></span>Selera Nusantara, sepenuh hati</p>
+      <p class="o1-eyebrow o1-eyebrow--light o1-hero__place">
+        <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+          <span>Catering Nusantara&nbsp;·</span> <span>Matraman, Jakarta Timur<Icon name="arrow" size={14} /></span>
+          <span class="o1-visually-hidden">(buka lokasi di Google Maps, tab baru)</span>
+        </a>
+      </p>
       <h1 id="o1-hero-title" class="o1-hero__title">
         <span class="o1-hero__line">Harga Merakyat.</span>
         <span class="o1-hero__line">Rasa <span class="o1-hero__accent">Ningrat<svg viewBox="0 0 380 22" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16Q180 -3 375 10M20 20Q190 6 345 16" /></svg></span>.</span>
       </h1>
-      <p class="o1-hero__lead">
-        Hidangan Nusantara yang akrab di lidah dan istimewa di setiap acara. Dari makan siang kantor hingga syukuran keluarga, biarkan Hanasari menyiapkan sajiannya.
-      </p>
+      <p class="o1-hero__lead">Hidangan Nusantara yang akrab di lidah, untuk makan siang kantor hingga syukuran keluarga.</p>
       <div class="o1-hero__actions">
         <a class="o1-btn o1-btn--primary" href="#menu">Lihat Menu & Harga <Icon name="arrow" /></a>
         <a class="o1-btn o1-btn--ghost-light" href={waLink('Saya ingin bertanya tentang paket catering.', 'Beranda')} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /> Chat WhatsApp</a>
       </div>
-      <ul class="o1-hero__facts" aria-label="Sekilas Hanasari">
-        <li><span>Nasi box mulai</span><strong>Rp23rb</strong></li>
-        <li><span>Snack box mulai</span><strong>Rp14rb</strong></li>
-        <li class="o1-hero__fact-badge"><span>Bisa dipesan via</span><strong>E-Katalog</strong></li>
-      </ul>
+      <p class="o1-hero__from">
+        <span>Nasi box mulai <strong>{rupiah(from('nasi-box'))}</strong></span>
+        <span>Snack box mulai <strong>{rupiah(from('snack-box'))}</strong></span>
+      </p>
     </div>
 
     <div class="o1-hero__visual">
@@ -53,5 +63,4 @@ import { asset, img, productImg, waLink } from './data';
       </a>
     </div>
   </div>
-
 </section>

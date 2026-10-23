@@ -1,7 +1,9 @@
 ---
 /*
- * Daftar artikel — memakai design system utama website (src/styles/site.css).
- * Data tetap dari Content Collection `articles`; detail artikel (/artikel/[slug]/) tidak berubah.
+ * Daftar artikel — design system utama website (src/styles/site.css): latar hero, batik mega mendung,
+ * dan motion yang sama dengan homepage, plus visual tumpeng bundar di sisi kanan hero
+ * (gema piring nasi kuning di hero homepage).
+ * Data tetap dari Content Collection `articles`.
  */
 import { getCollection } from 'astro:content';
 import SiteLayout from '../../layouts/SiteLayout.astro';
@@ -10,6 +12,7 @@ import SiteFooter from '../../components/site/SiteFooter.astro';
 import ArticleCard from '../../components/site/ArticleCard.astro';
 import BatikMegaMendung from '../../components/site/BatikMegaMendung.astro';
 import Icon from '../../components/site/Icon.astro';
+import { img } from '../../components/site/data';
 
 const articles = (await getCollection('articles'))
   .filter(({ data }) => data.status === 'published')
@@ -36,18 +39,31 @@ const searchTextOf = (entry: (typeof articles)[number]) =>
   <SiteHeader onHome={false} current="artikel" />
   <main id="utama">
     <section class="o1-ahero" aria-labelledby="o1-ahero-title" data-float-anchor>
-      <BatikMegaMendung class="o1-ahero__batik" />
-      <div class="o1-container o1-ahero__inner">
-        <p class="o1-eyebrow o1-eyebrow--light">Cerita dari dapur Hanasari</p>
-        <h1 id="o1-ahero-title" class="o1-ahero__title">Artikel, resep, dan <em>promo terbaru.</em></h1>
-        <p class="o1-ahero__lead">Temukan inspirasi sajian, resep sederhana, dan kabar promo Hanasari dalam satu tempat.</p>
+      <div class="o1-ahero__bg" aria-hidden="true">
+        <svg class="o1-hero__grid" viewBox="0 0 400 400"><defs><pattern id="o1-ahero-grid" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><path d="M0 0H40M0 0V40" stroke="currentColor" stroke-width="2.4" fill="none" /></pattern></defs><rect width="400" height="400" fill="url(#o1-ahero-grid)" /></svg>
+        <span class="o1-hero__glow"></span>
+      </div>
+      <div class="o1-container o1-ahero__inner o1-ahero__layout">
+        <div class="o1-ahero__copy">
+          <p class="o1-eyebrow o1-eyebrow--light">Cerita dari dapur Hanasari</p>
+          <h1 id="o1-ahero-title" class="o1-ahero__title">Artikel, resep, dan <em>promo terbaru.</em></h1>
+          <p class="o1-ahero__lead">Temukan inspirasi sajian, resep sederhana, dan kabar promo Hanasari dalam satu tempat.</p>
 
-        <form class="o1-search" role="search" action="/artikel/" method="get" data-article-search>
-          <label class="o1-visually-hidden" for="o1-search-input">Cari artikel</label>
-          <svg class="o1-search__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4" /></svg>
-          <input id="o1-search-input" class="o1-search__input" type="search" name="q" placeholder="Cari artikel, resep, tips, atau promo..." autocomplete="off" enterkeyhint="search" aria-controls="o1-article-list" />
-          <button class="o1-search__clear" type="button" data-search-clear aria-label="Hapus pencarian" hidden><Icon name="close" size={16} /></button>
-        </form>
+          <form class="o1-search" role="search" action="/artikel/" method="get" data-article-search>
+            <label class="o1-visually-hidden" for="o1-search-input">Cari artikel</label>
+            <svg class="o1-search__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4" /></svg>
+            <input id="o1-search-input" class="o1-search__input" type="search" name="q" placeholder="Cari artikel, resep, tips, atau promo..." autocomplete="off" enterkeyhint="search" aria-controls="o1-article-list" />
+            <button class="o1-search__clear" type="button" data-search-clear aria-label="Hapus pencarian" hidden><Icon name="close" size={16} /></button>
+          </form>
+        </div>
+
+        <div class="o1-ahero__visual">
+          <BatikMegaMendung class="o1-ahero__batik" />
+          <span class="o1-ahero__ring" aria-hidden="true"></span>
+          <figure class="o1-ahero__disc">
+            <img src={img('tumpeng-atas-840.webp')} alt="Tumpeng nasi kuning Hanasari dilihat dari atas, dikelilingi lauk di atas daun pisang" width="840" height="840" fetchpriority="high" decoding="async" />
+          </figure>
+        </div>
       </div>
     </section>
 

@@ -1,23 +1,10 @@
 ---
+/*
+ * "Racik isi box": foto racikan Paket Ningrat dengan penanda bernomor, lalu penjelajah isi per kategori.
+ * Jumlah per kategori cukup tampil di tombol filter; ajakan memesan cukup satu kalimat di lead.
+ */
 import Icon from './Icon.astro';
-import { dishGroups, products, productImg, waLink } from './data';
-
-const count = (ids: string[]) => dishGroups.filter((g) => ids.includes(g.id)).reduce((n, g) => n + g.items.length, 0);
-const stats = [
-  { value: count(['ayam', 'daging', 'ikan']), label: 'Lauk utama' },
-  { value: count(['tumisan', 'gorengan']), label: 'Tumisan & gorengan' },
-  { value: count(['sambal']), label: 'Sambal' },
-  { value: count(['snack']), label: 'Snack & kue' }
-];
-
-/* Paket yang isinya bisa diracik (Flyer 082026); tautan membuka kartu paketnya di section menu. */
-const packages = [
-  { category: 'nasi-box', label: 'Nasi Box' },
-  { category: 'snack-box', label: 'Snack Box' }
-].map((group) => ({
-  ...group,
-  items: products.filter((p) => p.category === group.category).map((p) => ({ id: p.id, name: p.name.replace(/^(Paket|Snack) /, '') }))
-}));
+import { dishGroups, productImg } from './data';
 
 /* Contoh racikan Paket Ningrat (foto dokumentasi). Posisi penanda dalam persen terhadap foto 4:3. */
 const anatomy = [
@@ -37,19 +24,8 @@ const anatomy = [
       <div>
         <p class="o1-eyebrow o1-eyebrow--light">Racik isi box</p>
         <h2 id="o1-dishes-title" class="o1-h2 o1-h2--light">Bebas pilih menu. <em>Sesuai selera.</em></h2>
-        <p class="o1-dishes__lead">Setiap paket nasi box dan snack box bisa diisi dengan lauk, tumisan, sambal, dan snack favorit Anda. Intip pilihannya di bawah, lalu sampaikan kombinasi yang diinginkan kepada admin.</p>
-        <div class="o1-dishes__apply">
-          {packages.map((group) => (
-            <p>
-              <span>{group.label}</span>
-              {group.items.map((item) => <a href={`#menu-${item.id}`} data-tab-link={group.category} data-card={`menu-${item.id}`}>{item.name}</a>)}
-            </p>
-          ))}
-        </div>
       </div>
-      <ul class="o1-dishes__stats">
-        {stats.map((s) => <li><strong data-count={s.value}>{s.value}</strong><span>{s.label}</span></li>)}
-      </ul>
+      <p class="o1-dishes__lead">Semua paket nasi box dan snack box bisa diisi lauk, tumisan, sambal, dan snack pilihan Anda.</p>
     </div>
 
     <div class="o1-dishes__body">
@@ -82,9 +58,9 @@ const anatomy = [
           </div>
         ))}
         <div class="o1-dishes__foot">
-          <p>*Mengikuti ketersediaan. Konfirmasikan pilihan isi kepada admin.<br />Favorit pelanggan: Daging Balado Pedas Manis, Ayam Bakar Taliwang, Ikan Gurame Goreng.</p>
-          <a class="o1-btn o1-btn--primary o1-btn--sm" href={waLink('Saya ingin meracik isi nasi box / snack box. Boleh dibantu pilihan lauknya?', 'Racik isi box')} target="_blank" rel="noopener noreferrer">
-            <Icon name="whatsapp" /> Racik bersama admin
+          <p>*Mengikuti ketersediaan.<br />Favorit pelanggan: Daging Balado Pedas Manis, Ayam Bakar Taliwang, Ikan Gurame Goreng.</p>
+          <a class="o1-btn o1-btn--primary o1-btn--sm" href="#konsultasi">
+            Racik bersama admin <Icon name="arrow" />
           </a>
         </div>
       </div>

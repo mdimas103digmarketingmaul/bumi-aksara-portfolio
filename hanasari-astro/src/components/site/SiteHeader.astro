@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { HOME_PATH, asset, waLink } from './data';
+import { HOME_PATH, asset } from './data';
 
 interface Props {
   /** false di halaman selain homepage (mis. /artikel/): anchor section diarahkan ke homepage. */
@@ -34,16 +34,15 @@ const links = [
         {links.map((link) => <li><a href={link.href} aria-current={link.key && link.key === current ? 'page' : undefined}>{link.label}</a></li>)}
       </ul>
       <div class="o1-nav__mobile-extra">
-        <a class="o1-btn o1-btn--primary o1-btn--block" href={waLink('Saya ingin konsultasi kebutuhan catering.', 'Navigasi mobile')} target="_blank" rel="noopener noreferrer">
-          <Icon name="whatsapp" /> Konsultasi via WhatsApp
+        <a class="o1-btn o1-btn--primary o1-btn--block" href={`${base}#konsultasi`}>
+          Konsultasi <Icon name="arrow" />
         </a>
-        <p>Senang membantu merencanakan sajian untuk acara Anda.</p>
       </div>
     </nav>
 
     <div class="o1-header__actions">
-      <a class="o1-btn o1-btn--primary o1-btn--sm o1-header__cta" href={waLink('Saya ingin konsultasi kebutuhan catering.', 'Navigasi')} target="_blank" rel="noopener noreferrer">
-        Konsultasi Acara <Icon name="arrow" size={16} />
+      <a class="o1-btn o1-btn--primary o1-btn--sm o1-header__cta" href={`${base}#konsultasi`}>
+        Konsultasi <Icon name="arrow" size={16} />
       </a>
       <button class="o1-burger" type="button" aria-expanded="false" aria-controls="o1-nav" aria-label="Buka navigasi" data-nav-toggle>
         <span></span><span></span>

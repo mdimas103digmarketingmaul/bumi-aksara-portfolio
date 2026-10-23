@@ -7,10 +7,6 @@ import { faqs, waLink } from './data';
     <div class="o1-faq__intro" data-reveal>
       <p class="o1-eyebrow">Sebelum memesan</p>
       <h2 id="o1-faq-title" class="o1-h2">Mungkin ini yang ingin <em>ditanyakan.</em></h2>
-      <div class="o1-faq__help">
-        <p><strong>Masih ada pertanyaan lain?</strong> Admin Hanasari siap membantu melalui WhatsApp.</p>
-        <a class="o1-btn o1-btn--dark o1-btn--sm" href={waLink('Saya punya pertanyaan tentang layanan Hanasari.', 'FAQ')} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /> Tanya admin</a>
-      </div>
     </div>
     <div class="o1-faq__list" data-reveal>
       {faqs.map((item, i) => (

@@ -5,8 +5,7 @@ import { categories, products, CATALOG_URL } from './data';
 
 const groups = categories.map((cat) => {
   const list = products.filter((p) => p.category === cat.id);
-  const prices = list.map((p) => p.price).filter((p): p is number => p !== null);
-  return { ...cat, list, from: prices.length ? Math.min(...prices) : null };
+  return { ...cat, list };
 });
 ---
 <section id="menu" class="o1-section o1-menu" aria-labelledby="o1-menu-title">
@@ -17,7 +16,6 @@ const groups = categories.map((cat) => {
         <h2 id="o1-menu-title" class="o1-h2">Ada sajian untuk <em>setiap kesempatan.</em></h2>
       </div>
       <div class="o1-heading__aside">
-        <p>Dari nasi box kantor dan tumpeng syukuran, hingga hantaran dan kue kering. Pilih kategori untuk melihat pilihannya.</p>
         <a class="o1-link" href={CATALOG_URL} target="_blank" rel="noopener"><Icon name="doc" size={18} /> Unduh katalog lengkap (PDF)</a>
       </div>
     </div>
@@ -29,7 +27,7 @@ const groups = categories.map((cat) => {
             <span class="o1-cat__thumb"><img src={cat.thumb} alt="" width="88" height="88" loading="lazy" decoding="async" /></span>
             <span class="o1-cat__text">
               <strong>{cat.label}</strong>
-              <small>{cat.list.length} pilihan{cat.from && <> · mulai Rp{cat.from / 1000}rb</>}</small>
+              <small>{cat.list.length} pilihan</small>
             </span>
           </button>
         ))}

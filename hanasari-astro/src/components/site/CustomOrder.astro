@@ -1,13 +1,13 @@
 ---
 import Icon from './Icon.astro';
-import { productImg, waLink } from './data';
+import { productImg } from './data';
 
-/* Sumber: Compro B2B Hanasari Okt 2026 (Layanan Kami, Kapasitas Produksi, Skema Kerja Sama). */
+/* Sumber: Compro B2B Hanasari Okt 2026 (Layanan Kami). */
 const services = [
-  { icon: 'calendar', title: 'Catering harian', text: 'Konsumsi rutin kantor dan institusi, dengan menu rotasi mingguan.' },
-  { icon: 'users', title: 'Acara kantor & meeting', text: 'Nasi box, snack box, dan sarapan untuk rapat, pelatihan, hingga kegiatan cabang.' },
-  { icon: 'heart', title: 'Ulang tahun & acara keluarga', text: 'Tumpeng, nasi liwet, hingga hantaran untuk momen bersama.' },
-  { icon: 'spark', title: 'Menu custom', text: 'Lauk, kemasan, dan jumlah porsi disesuaikan dengan kebutuhan Anda.' }
+  { icon: 'calendar', title: 'Catering harian' },
+  { icon: 'users', title: 'Acara kantor' },
+  { icon: 'heart', title: 'Acara keluarga' },
+  { icon: 'spark', title: 'Menu custom' }
 ] as const;
 
 const photos = [
@@ -20,21 +20,16 @@ const photos = [
   <div class="o1-container o1-custom__grid">
     <div class="o1-custom__copy" data-reveal>
       <p class="o1-eyebrow">Kebutuhan khusus</p>
-      <h2 id="o1-custom-title" class="o1-h2">Tak ada di daftar? <em>Ceritakan saja.</em></h2>
-      <p class="o1-custom__lead">Dapur Hanasari terbiasa menyiapkan konsumsi dalam jumlah besar dengan menu yang menyesuaikan acara. Selain pilihan di atas, kami juga melayani:</p>
+      <h2 id="o1-custom-title" class="o1-h2 o1-custom__title"><span>Punya acara khusus?</span> <em>Ceritakan kepada kami.</em></h2>
+      <p class="o1-custom__lead">Menu, porsi, dan kemasan menyesuaikan acara Anda.</p>
       <ul class="o1-custom__services">
         {services.map((s) => (
           <li>
             <span class="o1-custom__icon"><Icon name={s.icon} size={20} /></span>
-            <div><h3>{s.title}</h3><p>{s.text}</p></div>
+            <h3>{s.title}</h3>
           </li>
         ))}
       </ul>
-      <p class="o1-custom__fact"><strong>500–1.000 box</strong><span>kapasitas produksi, dengan invoice bulanan untuk kerja sama korporat.</span></p>
-      <div class="o1-custom__actions">
-        <a class="o1-btn o1-btn--primary" href={waLink('Saya punya kebutuhan catering khusus di luar paket yang tersedia. Boleh saya konsultasikan?', 'Kebutuhan khusus')} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /> Konsultasikan kebutuhan</a>
-        <a class="o1-link" href="#konsultasi">Atau isi formulir singkat <Icon name="arrow" size={18} /></a>
-      </div>
     </div>
 
     <div class="o1-custom__mosaic" data-reveal>

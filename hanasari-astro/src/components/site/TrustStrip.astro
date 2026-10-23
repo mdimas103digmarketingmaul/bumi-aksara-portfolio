@@ -3,10 +3,10 @@ import Icon from './Icon.astro';
 import { clients, img } from './data';
 
 const features = [
-  { icon: 'leaf', title: 'Sajian halal', text: 'Bahan terbaik, diolah higienis' },
-  { icon: 'spark', title: 'Ragam rasa Nusantara', text: 'Lauk, tumisan, dan sambal pilihan' },
-  { icon: 'users', title: 'Paket tiap momen', text: 'Dari keluarga hingga korporasi' },
-  { icon: 'box', title: 'Bebas pilih menu', text: 'Racik isi box sesuai selera acara', href: '#racik-isi-box' }
+  { icon: 'leaf', title: 'Sajian halal' },
+  { icon: 'spark', title: 'Ragam rasa Nusantara' },
+  { icon: 'users', title: 'Paket tiap momen' },
+  { icon: 'box', title: 'Bebas pilih menu', href: '#racik-isi-box' }
 ] as const;
 ---
 <section id="keunggulan" class="o1-trust" aria-label="Keunggulan dan pelanggan Hanasari">
@@ -17,13 +17,13 @@ const features = [
           {'href' in item ? (
             <a href={item.href} class="o1-trust__feature o1-trust__feature--link">
               <span class="o1-trust__icon"><Icon name={item.icon} size={22} /></span>
-              <span><strong>{item.title}</strong><small>{item.text}</small></span>
+              <strong>{item.title}</strong>
               <Icon name="arrow" size={16} class="o1-trust__arrow" />
             </a>
           ) : (
             <div class="o1-trust__feature">
               <span class="o1-trust__icon"><Icon name={item.icon} size={22} /></span>
-              <span><strong>{item.title}</strong><small>{item.text}</small></span>
+              <strong>{item.title}</strong>
             </div>
           )}
         </li>
@@ -31,7 +31,7 @@ const features = [
     </ul>
 
     <div class="o1-clients" data-reveal>
-      <h2 class="o1-clients__title">Terima kasih untuk <em>kepercayaan Anda</em> selama ini.</h2>
+      <h2 class="o1-clients__title">Terima kasih atas <em>kepercayaan Anda:</em></h2>
       <div class="o1-marquee o1-clients__marquee" aria-label="Pelanggan Hanasari">
         <ul class="o1-marquee__track">
           {clients.map((name) => <li>{name}</li>)}
