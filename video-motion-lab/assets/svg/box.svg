@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="640" viewBox="0 0 520 640">
+  <path d="M60 140 L300 80 L470 150 L230 215Z" fill="#ffd166"/>
+  <path d="M60 140 L230 215 V600 L60 520Z" fill="#f2a93b"/>
+  <path d="M230 215 L470 150 V530 L230 600Z" fill="#ffc43d"/>
+  <path d="M230 215 L470 150 V200 L230 266Z" fill="#1f3b2d"/>
+  <text x="350" y="300" text-anchor="middle" font-family="Impact, Arial Black, sans-serif" font-size="64" fill="#1f3b2d" transform="rotate(-15 350 300)">KRIUK</text>
+  <text x="350" y="345" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" letter-spacing="5" fill="#1f3b2d" transform="rotate(-15 350 345)">ORIGINAL CHIPS</text>
+  <g transform="rotate(-15 350 440)"><ellipse cx="350" cy="440" rx="70" ry="44" fill="#f7e2a8"/><ellipse cx="330" cy="432" rx="10" ry="6" fill="#d9a441"/><ellipse cx="370" cy="452" rx="8" ry="5" fill="#d9a441"/></g>
+  <path d="M60 140 L230 215 L230 266 L60 190Z" fill="#183025"/>
+  <text x="145" y="420" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" letter-spacing="3" fill="#7a4d10" transform="rotate(24 145 420) skewY(0)">100 G</text>
+</svg>

@@ -10,6 +10,27 @@ import BatikMegaMendung from './BatikMegaMendung.astro';
 import { MAPS_URL, asset, img, productImg, products, rupiah, waLink } from './data';
 
 const from = (category: string) => Math.min(...products.filter((p) => p.category === category && p.price).map((p) => p.price as number));
+
+/*
+ * Teks melingkar medalion: setiap huruf diletakkan sendiri pada sudutnya (bukan <textPath> + letter-spacing),
+ * karena Safari iOS mengukur textPath berbeda sehingga huruf bertabrakan atau terpotong di ujung jalur.
+ * Lebar huruf memakai perkiraan metrik Poppins 600; sisa keliling dibagi rata sebagai jarak antarhuruf.
+ * Pemisah berupa asterisk vektor (bukan karakter ✳, yang di iPhone tampil sebagai emoji kotak hijau).
+ */
+const SEAL = { r: 76, size: 14, star: 9 };
+const glyph: Record<string, number> = { A: .72, C: .7, D: .74, E: .6, G: .76, H: .74, I: .3, K: .68, N: .76, R: .66, S: .62, T: .62, U: .72, Y: .66, ' ': .3 };
+const sealItems = ['CITA RASA NUSANTARA', 'RAYAKAN DENGAN HANASARI'].flatMap((phrase) => [
+  ...[...phrase].map((ch) => ({ ch, w: (glyph[ch] ?? .66) * SEAL.size })),
+  { ch: '*', w: SEAL.star * 1.6 }
+]);
+const circumference = 2 * Math.PI * SEAL.r;
+const gap = (circumference - sealItems.reduce((n, i) => n + i.w, 0)) / sealItems.length;
+let cursor = 0;
+const sealGlyphs = sealItems.map((item) => {
+  const angle = ((cursor + gap / 2 + item.w / 2) / circumference) * 360;
+  cursor += item.w + gap;
+  return { ...item, angle: +angle.toFixed(2) };
+}).filter((item) => item.ch !== ' ');
 ---
 <section id="beranda" class="o1-hero" aria-labelledby="o1-hero-title">
   <div class="o1-hero__bg" aria-hidden="true">
@@ -51,8 +72,10 @@ const from = (category: string) => Math.min(...products.filter((p) => p.category
       </div>
       <div class="o1-hero__seal" aria-hidden="true">
         <svg viewBox="0 0 200 200">
-          <defs><path id="o1-seal-path" d="M100 100m-74 0a74 74 0 1 1 148 0a74 74 0 1 1-148 0" /></defs>
-          <text><textPath href="#o1-seal-path">Cita Rasa Nusantara ✳ Rayakan dengan Hanasari ✳</textPath></text>
+          {sealGlyphs.map(({ ch, angle }) => ch === '*'
+            ? <path class="o1-hero__seal-star" d="M0-4.5v9M-4.5 0h9M-3.2-3.2l6.4 6.4M3.2-3.2l-6.4 6.4" transform={`rotate(${angle} 100 100) translate(100 ${100 - SEAL.r - SEAL.size * .35})`} />
+            : <text x="100" y={100 - SEAL.r} transform={`rotate(${angle} 100 100)`}>{ch}</text>
+          )}
         </svg>
         <img class="o1-hero__seal-mark" src={asset('hs-mark-white.webp')} alt="" width="306" height="246" />
       </div>

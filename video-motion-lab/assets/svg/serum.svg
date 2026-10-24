@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="800" viewBox="0 0 400 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7a4a2a"/><stop offset=".25" stop-color="#c98a55"/><stop offset=".5" stop-color="#e8b27a"/><stop offset=".8" stop-color="#a5663a"/><stop offset="1" stop-color="#5e341c"/></linearGradient>
+    <linearGradient id="cap" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#151515"/><stop offset=".4" stop-color="#4a4a4a"/><stop offset="1" stop-color="#0c0c0c"/></linearGradient>
+    <linearGradient id="hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <ellipse cx="200" cy="168" rx="46" ry="14" fill="#0c0c0c"/>
+  <path d="M154 60 C154 20 246 20 246 60 V170 H154Z" fill="url(#cap)"/>
+  <rect x="140" y="160" width="120" height="70" rx="10" fill="url(#cap)"/>
+  <path d="M90 300 C90 250 120 230 160 230 H240 C280 230 310 250 310 300 V720 C310 750 290 770 260 770 H140 C110 770 90 750 90 720Z" fill="url(#g)"/>
+  <rect x="112" y="250" width="22" height="490" rx="11" fill="url(#hl)"/>
+  <rect x="110" y="400" width="180" height="230" rx="6" fill="#f4ede2"/>
+  <text x="200" y="470" text-anchor="middle" font-family="Georgia, serif" font-size="46" letter-spacing="6" fill="#2a1a10">SÉRA</text>
+  <rect x="160" y="490" width="80" height="2" fill="#2a1a10"/>
+  <text x="200" y="530" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="16" letter-spacing="4" fill="#5a4030">DAILY SERUM</text>
+  <text x="200" y="600" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" letter-spacing="2" fill="#8a7060">30 ML · 1.0 FL OZ</text>
+</svg>

@@ -15,6 +15,10 @@
 @font-face { font-family: 'O1 Body'; font-style: normal; font-weight: 700; font-display: swap; src: url('/assets/fonts/poppins-3.woff2') format('woff2'); }
 
 .o1-root {
+  /* Ikon vektor untuk mask CSS: tampil sama di semua perangkat (karakter ✳/↗ bisa dirender sebagai emoji di iOS) */
+  --icon-asterisk: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  --icon-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 17 17 7M8 7h9v9' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
   /* Brand */
   --green: #309c31;
   --green-700: #237a25;
@@ -278,10 +282,9 @@
 .o1-js .o1-hero__arch img { animation: o1-zoom-out 1.6s var(--ease) both; }
 .o1-hero__arch-outline { transform: translate(-22px, 22px); border: 1.5px solid rgba(220, 175, 95, .55); }
 
-.o1-hero__plate {
-  position: absolute; left: -2%; bottom: 0; width: 50%; aspect-ratio: 1;
-  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .45));
-}
+.o1-hero__plate { position: absolute; left: -2%; bottom: 0; width: 50%; aspect-ratio: 1; isolation: isolate; }
+/* Bayangan piring: lingkaran di belakang foto (lebih ringan dan stabil di iOS daripada filter drop-shadow) */
+.o1-hero__plate::before { content: ''; position: absolute; z-index: -1; inset: 8%; border-radius: 50%; box-shadow: 0 30px 46px 4px rgba(0, 0, 0, .42); }
 .o1-hero__plate img { width: 100%; height: 100%; object-fit: contain; animation: o1-spin 80s linear infinite; }
 
 .o1-hero__seal {
@@ -291,7 +294,8 @@
   box-shadow: 0 0 0 1px rgba(220, 175, 95, .35), 0 20px 40px -20px rgba(0, 0, 0, .7);
 }
 .o1-hero__seal svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: o1-spin 26s linear infinite; }
-.o1-hero__seal text { fill: currentColor; font-family: var(--font-body); font-weight: 600; font-size: 15.5px; letter-spacing: .2em; text-transform: uppercase; }
+.o1-hero__seal text { fill: currentColor; font-family: var(--font-body); font-weight: 600; font-size: 14px; text-anchor: middle; }
+.o1-hero__seal-star { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
 .o1-hero__seal-mark { width: 34%; height: auto; opacity: .92; }
 
 .o1-hero__ticket {
@@ -346,7 +350,9 @@
 .o1-marquee:hover .o1-marquee__track { animation-play-state: paused; }
 .o1-clients__marquee { --gap: 56px; --speed: 36s; padding-block: 6px; }
 .o1-clients__marquee li { position: relative; color: var(--ink); font-family: var(--font-display); font-weight: 700; font-size: clamp(16px, 1.4vw, 19px); letter-spacing: -.01em; white-space: nowrap; }
-.o1-clients__marquee li::after { content: '✳'; position: absolute; right: calc(var(--gap) / -2 - 6px); top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 13px; }
+.o1-clients__marquee li::after { content: ''; position: absolute; right: calc(var(--gap) / -2 - 6px); top: 50%; width: 12px; height: 12px; transform: translateY(-50%); background: var(--gold); -webkit-mask: var(--icon-asterisk) center / contain no-repeat; mask: var(--icon-asterisk) center / contain no-repeat; }
+
+.o1-asterisk { display: inline-block; width: .8em; height: .8em; vertical-align: middle; background: currentColor; -webkit-mask: var(--icon-asterisk) center / contain no-repeat; mask: var(--icon-asterisk) center / contain no-repeat; }
 
 /* ---------- Menu ---------- */
 .o1-menu { padding-top: var(--sec-tight); }
@@ -961,7 +967,7 @@
   .o1-nav.is-open { opacity: 1; visibility: visible; transform: none; transition: opacity .3s var(--ease), transform .3s var(--ease); }
   .o1-nav ul { flex-direction: column; align-items: stretch; gap: 0; }
   .o1-nav ul a { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid var(--line); font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 5vw, 30px); letter-spacing: -.02em; opacity: 1; }
-  .o1-nav ul a::after { position: static; content: '↗'; width: auto; height: auto; background: none; color: var(--orange-600); font-size: .7em; transform: none; }
+  .o1-nav ul a::after { position: static; flex: none; content: ''; width: .72em; height: .72em; border-radius: 0; background: var(--orange-600); -webkit-mask: var(--icon-arrow) center / contain no-repeat; mask: var(--icon-arrow) center / contain no-repeat; transform: none; }
   .o1-nav__mobile-extra { display: grid; gap: 12px; }
 
   .o1-hero__grid-layout { grid-template-columns: 1fr; }
@@ -1003,8 +1009,7 @@
   .o1-hero__batik { opacity: .36; }
   .o1-hero__arch-outline { transform: translate(-12px, 12px); }
   .o1-hero__plate { width: 52%; left: -3%; bottom: 2%; }
-  .o1-hero__seal { left: 2%; top: 4%; width: 96px; }
-  .o1-hero__seal text { font-size: 16.5px; }
+  .o1-hero__seal { left: 2%; top: 4%; width: 106px; }
   .o1-hero__ticket { right: 0; bottom: 0; max-width: 260px; padding: 8px 12px 8px 8px; gap: 10px; }
   .o1-hero__ticket small { font-size: 9px; letter-spacing: .08em; }
   .o1-hero__ticket img { width: 46px; height: 46px; }
@@ -1120,10 +1125,11 @@
 .o1-hero__place a:hover { color: var(--gold-100); text-decoration-color: var(--gold); }
 .o1-hero__place a:hover svg { transform: translate(2px, -2px); }
 
-/* Nasi kuning: masuk dengan putaran halus, lalu terus berputar sangat pelan (satu putaran ±2 menit).
-   Putaran kontinu harus linear agar tidak terasa "berdenyut"; spin baru mulai setelah settle selesai
-   di 0°, jadi peralihannya mulus. Medalion tetap melambat agar tidak bersaing. */
-.o1-root .o1-hero__plate img { animation: o1-settle 1.6s .2s var(--ease) both, o1-spin 120s linear 1.8s infinite; }
+/* Nasi kuning: wadah piring masuk dengan putaran halus, foto di dalamnya terus berputar sangat pelan
+   (satu putaran 2 menit, linear agar tidak terasa "berdenyut"). Satu animasi transform per elemen:
+   Safari iOS tidak andal menjalankan dua animasi transform pada elemen yang sama. Medalion melambat. */
+.o1-root .o1-hero__plate img { animation: o1-spin 120s linear infinite; }
+.o1-root.o1-js .o1-hero__plate { animation: o1-settle 1.6s .2s var(--ease) both; }
 .o1-root .o1-hero__seal svg { animation-duration: 60s; }
 
 /* Masuk hero: judul per baris, lalu teks pendukung */
@@ -1223,8 +1229,9 @@
   border-radius: 50%; overflow: hidden; background: var(--ink-800);
   box-shadow: 0 0 0 6px rgba(220, 175, 95, .1), 0 40px 70px -30px rgba(0, 0, 0, .75);
 }
-/* Sedikit diperbesar agar tepi meja putih di foto tidak ikut terlihat di lingkaran */
-.o1-ahero__disc img { position: absolute; inset: -4%; width: 108%; height: 108%; max-width: none; object-fit: cover; }
+/* Foto sudah dipotong rapat (tanpa tepi meja), jadi cukup dibulatkan sendiri; tidak bergantung pada
+   overflow induk, yang di iOS kadang gagal memotong anak yang sedang berputar */
+.o1-ahero__disc img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 .o1-ahero__batik {
   position: absolute; z-index: -1; top: -26%; right: -44%; width: 150%; height: auto;
   color: var(--gold); opacity: .45; pointer-events: none;
@@ -1232,8 +1239,9 @@
   mask-image: linear-gradient(200deg, #000 35%, transparent 90%);
 }
 .o1-root.o1-js .o1-ahero__batik { animation: o1-batik-in 1.8s .2s var(--ease) both; }
-/* Tumpeng: masuk dengan putaran halus lalu berputar sangat pelan, sama seperti piring nasi kuning */
-.o1-root.o1-js .o1-ahero__disc img { animation: o1-settle 1.6s .2s var(--ease) both, o1-spin 160s linear 1.8s infinite; }
+/* Tumpeng: sama seperti piring nasi kuning (wadah masuk, foto berputar sangat pelan) */
+.o1-root .o1-ahero__disc img { animation: o1-spin 160s linear infinite; }
+.o1-root.o1-js .o1-ahero__disc { animation: o1-settle 1.6s .2s var(--ease) both; }
 
 /* Masuk halaman: sama dengan hero homepage (naik halus per baris) */
 .o1-root.o1-js .o1-ahero__copy > *,
@@ -1270,14 +1278,17 @@
 
   .o1-root .o1-occasions { padding: 14px 0; }
 
-  /* Artikel: tumpeng turun ke bawah teks dan "terbit" dari tepi bawah hero (setengah lingkaran),
-     jadi judul tetap lega dan gambar tidak memakan banyak ruang */
-  .o1-root .o1-ahero:has(.o1-ahero__visual) { padding-bottom: 0; }
-  .o1-ahero__layout { grid-template-columns: 1fr; gap: 0; }
-  .o1-ahero__visual { justify-self: end; width: min(260px, 70vw); aspect-ratio: auto; height: min(130px, 35vw); margin: 28px -4% 0 0; }
-  .o1-ahero__ring, .o1-ahero__disc { inset: 0 0 auto; height: auto; aspect-ratio: 1; }
-  .o1-ahero__batik { top: -45%; right: -30%; width: 140%; opacity: .32; }
-  .o1-ahero__bg .o1-hero__glow { width: 320px; height: 320px; right: -20%; top: auto; bottom: -160px; }
+  /* Artikel: tumpeng utuh (tidak terpotong) dan lebih kecil, duduk di samping lead.
+     Isi .o1-ahero__copy ikut grid induk lewat display: contents: judul & pencarian tetap selebar penuh. */
+  .o1-ahero__layout { grid-template-columns: minmax(0, 1fr) clamp(100px, 30vw, 132px); gap: 0 18px; align-items: center; }
+  .o1-ahero__copy { display: contents; }
+  .o1-ahero__copy > * { grid-column: 1 / -1; }
+  .o1-ahero__copy > .o1-ahero__lead { grid-column: 1; }
+  .o1-ahero__visual { grid-column: 2; grid-row: 3; margin-top: 18px; }
+  .o1-ahero__ring { transform: translate(-8px, 7px); }
+  .o1-ahero__disc { box-shadow: 0 0 0 4px rgba(220, 175, 95, .1), 0 22px 40px -18px rgba(0, 0, 0, .75); }
+  .o1-ahero__batik { top: -60%; right: -70%; width: 230%; opacity: .32; }
+  .o1-ahero__bg .o1-hero__glow { width: 320px; height: 320px; right: -30%; top: 10%; }
 
   /* Lokasi: pecah rapi menjadi dua baris; garis pembuka disembunyikan agar tidak menggantung */
   .o1-hero__place::before { display: none; }

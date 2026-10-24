@@ -37,11 +37,11 @@ const photo = img('tim-hanasari');
   <div class="o1-marquee o1-marquee--big">
     {[0, 1].map((n) => (
       <ul class="o1-marquee__track" aria-hidden={n === 1 ? 'true' : undefined}>
-        <li>Rapat kantor</li><li class="is-star">✳</li>
-        <li>Acara keluarga</li><li class="is-star">✳</li>
-        <li>Syukuran</li><li class="is-star">✳</li>
-        <li>Momen berbagi</li><li class="is-star">✳</li>
-        <li>#RayakanDenganHanasari</li><li class="is-star">✳</li>
+        <li>Rapat kantor</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
+        <li>Acara keluarga</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
+        <li>Syukuran</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
+        <li>Momen berbagi</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
+        <li>#RayakanDenganHanasari</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
       </ul>
     ))}
   </div>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-format="9:16" data-motion="on">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Motion Lab — Interactive Dictionary &amp; Playground for Motion Design</title>
+  <meta name="description" content="An interactive visual dictionary and playground for video motion design: live, scrubbable timelines for typography, camera, transitions, product UI, data, brand, social hooks, ads and cinematic effects — each with motion anatomy, timing recipe and a reusable AI prompt." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#09090a" />
+  <link rel="icon" href="assets/svg/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@300..800&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/stage.css" />
+  <link rel="stylesheet" href="css/scenes.css" />
+  <link rel="stylesheet" href="css/motion.css" />
+  <link rel="stylesheet" href="css/learn.css" />
+  <script>
+    /* Apply saved settings before first paint (no flash of the wrong format/motion). */
+    (function () {
+      var d = document.documentElement;
+      try {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        d.dataset.motion = localStorage.getItem('vml:motion') || (reduce ? 'reduced' : 'on');
+        var f = localStorage.getItem('vml:format'); if (f) d.dataset.format = f;
+        var b = localStorage.getItem('vml:bg'); if (b) d.dataset.bg = b;
+      } catch (e) { /* storage blocked */ }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#sections">Skip to the motion library</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="#top" aria-label="Video Motion Lab — back to top">
+        <svg class="brand__mark" viewBox="0 0 26 26" aria-hidden="true">
+          <rect x="6.5" y="2.5" width="13" height="21" rx="2.6" fill="none" stroke="#ecebe7" stroke-opacity=".75" stroke-width="1.4" />
+          <path d="M11.2 9.2v7.6l6-3.8z" fill="#ef4b36" />
+          <path d="M3 13h2M21 13h2" stroke="#ecebe7" stroke-opacity=".3" stroke-width="1.4" stroke-linecap="round" />
+        </svg>
+        <span class="brand__name">Video Motion Lab</span>
+        <span class="brand__sub">dictionary + playground · v1</span>
+      </a>
+
+      <button class="btn controls-toggle" type="button" aria-expanded="false" aria-controls="gcontrols">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 4h12M2 12h12" /><circle cx="6" cy="4" r="1.8" fill="#09090a" /><circle cx="10" cy="12" r="1.8" fill="#09090a" /></svg>
+        Preview controls
+      </button>
+
+      <div class="gcontrols" id="gcontrols" role="group" aria-label="Global preview controls">
+        <div class="gcontrol"><span class="gcontrol__label" id="lbl-format">Format</span>
+          <div class="seg" data-setting="format" role="group" aria-labelledby="lbl-format">
+            <button type="button" data-value="9:16">9:16</button><button type="button" data-value="4:5">4:5</button><button type="button" data-value="1:1">1:1</button><button type="button" data-value="16:9">16:9</button>
+          </div></div>
+        <div class="gcontrol"><span class="gcontrol__label" id="lbl-speed">Speed</span>
+          <div class="seg" data-setting="speed" role="group" aria-labelledby="lbl-speed">
+            <button type="button" data-value="0.5">0.5×</button><button type="button" data-value="1">1×</button><button type="button" data-value="1.5">1.5×</button><button type="button" data-value="2">2×</button>
+          </div></div>
+        <div class="gcontrol"><span class="gcontrol__label" id="lbl-safe">Safe zone</span>
+          <div class="seg" data-setting="safe" role="group" aria-labelledby="lbl-safe"><button type="button" data-value="on">On</button><button type="button" data-value="off">Off</button></div></div>
+        <div class="gcontrol"><span class="gcontrol__label" id="lbl-labels">Labels</span>
+          <div class="seg" data-setting="labels" role="group" aria-labelledby="lbl-labels"><button type="button" data-value="on">On</button><button type="button" data-value="off">Off</button></div></div>
+        <div class="gcontrol gcontrol--minor"><span class="gcontrol__label" id="lbl-bg">Stage</span>
+          <div class="seg" data-setting="bg" role="group" aria-labelledby="lbl-bg"><button type="button" data-value="dark">Dark</button><button type="button" data-value="light">Light</button></div></div>
+        <div class="gcontrol gcontrol--minor"><span class="gcontrol__label" id="lbl-loop">Loop</span>
+          <div class="seg" data-setting="loop" role="group" aria-labelledby="lbl-loop"><button type="button" data-value="on">On</button><button type="button" data-value="off">Off</button></div></div>
+        <div class="gcontrol"><span class="gcontrol__label" id="lbl-motion">Motion</span>
+          <div class="seg" data-setting="motion" role="group" aria-labelledby="lbl-motion"><button type="button" data-value="on">On</button><button type="button" data-value="reduced">Reduced</button></div></div>
+        <div class="gcontrol gcontrol--minor">
+          <button class="btn" type="button" id="play-visible" title="Play every demo on screen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.8v10.4L13 8z" fill="currentColor" /></svg>Play</button>
+          <button class="btn" type="button" id="pause-all" title="Pause every demo"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z" fill="currentColor" /></svg>Pause</button>
+          <button class="btn" type="button" id="replay-visible" title="Replay every demo on screen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2.8 8a5.2 5.2 0 1 0 1.6-3.8" /><path d="M2.6 1.8v3h3" /></svg>Replay</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav">
+    <div class="mobile-nav__row">
+      <label class="search"><span class="visually-hidden">Search techniques</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="4.5" /><path d="M10.5 10.5L14 14" /></svg>
+        <input type="search" data-search placeholder="Search motion…" autocomplete="off" /></label>
+      <label class="visually-hidden" for="mobile-cat">Jump to category</label>
+      <select id="mobile-cat"></select>
+    </div>
+    <div class="filters" data-filters role="group" aria-label="Filter by type"></div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="Library navigation">
+      <label class="search"><span class="visually-hidden">Search techniques</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="4.5" /><path d="M10.5 10.5L14 14" /></svg>
+        <input type="search" data-search placeholder="Search motion…" autocomplete="off" /><kbd>/</kbd></label>
+      <div class="filters" data-filters role="group" aria-label="Filter by type"></div>
+      <p class="side-label">Library · <span id="result-count"></span></p>
+      <ul class="nav" id="nav"></ul>
+      <p class="side-label">Learn</p>
+      <ul class="nav" id="nav-learn"></ul>
+      <div class="side-foot"><b>Keys on a focused stage</b><br />Space play/pause · ← → frame step · Shift+← → 0.5s · R replay</div>
+    </aside>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <p class="eyebrow">Interactive dictionary &amp; playground</p>
+          <h1 class="hero__title" id="hero-title">Video Motion <em>Lab</em></h1>
+          <p class="hero__lead">A visual encyclopedia of <strong>motion design for video</strong> — Reels, TikTok, Shorts, YouTube, ads and product marketing. Every technique is a live mini-scene with a <strong>scrubbable timeline</strong>, so you can see exactly when each element starts, how long it moves, and how it overlaps the next.</p>
+          <ul class="hero__stats">
+            <li><b id="stat-demos">0</b><span>Interactive demos</span></li>
+            <li><b id="stat-techniques">0</b><span>Named techniques</span></li>
+            <li><b>16</b><span>Categories</span></li>
+            <li><b id="stat-recipes">0</b><span>Full recipes</span></li>
+          </ul>
+          <div class="hero__cta">
+            <a class="btn btn--accent" href="#fundamentals">Start with fundamentals</a>
+            <a class="btn" href="#recipes">See full recipes</a>
+            <a class="btn btn--ghost" href="#builder">Prompt builder</a>
+          </div>
+        </div>
+        <div class="hero__feature">
+          <div id="hero-player"></div>
+          <p class="hero__feature-cap">Featured · <a id="hero-feature-link" href="#recipes">Recipe</a></p>
+        </div>
+      </section>
+
+      <div class="legend" aria-label="How to read a demo">
+        <div><span>01 · Stage</span><b>The preview is the frame</b><p>Format follows the global selector (default 9:16). Safe Zone shows where platform UI covers it.</p></div>
+        <div><span>02 · Transport</span><b>Play, scrub, step</b><p>Pause anywhere, drag the scrubber, step frame by frame, change speed per demo.</p></div>
+        <div><span>03 · Timeline</span><b>When things happen</b><p>Each bar is one event. Read start, duration, overlap and stagger. Drag the lanes to scrub.</p></div>
+        <div><span>04 · Recipe</span><b>Anatomy → timing → prompt</b><p>Every demo explains its trigger, target, transformation and easing, then gives a copyable prompt.</p></div>
+      </div>
+
+      <div id="sections"></div>
+      <div class="no-results"><p>No technique matches that search.</p><button type="button" class="btn">Clear search &amp; filters</button></div>
+
+      <footer class="site-footer">
+        <span>Video Motion Lab — personal learning project. All assets are generic placeholders made for this lab.</span>
+        <span><a href="../web-motion-lab/">Web Motion Lab</a> · <a href="../">Portfolio</a></span>
+      </footer>
+    </main>
+  </div>
+
+  <dialog class="study" id="study" aria-labelledby="study-title">
+    <div class="study__inner">
+      <div class="study__stage">
+        <div class="study__bar">
+          <span class="card__num study__num"></span>
+          <h2 class="study__name" id="study-title"></h2>
+          <button type="button" class="btn study__nav" data-prev aria-label="Previous demo" title="Previous ( [ )"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 3L5 8l5 5" /></svg></button>
+          <button type="button" class="btn study__nav" data-next aria-label="Next demo" title="Next ( ] )"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 3l5 5-5 5" /></svg></button>
+          <button type="button" class="btn study__close" data-close aria-label="Close study mode"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" /></svg></button>
+        </div>
+        <div class="study__player"></div>
+        <p class="study__keys"><kbd>Space</kbd> play/pause · <kbd>←</kbd><kbd>→</kbd> frame · <kbd>Shift</kbd>+arrows 0.5s · <kbd>R</kbd> replay · <kbd>[</kbd><kbd>]</kbd> prev/next · <kbd>Esc</kbd> close</p>
+      </div>
+      <div class="study__info"></div>
+    </div>
+  </dialog>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <!-- core runtime (order matters) -->
+  <script src="js/core/utils.js" defer></script>
+  <script src="js/core/timeline.js" defer></script>
+  <script src="js/core/stage.js" defer></script>
+  <script src="js/core/assets.js" defer></script>
+  <script src="js/core/gl.js" defer></script>
+  <script src="js/core/playback.js" defer></script>
+  <!-- motion library: one file per category -->
+  <script src="js/demos/fundamentals.js" defer></script>
+  <script src="js/demos/easing.js" defer></script>
+  <script src="js/demos/typography.js" defer></script>
+  <script src="js/demos/photography.js" defer></script>
+  <script src="js/demos/graphics.js" defer></script>
+  <script src="js/demos/camera.js" defer></script>
+  <script src="js/demos/transitions.js" defer></script>
+  <script src="js/demos/product-ui.js" defer></script>
+  <script src="js/demos/infographic.js" defer></script>
+  <script src="js/demos/branding.js" defer></script>
+  <script src="js/demos/social-hooks.js" defer></script>
+  <script src="js/demos/ads.js" defer></script>
+  <script src="js/demos/cta.js" defer></script>
+  <script src="js/demos/cinematic.js" defer></script>
+  <script src="js/demos/advanced.js" defer></script>
+  <script src="js/demos/recipes.js" defer></script>
+  <!-- learning sections -->
+  <script src="js/learn/principles.js" defer></script>
+  <script src="js/learn/rhythm.js" defer></script>
+  <script src="js/learn/guides.js" defer></script>
+  <script src="js/learn/prompt-builder.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b0d12"/><stop offset=".5" stop-color="#a3202a"/><stop offset="1" stop-color="#e8564a"/></linearGradient>
+    <linearGradient id="b" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#6e121b" stop-opacity=".0"/><stop offset=".5" stop-color="#ff8a6e" stop-opacity=".55"/><stop offset="1" stop-color="#6e121b" stop-opacity="0"/></linearGradient>
+    <linearGradient id="c" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1a0507" stop-opacity=".7"/><stop offset="1" stop-color="#1a0507" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#a)"/>
+  <path d="M-100 300 C200 100 400 600 700 400 S1100 200 1300 500 V700 C1000 400 900 800 600 640 S100 500 -100 700Z" fill="url(#b)"/>
+  <path d="M-100 800 C250 600 450 1000 760 860 S1100 700 1300 900 V1000 C1000 820 880 1080 600 980 S120 900 -100 1060Z" fill="url(#b)" opacity=".8"/>
+  <path d="M-100 0 C150 200 300 120 500 260 S900 120 1300 220 V0Z" fill="url(#c)"/>
+  <path d="M-100 1200 C200 1000 600 1160 900 1060 S1200 1100 1300 1040 V1200Z" fill="#1a0507" opacity=".45"/>
+</svg>

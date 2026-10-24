@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c9a0"/><stop offset=".55" stop-color="#f7dfc0"/><stop offset="1" stop-color="#f1d3ad"/></linearGradient>
+    <linearGradient id="d1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d98a52"/><stop offset="1" stop-color="#b8612f"/></linearGradient>
+    <linearGradient id="d2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c46d38"/><stop offset="1" stop-color="#8d4323"/></linearGradient>
+    <linearGradient id="d3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a24e26"/><stop offset="1" stop-color="#5e2915"/></linearGradient>
+    <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff6e6"/><stop offset=".6" stop-color="#ffe9c9"/><stop offset="1" stop-color="#ffe2bd" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#s)"/>
+  <circle cx="780" cy="420" r="210" fill="url(#sun)"/>
+  <circle cx="780" cy="420" r="92" fill="#fff4e2"/>
+  <path d="M0 690 C220 600 380 640 560 700 S900 760 1200 640 V1200 H0Z" fill="url(#d1)"/>
+  <path d="M0 820 C260 720 460 760 640 860 S1000 900 1200 800 V1200 H0Z" fill="url(#d2)"/>
+  <path d="M640 860 C720 900 900 900 1200 800 V860 C980 940 780 930 640 860Z" fill="#f2b37c" opacity=".55"/>
+  <path d="M0 980 C300 900 560 940 760 1020 S1060 1060 1200 1000 V1200 H0Z" fill="url(#d3)"/>
+  <path d="M0 980 C200 930 380 930 520 960 C360 955 180 970 0 1010Z" fill="#e6a26c" opacity=".5"/>
+  <g fill="#3a1b0e" opacity=".85"><rect x="492" y="684" width="6" height="22" rx="3"/><circle cx="495" cy="680" r="5"/></g>
+</svg>
