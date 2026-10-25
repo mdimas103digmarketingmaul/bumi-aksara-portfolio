@@ -1,13 +1,11 @@
 ---
 import Icon from './Icon.astro';
-import { HOME_PATH, INSTAGRAM_URL, LINKS_URL, MAPS_URL, PARTNERSHIP_EMAIL, TIKTOK_URL, asset, img, waLink } from './data';
+import { HOME_PATH, INSTAGRAM_URL, LINKS_URL, MAPS_URL, PARTNERSHIP_EMAIL, TIKTOK_URL, img, waLink } from './data';
 
 interface Props {
   onHome?: boolean;
-  /** 'badge' = logo asli (lingkaran putih, HS berwarna); bawaan 'mark' = logo HS putih. */
-  logo?: 'mark' | 'badge';
 }
-const { onHome = true, logo = 'mark' } = Astro.props;
+const { onHome = true } = Astro.props;
 ---
 <footer id="kontak" class="o1-footer" aria-labelledby="o1-footer-title">
   <div class="o1-container">
@@ -52,9 +50,7 @@ const { onHome = true, logo = 'mark' } = Astro.props;
 
   <div class="o1-container o1-footer__bottom">
     <a class="o1-brand o1-brand--footer" href={onHome ? '#beranda' : HOME_PATH}>
-      {logo === 'badge'
-        ? <span class="o1-brand__mark o1-brand__mark--badge"><img src={img('logo.webp')} alt="" width="464" height="464" loading="lazy" /></span>
-        : <span class="o1-brand__mark"><img src={asset('hs-mark-white.webp')} alt="" width="306" height="246" loading="lazy" /></span>}
+      <span class="o1-brand__mark o1-brand__mark--badge"><img src={img('logo.webp')} alt="" width="464" height="464" loading="lazy" /></span>
       <span class="o1-brand__word">Hanasari<small>Catering</small></span>
     </a>
     <span>© 2026 Hanasari Catering.</span>

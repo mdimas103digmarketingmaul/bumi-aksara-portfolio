@@ -1,0 +1,19 @@
+---
+/*
+ * Testimoni — langsung dibuka dengan section "Cerita dari pelanggan" (dipindahkan dari homepage).
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import SiteHeader from '../../components/site/SiteHeader.astro';
+import Testimonials from '../../components/site/Testimonials.astro';
+import SiteFooter from '../../components/site/SiteFooter.astro';
+---
+<SiteLayout
+  title="Testimoni — Hanasari Catering"
+  description="Ulasan pelanggan Hanasari Catering dari Google Maps: pengalaman memesan nasi box, snack box, dan tumpeng untuk berbagai acara."
+>
+  <SiteHeader onHome={false} current="testimoni" />
+  <main id="utama">
+    <Testimonials pageTop />
+  </main>
+  <SiteFooter onHome={false} />
+</SiteLayout>

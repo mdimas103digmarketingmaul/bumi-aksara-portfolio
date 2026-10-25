@@ -2,6 +2,7 @@
 /*
  * "Racik isi box": foto racikan Paket Ningrat dengan penanda bernomor, lalu penjelajah isi per kategori.
  * Jumlah per kategori cukup tampil di tombol filter; ajakan memesan cukup satu kalimat di lead.
+ * Setelah ajakan "Racik bersama admin", layanan Hanasari (dulu section "Kebutuhan khusus").
  */
 import Icon from './Icon.astro';
 import { dishGroups, productImg } from './data';
@@ -16,6 +17,14 @@ const anatomy = [
   { label: 'Sambal', x: 56, y: 26 },
   { label: 'Buah', x: 11, y: 50 }
 ];
+
+/* Layanan — Compro B2B Hanasari Okt 2026 (Layanan Kami). */
+const services = [
+  { icon: 'users', title: 'Acara kantor' },
+  { icon: 'heart', title: 'Acara keluarga' },
+  { icon: 'calendar', title: 'Catering sekolah' },
+  { icon: 'box', title: 'Hantaran' }
+] as const;
 ---
 <section id="racik-isi-box" class="o1-dishes" aria-labelledby="o1-dishes-title">
   <div class="o1-dishes__decor" aria-hidden="true"></div>
@@ -63,6 +72,11 @@ const anatomy = [
             Racik bersama admin <Icon name="arrow" />
           </a>
         </div>
+        <ul class="o1-dishes__services" aria-label="Layanan Hanasari">
+          {services.map((s) => (
+            <li><span class="o1-dishes__service-icon"><Icon name={s.icon} size={16} /></span>{s.title}</li>
+          ))}
+        </ul>
       </div>
     </div>
   </div>

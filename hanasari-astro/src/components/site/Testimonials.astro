@@ -1,12 +1,19 @@
 ---
 import Icon from './Icon.astro';
 import { MAPS_URL, reviews } from './data';
+
+interface Props {
+  /** true bila section ini membuka halaman (/testimoni/): judul menjadi h1. */
+  pageTop?: boolean;
+}
+const { pageTop = false } = Astro.props;
+const Heading = pageTop ? 'h1' : 'h2';
 ---
-<section id="testimoni" class="o1-section o1-reviews" aria-labelledby="o1-reviews-title">
+<section id="testimoni" class="o1-section o1-reviews" aria-labelledby="o1-reviews-title" data-float-anchor={pageTop ? '' : undefined}>
   <div class="o1-container o1-reviews__grid">
     <div class="o1-reviews__intro" data-reveal>
       <p class="o1-eyebrow">Cerita dari pelanggan</p>
-      <h2 id="o1-reviews-title" class="o1-h2">Yang paling berarti? Saat Anda bilang <em>enak.</em></h2>
+      <Heading id="o1-reviews-title" class="o1-h2">Yang paling berarti? Saat Anda bilang <em>enak.</em></Heading>
       <p>Cuplikan pengalaman pelanggan dari ulasan Google yang dibagikan kepada Hanasari.</p>
       <a class="o1-link" href={MAPS_URL} target="_blank" rel="noopener noreferrer">Lihat di Google Maps <Icon name="arrow" size={18} /></a>
     </div>

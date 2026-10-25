@@ -1,0 +1,22 @@
+---
+/*
+ * Tentang Kami — langsung dibuka dengan section Tentang Hanasari (foto tim), lalu pertanyaan yang
+ * sering diajukan sebelum memesan. Kedua section dipindahkan dari homepage.
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import SiteHeader from '../../components/site/SiteHeader.astro';
+import AboutSection from '../../components/site/AboutSection.astro';
+import Faq from '../../components/site/Faq.astro';
+import SiteFooter from '../../components/site/SiteFooter.astro';
+---
+<SiteLayout
+  title="Tentang Kami — Hanasari Catering"
+  description="Mengenal Hanasari Catering (PT Hanasari Asa Nusantara): tim di balik dapur kami, prinsip kerja kami, dan jawaban atas pertanyaan yang sering diajukan sebelum memesan."
+>
+  <SiteHeader onHome={false} current="tentang-kami" />
+  <main id="utama">
+    <AboutSection pageTop />
+    <Faq />
+  </main>
+  <SiteFooter onHome={false} />
+</SiteLayout>

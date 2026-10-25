@@ -5,7 +5,7 @@ import { HOME_PATH, asset } from './data';
 interface Props {
   /** false di halaman selain homepage (mis. /artikel/): anchor section diarahkan ke homepage. */
   onHome?: boolean;
-  current?: 'artikel';
+  current?: 'testimoni' | 'artikel' | 'tentang-kami';
 }
 const { onHome = true, current } = Astro.props;
 const base = onHome ? '' : HOME_PATH;
@@ -13,9 +13,9 @@ const base = onHome ? '' : HOME_PATH;
 /* Anchor (#) = section di homepage; path (/artikel/) = pindah halaman biasa. */
 const links = [
   { href: `${base}#menu`, label: 'Menu & Paket' },
-  { href: `${base}#testimoni`, label: 'Testimoni' },
+  { href: '/testimoni/', label: 'Testimoni', key: 'testimoni' },
   { href: '/artikel/', label: 'Artikel', key: 'artikel' },
-  { href: `${base}#tentang-kami`, label: 'Tentang Kami' }
+  { href: '/tentang-kami/', label: 'Tentang Kami', key: 'tentang-kami' }
 ];
 ---
 <a class="o1-skip" href="#utama">Lewati ke konten</a>
@@ -23,8 +23,7 @@ const links = [
   <div class="o1-container o1-header__inner">
     <a class="o1-brand" href={onHome ? '#beranda' : HOME_PATH} aria-label={onHome ? 'Hanasari Catering — kembali ke atas' : 'Hanasari Catering — beranda'}>
       <span class="o1-brand__mark">
-        <img class="o1-brand__light" src={asset('hs-mark-white.webp')} alt="" width="306" height="246" />
-        <img class="o1-brand__color" src={asset('hs-mark.webp')} alt="" width="306" height="246" />
+        <img src={asset('hs-mark.webp')} alt="" width="306" height="246" />
       </span>
       <span class="o1-brand__word">Hanasari<small>Catering</small></span>
     </a>

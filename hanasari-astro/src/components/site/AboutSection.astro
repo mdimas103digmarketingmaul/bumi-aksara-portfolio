@@ -1,18 +1,24 @@
 ---
 /*
  * Tentang Hanasari: menceritakan orang di balik Hanasari.
- * Foto tim menjadi visual utama (srcset 960/1600), diikuti pita kesempatan.
+ * Foto tim menjadi visual utama (srcset 960/1600). Ditampilkan di halaman /tentang-kami/.
  */
 import { img } from './data';
 
+interface Props {
+  /** true bila section ini membuka halaman (/tentang-kami/): judul menjadi h1. */
+  pageTop?: boolean;
+}
+const { pageTop = false } = Astro.props;
+const Heading = pageTop ? 'h1' : 'h2';
 const photo = img('tim-hanasari');
 ---
-<section id="tentang-kami" class="o1-section o1-about" aria-labelledby="o1-about-title">
+<section id="tentang-kami" class:list={['o1-section', 'o1-about', { 'o1-about--page': pageTop }]} aria-labelledby="o1-about-title" data-float-anchor={pageTop ? '' : undefined}>
   <div class="o1-container">
     <div class="o1-about__copy" data-reveal>
       <div>
         <p class="o1-eyebrow">Tentang Hanasari</p>
-        <h2 id="o1-about-title" class="o1-h2 o1-about__title"><span>Dari dapur kami,</span> <span>untuk <em>banyak momen.</em></span></h2>
+        <Heading id="o1-about-title" class="o1-h2 o1-about__title"><span>Dari dapur kami,</span> <span>untuk <em>banyak momen.</em></span></Heading>
       </div>
       <div class="o1-about__body">
         <p>PT Hanasari Asa Nusantara hadir dengan satu prinsip sederhana: menyajikan makanan yang enak, konsisten, dan tiba tepat waktu.</p>
@@ -32,17 +38,3 @@ const photo = img('tim-hanasari');
     </figure>
   </div>
 </section>
-
-<div class="o1-occasions" aria-label="Satu dapur, banyak cerita">
-  <div class="o1-marquee o1-marquee--big">
-    {[0, 1].map((n) => (
-      <ul class="o1-marquee__track" aria-hidden={n === 1 ? 'true' : undefined}>
-        <li>Rapat kantor</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
-        <li>Acara keluarga</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
-        <li>Syukuran</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
-        <li>Momen berbagi</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
-        <li>#RayakanDenganHanasari</li><li class="is-star" aria-hidden="true"><span class="o1-asterisk"></span></li>
-      </ul>
-    ))}
-  </div>
-</div>

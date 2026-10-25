@@ -3,10 +3,10 @@
  * Pratinjau revisi tim Hanasari (/revisi/) — homepage production dengan revisi:
  * 1. navigasi terang sejak awal, logo HS berwarna;
  * 2. medalion "Rayakan dengan Hanasari" terang dengan logo berwarna;
- * 3. footer memakai logo asli (lingkaran putih, HS berwarna) — SiteFooter logo="badge";
+ * 3. footer memakai logo asli (lingkaran putih, HS berwarna);
  * 4. logo SLHS di samping INAPROC;
  * 5. foto "Paket makanan untuk acara" baru (landscape).
- * Komponen yang berubah ada di src/components/revisi/, penyesuaian visual di src/styles/revisi.css.
+ * Komponen yang berubah ada di src/components/revisi/.
  */
 import { getCollection } from 'astro:content';
 import RevisiLayout from '../../components/revisi/RevisiLayout.astro';
@@ -48,5 +48,5 @@ const featuredArticles = (await getCollection('articles'))
     <Faq />
     <FeaturedArticles articles={featuredArticles} />
   </main>
-  <SiteFooter logo="badge" />
+  <SiteFooter />
 </RevisiLayout>
