@@ -1,0 +1,52 @@
+---
+/*
+ * Pratinjau revisi tim Hanasari (/revisi/) — homepage production dengan revisi:
+ * 1. navigasi terang sejak awal, logo HS berwarna;
+ * 2. medalion "Rayakan dengan Hanasari" terang dengan logo berwarna;
+ * 3. footer memakai logo asli (lingkaran putih, HS berwarna) — SiteFooter logo="badge";
+ * 4. logo SLHS di samping INAPROC;
+ * 5. foto "Paket makanan untuk acara" baru (landscape).
+ * Komponen yang berubah ada di src/components/revisi/, penyesuaian visual di src/styles/revisi.css.
+ */
+import { getCollection } from 'astro:content';
+import RevisiLayout from '../../components/revisi/RevisiLayout.astro';
+import SiteHeader from '../../components/site/SiteHeader.astro';
+import Hero from '../../components/revisi/Hero.astro';
+import TrustStrip from '../../components/revisi/TrustStrip.astro';
+import MenuSection from '../../components/site/MenuSection.astro';
+import DishExplorer from '../../components/site/DishExplorer.astro';
+import CustomOrder from '../../components/revisi/CustomOrder.astro';
+import AboutSection from '../../components/site/AboutSection.astro';
+import Testimonials from '../../components/site/Testimonials.astro';
+import HowToOrder from '../../components/site/HowToOrder.astro';
+import Consultation from '../../components/site/Consultation.astro';
+import Faq from '../../components/site/Faq.astro';
+import FeaturedArticles from '../../components/site/FeaturedArticles.astro';
+import SiteFooter from '../../components/site/SiteFooter.astro';
+
+const featuredArticles = (await getCollection('articles'))
+  .filter(({ data }) => data.status === 'published' && data.featured)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 3)
+  .map(({ data }) => data);
+---
+<RevisiLayout
+  title="Hanasari Catering — Harga Merakyat, Rasa Ningrat (Pratinjau revisi)"
+  description="Pratinjau revisi homepage Hanasari Catering."
+>
+  <SiteHeader />
+  <main id="utama">
+    <Hero />
+    <TrustStrip />
+    <MenuSection />
+    <DishExplorer />
+    <CustomOrder />
+    <AboutSection />
+    <Testimonials />
+    <HowToOrder />
+    <Consultation />
+    <Faq />
+    <FeaturedArticles articles={featuredArticles} />
+  </main>
+  <SiteFooter logo="badge" />
+</RevisiLayout>

@@ -1,0 +1,45 @@
+---
+/* Revisi tim Hanasari: foto acara diganti (IMG_8439, diputar menjadi landscape), keterangan "Paket makanan untuk acara". */
+import Icon from '../site/Icon.astro';
+import { productImg } from '../site/data';
+
+/* Sumber: Compro B2B Hanasari Okt 2026 (Layanan Kami). */
+const services = [
+  { icon: 'calendar', title: 'Catering harian' },
+  { icon: 'users', title: 'Acara kantor' },
+  { icon: 'heart', title: 'Acara keluarga' },
+  { icon: 'spark', title: 'Menu custom' }
+] as const;
+
+const photos = [
+  { src: '/assets/revisi/nasi-box-acara.webp', alt: 'Hidangan Hanasari untuk acara dalam wadah saji: nasi kuning, bihun goreng, nasi putih, sambal goreng kentang, ayam panggang, dan empal', caption: 'Paket makanan untuk acara', w: 1400, h: 788 },
+  { src: productImg('lainnya/produksi-catering-harian.webp'), alt: 'Deretan ompreng catering harian Hanasari berisi nasi, lauk, sayur, dan minuman', caption: 'Catering harian', w: 640, h: 800 },
+  { src: productImg('lainnya/lauk-pauk.webp'), alt: 'Aneka lauk Hanasari dalam piring dan nampan, seperti bakso balado, kentang balado, ayam goreng, dan bihun', caption: 'Aneka lauk Nusantara', w: 640, h: 800 }
+];
+---
+<section id="kebutuhan-khusus" class="o1-section o1-custom" aria-labelledby="o1-custom-title">
+  <div class="o1-container o1-custom__grid">
+    <div class="o1-custom__copy" data-reveal>
+      <p class="o1-eyebrow">Kebutuhan khusus</p>
+      <h2 id="o1-custom-title" class="o1-h2 o1-custom__title"><span>Punya acara khusus?</span> <em>Ceritakan kepada kami.</em></h2>
+      <p class="o1-custom__lead">Menu, porsi, dan kemasan menyesuaikan acara Anda.</p>
+      <ul class="o1-custom__services">
+        {services.map((s) => (
+          <li>
+            <span class="o1-custom__icon"><Icon name={s.icon} size={20} /></span>
+            <h3>{s.title}</h3>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="o1-custom__mosaic" data-reveal>
+      {photos.map((photo) => (
+        <figure>
+          <img src={photo.src} alt={photo.alt} width={photo.w} height={photo.h} loading="lazy" decoding="async" />
+          <figcaption>{photo.caption}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

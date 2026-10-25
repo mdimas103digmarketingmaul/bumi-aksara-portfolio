@@ -1,0 +1,39 @@
+---
+/*
+ * Layout pratinjau revisi tim Hanasari (/revisi/) — sama dengan SiteLayout, ditambah:
+ * - noindex, nofollow, noarchive (halaman pratinjau);
+ * - class `o1-rev` di <html> sebagai cakupan src/styles/revisi.css.
+ */
+import '../../styles/site.css';
+import '../../styles/revisi.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="id" class="o1-root o1-rev">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="googlebot" content="noindex, nofollow, noarchive" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fbf8f1" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preload" href="/assets/site/fonts/montserrat-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/poppins-0.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/images/nasi-box-styled.webp" as="image" fetchpriority="high" />
+    <title>{title}</title>
+    <script is:inline>document.documentElement.classList.add('o1-js');</script>
+  </head>
+  <body class="o1">
+    <slot />
+    <script>
+      // `?revisi` menjadikannya modul terpisah, sehingga chunk skrip production tidak berubah.
+      import '../site/site.client.ts?revisi';
+    </script>
+  </body>
+</html>

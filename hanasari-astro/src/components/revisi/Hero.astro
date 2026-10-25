@@ -1,0 +1,90 @@
+---
+/* Revisi tim Hanasari: medalion terang dengan logo HS berwarna (bukan logo putih). */
+/*
+ * Hero homepage:
+ * - label lokasi di atas judul dapat diklik (Google Maps, tab baru);
+ * - baris harga mulai (data resmi Flyer) di bawah tombol, agar harga terlihat tanpa scroll;
+ * - motion: judul masuk per baris, piring nasi kuning berputar sangat pelan (lihat site.css).
+ */
+import Icon from '../site/Icon.astro';
+import BatikMegaMendung from '../site/BatikMegaMendung.astro';
+import { MAPS_URL, asset, img, productImg, products, rupiah, waLink } from '../site/data';
+
+const from = (category: string) => Math.min(...products.filter((p) => p.category === category && p.price).map((p) => p.price as number));
+
+/*
+ * Teks melingkar medalion: setiap huruf diletakkan sendiri pada sudutnya (bukan <textPath> + letter-spacing),
+ * karena Safari iOS mengukur textPath berbeda sehingga huruf bertabrakan atau terpotong di ujung jalur.
+ * Lebar huruf memakai perkiraan metrik Poppins 600; sisa keliling dibagi rata sebagai jarak antarhuruf.
+ * Pemisah berupa asterisk vektor (bukan karakter ✳, yang di iPhone tampil sebagai emoji kotak hijau).
+ */
+const SEAL = { r: 76, size: 14, star: 9 };
+const glyph: Record<string, number> = { A: .72, C: .7, D: .74, E: .6, G: .76, H: .74, I: .3, K: .68, N: .76, R: .66, S: .62, T: .62, U: .72, Y: .66, ' ': .3 };
+const sealItems = ['CITA RASA NUSANTARA', 'RAYAKAN DENGAN HANASARI'].flatMap((phrase) => [
+  ...[...phrase].map((ch) => ({ ch, w: (glyph[ch] ?? .66) * SEAL.size })),
+  { ch: '*', w: SEAL.star * 1.6 }
+]);
+const circumference = 2 * Math.PI * SEAL.r;
+const gap = (circumference - sealItems.reduce((n, i) => n + i.w, 0)) / sealItems.length;
+let cursor = 0;
+const sealGlyphs = sealItems.map((item) => {
+  const angle = ((cursor + gap / 2 + item.w / 2) / circumference) * 360;
+  cursor += item.w + gap;
+  return { ...item, angle: +angle.toFixed(2) };
+}).filter((item) => item.ch !== ' ');
+---
+<section id="beranda" class="o1-hero" aria-labelledby="o1-hero-title">
+  <div class="o1-hero__bg" aria-hidden="true">
+    <svg class="o1-hero__grid" viewBox="0 0 400 400"><defs><pattern id="o1-grid" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><path d="M0 0H40M0 0V40" stroke="currentColor" stroke-width="2.4" fill="none" /></pattern></defs><rect width="400" height="400" fill="url(#o1-grid)" /></svg>
+    <span class="o1-hero__glow"></span>
+  </div>
+
+  <div class="o1-container o1-hero__grid-layout">
+    <div class="o1-hero__copy">
+      <p class="o1-eyebrow o1-eyebrow--light o1-hero__place">
+        <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+          <span>Catering Nusantara&nbsp;·</span> <span>Matraman, Jakarta Timur<Icon name="arrow" size={14} /></span>
+          <span class="o1-visually-hidden">(buka lokasi di Google Maps, tab baru)</span>
+        </a>
+      </p>
+      <h1 id="o1-hero-title" class="o1-hero__title">
+        <span class="o1-hero__line">Harga Merakyat.</span>
+        <span class="o1-hero__line">Rasa <span class="o1-hero__accent">Ningrat<svg viewBox="0 0 380 22" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16Q180 -3 375 10M20 20Q190 6 345 16" /></svg></span>.</span>
+      </h1>
+      <p class="o1-hero__lead">Hidangan Nusantara yang akrab di lidah, untuk makan siang kantor hingga syukuran keluarga.</p>
+      <div class="o1-hero__actions">
+        <a class="o1-btn o1-btn--primary" href="#menu">Lihat Menu & Harga <Icon name="arrow" /></a>
+        <a class="o1-btn o1-btn--ghost-light" href={waLink('Saya ingin bertanya tentang paket catering.', 'Beranda')} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" /> Chat WhatsApp</a>
+      </div>
+      <p class="o1-hero__from">
+        <span>Nasi box mulai <strong>{rupiah(from('nasi-box'))}</strong></span>
+        <span>Snack box mulai <strong>{rupiah(from('snack-box'))}</strong></span>
+      </p>
+    </div>
+
+    <div class="o1-hero__visual">
+      <BatikMegaMendung class="o1-hero__batik" />
+      <div class="o1-hero__arch-outline" aria-hidden="true"></div>
+      <figure class="o1-hero__arch">
+        <img src={img('nasi-box-styled.webp')} alt="Nasi box Hanasari berisi ayam, sayuran, sambal, dan buah dalam kemasan khas Hanasari" width="778" height="1066" fetchpriority="high" />
+      </figure>
+      <div class="o1-hero__plate" aria-hidden="true">
+        <img src={img('nasi-kuning.webp')} alt="" width="926" height="903" />
+      </div>
+      <div class="o1-hero__seal" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          {sealGlyphs.map(({ ch, angle }) => ch === '*'
+            ? <path class="o1-hero__seal-star" d="M0-4.5v9M-4.5 0h9M-3.2-3.2l6.4 6.4M3.2-3.2l-6.4 6.4" transform={`rotate(${angle} 100 100) translate(100 ${100 - SEAL.r - SEAL.size * .35})`} />
+            : <text x="100" y={100 - SEAL.r} transform={`rotate(${angle} 100 100)`}>{ch}</text>
+          )}
+        </svg>
+        <img class="o1-hero__seal-mark" src={asset('hs-mark.webp')} alt="" width="306" height="246" />
+      </div>
+      <a class="o1-hero__ticket" href="#menu" data-tab-link="tumpeng">
+        <img src={productImg('kategori/tumpeng.webp')} alt="" width="64" height="64" loading="lazy" />
+        <span><small>Rayakan kebersamaan</small><strong>Tumpeng untuk<br />hari istimewa</strong></span>
+        <Icon name="arrow" size={16} />
+      </a>
+    </div>
+  </div>
+</section>

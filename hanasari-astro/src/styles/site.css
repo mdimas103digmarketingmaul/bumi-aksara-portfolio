@@ -904,6 +904,9 @@
 .o1-brand--footer { color: var(--white); }
 .o1-brand--footer .o1-brand__mark { width: 38px; height: 31px; }
 .o1-brand--footer .o1-brand__word { font-size: 16px; }
+/* Logo asli: lingkaran putih dengan HS berwarna (gambar persegi, dipotong bulat) */
+.o1-brand--footer .o1-brand__mark--badge { width: 46px; height: 46px; }
+.o1-brand__mark--badge img { border-radius: 50%; }
 
 /* Floating WhatsApp */
 .o1-float-wa {
