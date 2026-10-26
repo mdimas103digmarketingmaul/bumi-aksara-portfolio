@@ -56,6 +56,8 @@
 }
 
 html {
+  /* Clip off-canvas decoration at the viewport as well as the body. */
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: calc(var(--nav-h) + 1rem);

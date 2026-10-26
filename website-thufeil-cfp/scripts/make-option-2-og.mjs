@@ -1,4 +1,4 @@
-// Generates public/og-image.jpg (1200×630) in the option-2 visual language.
+// Generates public/option-2/og-image.jpg (1200×630) in the option-2 visual language.
 import sharp from 'sharp';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -45,5 +45,5 @@ await sharp(Buffer.from(bg))
     { input: Buffer.from(front), left: 0, top: 0 },
   ])
   .jpeg({ quality: 88 })
-  .toFile(path.join(root, 'public/og-image.jpg'));
-console.log('public/og-image.jpg written');
+  .toFile(path.join(root, 'public/option-2/og-image.jpg'));
+console.log('public/option-2/og-image.jpg written');

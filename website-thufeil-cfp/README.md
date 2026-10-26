@@ -33,11 +33,14 @@ website-thufeil-cfp/
 ├── public/                    # disajikan apa adanya
 │   ├── favicon.svg
 │   ├── og-image.jpg           # social preview 1200×630
+│   ├── option-2/              # favicon + social preview desain alternatif
 │   └── robots.txt
 ├── scripts/
+│   ├── make-option-2-og.mjs   # generator social preview Option 2
 │   └── prepare-assets.mjs     # salin + optimasi aset dari folder sumber (sekali jalan)
 └── src/
     ├── assets/
+    │   ├── brand/             # logo IFAC
     │   ├── profile/           # thufeil-portrait.png
     │   ├── credentials/       # sertifikat-cfp.jpg
     │   ├── instagram/         # post-01.jpg … post-09.jpg (urutan 1–9)
@@ -48,7 +51,9 @@ website-thufeil-cfp/
     ├── config/site.ts         # ← SEMUA link & pengaturan kontak/booking
     ├── data/content.ts        # kredensial, keahlian, caption Instagram, alt testimoni
     ├── layouts/Base.astro     # <head>, SEO, Open Graph, JSON-LD
-    ├── pages/index.astro
+    ├── option-2/              # komponen, layout, data, CSS, dan animasi alternatif
+    ├── pages/index.astro      # /
+    ├── pages/option-2/index.astro # /option-2/
     └── styles/global.css      # token warna, tipografi, tombol, motion
 ```
 
@@ -129,7 +134,7 @@ Karena URL per postingan belum tersedia, setiap postingan mengarah ke profil Ins
 Semua fakta bersumber dari profil resmi IFAC (`ifac.or.id/thufeil`), sertifikat CFP®, dan aset
 Instagram yang diberikan. Tidak ada angka, testimoni, atau klaim yang dikarang.
 
-Sengaja **tidak** dipakai:
+Pada desain utama, sengaja **tidak** dipakai:
 
 - **Jumlah klien & tahun pengalaman.** Profil IFAC menyebut "5+ tahun, 100+ klien", sedangkan bio
   Instagram yang terlihat di salah satu screenshot testimoni menyebut "7+ tahun, 50+ klien".
@@ -139,9 +144,35 @@ Sengaja **tidak** dipakai:
 
 Footer memuat disclaimer bahwa konten bersifat edukasi umum, bukan nasihat keuangan personal.
 
-## Aksesibilitas & motion
+## Aksesibilitas & motion — desain utama
 
 - Lightbox memakai `<dialog>` native: ESC menutup, fokus terkunci di dalam dan kembali ke pemicu,
   panah kiri/kanan untuk berpindah, swipe di layar sentuh, tombol "Perbesar" untuk membaca detail.
 - Carousel testimoni tidak auto-slide; dikontrol lewat tombol, scroll, atau keyboard.
 - Semua animasi dimatikan saat `prefers-reduced-motion: reduce`. Konten tetap tampil tanpa JS.
+
+## Option 2 — route alternatif
+
+Build dari root project ini menghasilkan dua halaman independen:
+
+- `src/pages/index.astro` → `/` (desain utama).
+- `src/pages/option-2/index.astro` → `/option-2/` (desain alternatif existing).
+
+Komponen, layout, CSS, data, dan animasi khusus Option 2 berada di `src/option-2/`.
+CSS dan JavaScript dimuat hanya melalui layout Option 2. Foto profil, sertifikat,
+Instagram, dan testimoni menggunakan `src/assets/` bersama; logo IFAC berada di
+`src/assets/brand/`. Favicon dan social preview khusus desain ini berada di
+`public/option-2/`. Untuk membuat ulang social preview: `node scripts/make-option-2-og.mjs`.
+Konfigurasi kontak dan booking tetap bersumber dari `src/config/site.ts`;
+`src/option-2/config/site.ts` menambahkan metadata khusus Option 2.
+
+Dependency tambahan dari implementasi asli: Archivo Variable, Geist Variable,
+GSAP, dan Lenis. Tidak memerlukan build terpisah atau redirect Cloudflare.
+Tetap gunakan build command `npm run build` dan output directory `dist`.
+Deployment memakai root project ini. Folder project mandiri lama `option-2/`
+telah dihapus setelah migrasi disetujui; tidak ada install atau build kedua.
+
+Option 2 mempertahankan preloader, GSAP + ScrollTrigger, smooth scroll Lenis,
+carousel testimoni dengan autoplay/jeda, serta lightbox sertifikat dan testimoni.
+Reduced motion menonaktifkan animasi dan autoplay. Konten khususnya berada di
+`src/option-2/data/content.ts`, termasuk angka profil 5+ tahun / 100+ klien dan misi 2035.

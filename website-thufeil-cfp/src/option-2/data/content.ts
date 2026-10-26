@@ -76,8 +76,8 @@ export const expertise: Expertise[] = [
 
 // ─── Instagram posts (order 1–9 follows the supplied files) ───────
 
-const igImages = import.meta.glob<{ default: ImageMetadata }>('../assets/instagram/*.jpg', { eager: true });
-const ig = (n: number) => igImages[`../assets/instagram/post-${String(n).padStart(2, '0')}.jpg`].default;
+const igImages = import.meta.glob<{ default: ImageMetadata }>('../../assets/instagram/*.jpg', { eager: true });
+const ig = (n: number) => igImages[`../../assets/instagram/post-${String(n).padStart(2, '0')}.jpg`].default;
 
 export interface InstagramPost {
   image: ImageMetadata;
@@ -146,8 +146,8 @@ export const instagramPosts: InstagramPost[] = [
 // ─── Testimonials (original Instagram Story screenshots) ──────────
 // Alt text describes what is visible; it is not a quote.
 
-const tImages = import.meta.glob<{ default: ImageMetadata }>('../assets/testimonials/*.webp', { eager: true });
-const ts = (n: number) => tImages[`../assets/testimonials/testimoni-${String(n).padStart(2, '0')}.webp`].default;
+const tImages = import.meta.glob<{ default: ImageMetadata }>('../../assets/testimonials/*.webp', { eager: true });
+const ts = (n: number) => tImages[`../../assets/testimonials/testimoni-${String(n).padStart(2, '0')}.webp`].default;
 
 export interface Testimonial {
   image: ImageMetadata;

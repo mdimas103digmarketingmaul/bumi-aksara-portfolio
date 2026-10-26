@@ -1,0 +1,38 @@
+---
+import Base from '../../option-2/layouts/Base.astro';
+import Preloader from '../../option-2/components/Preloader.astro';
+import Nav from '../../option-2/components/Nav.astro';
+import Hero from '../../option-2/components/Hero.astro';
+import Manifesto from '../../option-2/components/Manifesto.astro';
+import Credentials from '../../option-2/components/Credentials.astro';
+import Expertise from '../../option-2/components/Expertise.astro';
+import Testimonials from '../../option-2/components/Testimonials.astro';
+import Insight from '../../option-2/components/Insight.astro';
+import Consultation from '../../option-2/components/Consultation.astro';
+import Footer from '../../option-2/components/Footer.astro';
+import Lightbox from '../../option-2/components/Lightbox.astro';
+---
+
+<Base>
+  <Preloader />
+  <Nav />
+  <main id="main" class="main">
+    <Hero />
+    <Manifesto />
+    <Credentials />
+    <Expertise />
+    <Testimonials />
+    <Insight />
+    <Consultation />
+  </main>
+  <Footer />
+  <Lightbox />
+</Base>
+
+<style>
+  /* Main sits above the footer so the footer can be revealed from underneath. */
+  .main {
+    position: relative;
+    z-index: 2;
+  }
+</style>
