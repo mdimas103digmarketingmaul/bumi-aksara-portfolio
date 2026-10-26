@@ -1,0 +1,130 @@
+---
+/*
+ * Booking panel — state comes from src/config/site.ts:
+ *  • booking.enabled + booking.calUrl → Cal.com calendar embedded inline.
+ *  • otherwise → the channels that work today (Instagram DM, IFAC form).
+ * WhatsApp stays a disabled control until whatsapp.enabled + number are set.
+ */
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { booking, isBookingLive, isWhatsappLive, whatsappHref, links } from '../config/site';
+
+const cal = isBookingLive ? new URL(booking.calUrl) : null;
+---
+
+<div class:list={['book', { 'book--live': isBookingLive }]}>
+  {
+    isBookingLive && cal ? (
+      <Fragment>
+        <p class="book__label">Pilih jadwal</p>
+        <div class="book__cal" id="cal-inline" data-cal-origin={cal.origin} data-cal-link={cal.pathname.replace(/^\//, '')} />
+        <a class="book__fallback" href={booking.calUrl} target="_blank" rel="noopener noreferrer">
+          Buka kalender di tab baru <Icon name="external" />
+        </a>
+      </Fragment>
+    ) : (
+      <Fragment>
+        <p class="book__label">Atur jadwal lewat</p>
+        <div class="book__actions">
+          <Button href={links.instagramDm} label="Kirim DM di Instagram" icon="instagram" external />
+          <Button href={links.ifacProfile} label="Isi formulir di profil IFAC" variant="ghost" external />
+        </div>
+      </Fragment>
+    )
+  }
+
+  <div class="book__wa">
+    {
+      isWhatsappLive && whatsappHref ? (
+        <Button href={whatsappHref} label="Hubungi via WhatsApp" icon="whatsapp" variant="ghost" external />
+      ) : (
+        <Fragment>
+          <span class="btn btn--ghost" role="link" aria-disabled="true" aria-describedby="wa-note">
+            <Icon name="whatsapp" />
+            Hubungi via WhatsApp
+          </span>
+          <span class="book__note" id="wa-note">Nomor WhatsApp belum tersedia.</span>
+        </Fragment>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .book {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border-radius: var(--r-lg);
+    background: var(--night);
+    color: var(--cream);
+    box-shadow: 0 40px 80px -40px rgb(10 14 28 / 0.6);
+  }
+
+  .book__label {
+    font-size: var(--t-label);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fog);
+  }
+
+  .book__actions,
+  .book__wa {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .book :global(.btn) {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .book__wa {
+    margin-top: 0.5rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--line-d);
+  }
+
+  .book__wa .btn {
+    justify-content: center;
+  }
+
+  .book__note {
+    font-size: var(--t-label);
+    color: var(--fog-2);
+    text-align: center;
+  }
+
+  .book__cal {
+    min-height: 34rem;
+    width: 100%;
+    overflow: auto;
+    border-radius: var(--r-md);
+    background: var(--cream);
+  }
+
+  .book__fallback {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    justify-self: start;
+    font-size: var(--t-small);
+    color: var(--sun);
+  }
+</style>
+
+{
+  isBookingLive && (
+    <script is:inline>
+      // Official Cal.com inline embed snippet, only rendered when booking is live.
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      (function () {
+        var el = document.getElementById('cal-inline');
+        if (!el) return;
+        Cal('init', { origin: el.dataset.calOrigin });
+        Cal('inline', { elementOrSelector: '#cal-inline', calLink: el.dataset.calLink, config: { layout: 'month_view' } });
+        Cal('ui', { theme: 'light' });
+      })();
+    </script>
+  )
+}

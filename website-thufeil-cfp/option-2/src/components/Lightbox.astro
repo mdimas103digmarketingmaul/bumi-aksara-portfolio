@@ -1,0 +1,394 @@
+---
+import Icon from './Icon.astro';
+/*
+ * One shared lightbox for the page. Any element with
+ *   data-lightbox="<group>" data-src data-width data-height data-alt data-caption
+ * opens it. Elements sharing a group become a browsable set (prev/next).
+ */
+---
+
+<dialog class="lb" aria-labelledby="lb-caption" data-lb>
+  <div class="lb__bar">
+    <p class="lb__caption" id="lb-caption" aria-live="polite" data-lb-caption></p>
+    <div class="lb__tools">
+      <button class="lb__btn" type="button" aria-pressed="false" data-lb-zoom>
+        <Icon name="expand" />
+        <span class="lb__btn-label" data-lb-zoom-label>Perbesar</span>
+      </button>
+      <button class="lb__btn" type="button" data-lb-close autofocus>
+        <Icon name="close" />
+        <span class="lb__btn-label">Tutup</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="lb__stage" data-lb-stage>
+    <img class="lb__img" alt="" data-lb-img />
+  </div>
+
+  <div class="lb__nav" data-lb-nav>
+    <button class="lb__arrow" type="button" data-lb-prev>
+      <Icon name="prev" />
+      <span class="sr-only">Sebelumnya</span>
+    </button>
+    <span class="lb__count" data-lb-count></span>
+    <button class="lb__arrow" type="button" data-lb-next>
+      <Icon name="next" />
+      <span class="sr-only">Berikutnya</span>
+    </button>
+  </div>
+</dialog>
+
+<style>
+  .lb {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--cream);
+    overflow: hidden;
+  }
+
+  .lb[open] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .lb::backdrop {
+    background: rgb(8 12 26 / 0.96);
+    backdrop-filter: blur(12px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lb[open] {
+      animation: lb-in 0.3s var(--ease);
+    }
+
+    .lb[open]::backdrop {
+      animation: lb-fade 0.3s var(--ease);
+    }
+  }
+
+  @keyframes lb-in {
+    from {
+      opacity: 0;
+      transform: scale(0.985);
+    }
+  }
+
+  @keyframes lb-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .lb__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem var(--gutter);
+  }
+
+  .lb__caption {
+    font-size: var(--fs-small);
+    color: var(--fog);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .lb__tools {
+    display: flex;
+    gap: 0.25rem;
+    flex: none;
+  }
+
+  .lb__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    padding: 0 0.85rem;
+    border-radius: 999px;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    transition: background-color 0.2s var(--ease);
+  }
+
+  .lb__btn:hover {
+    background: rgb(243 238 227 / 0.1);
+  }
+
+  .lb__btn .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .lb__stage {
+    display: grid;
+    place-items: center;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 0.5rem var(--gutter);
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .lb__img {
+    max-width: 100%;
+    /* Toolbar + navigation take ~9.5rem; the image always fits the rest. */
+    max-height: calc(100dvh - 9.5rem);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    background: rgb(243 238 227 / 0.06);
+    cursor: zoom-in;
+    user-select: none;
+    transition: opacity 0.25s var(--ease);
+  }
+
+  .lb__img.is-loading {
+    opacity: 0;
+  }
+
+  /* Zoomed: show the image larger than the viewport and let the stage scroll. */
+  .lb.is-zoomed .lb__stage {
+    place-items: start center;
+    touch-action: auto;
+  }
+
+  .lb.is-zoomed .lb__img {
+    max-width: none;
+    max-height: none;
+    width: var(--zoom-w, auto) !important;
+    cursor: zoom-out;
+  }
+
+  .lb__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0.75rem var(--gutter) max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .lb__nav[hidden] {
+    display: none;
+  }
+
+  .lb:has(.lb__nav[hidden]) .lb__img {
+    max-height: calc(100dvh - 5.5rem);
+  }
+
+  .lb__arrow {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid var(--line-d);
+    border-radius: 50%;
+    transition:
+      background-color 0.2s var(--ease),
+      border-color 0.2s var(--ease);
+  }
+
+  .lb__arrow:hover:not(:disabled) {
+    background: rgb(243 238 227 / 0.1);
+    border-color: var(--sun);
+    color: var(--sun);
+  }
+
+  .lb__arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .lb__arrow .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .lb__count {
+    min-width: 4.5rem;
+    text-align: center;
+    font-size: var(--fs-small);
+    font-variant-numeric: tabular-nums;
+    color: var(--fog);
+  }
+
+  @media (max-width: 30rem) {
+    .lb__btn-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+    }
+
+    .lb__btn {
+      width: 2.75rem;
+      padding: 0;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  import { lockScroll, unlockScroll } from '../scripts/scroll';
+
+  interface Item {
+    src: string;
+    width: number;
+    height: number;
+    alt: string;
+    caption: string;
+    trigger: HTMLElement;
+  }
+
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lb]');
+
+  if (dialog) {
+    const q = <T extends HTMLElement>(sel: string) => dialog.querySelector<T>(sel)!;
+    const img = q<HTMLImageElement>('[data-lb-img]');
+    const stage = q<HTMLElement>('[data-lb-stage]');
+    const caption = q<HTMLElement>('[data-lb-caption]');
+    const nav = q<HTMLElement>('[data-lb-nav]');
+    const count = q<HTMLElement>('[data-lb-count]');
+    const prev = q<HTMLButtonElement>('[data-lb-prev]');
+    const next = q<HTMLButtonElement>('[data-lb-next]');
+    const zoom = q<HTMLButtonElement>('[data-lb-zoom]');
+    const zoomLabel = q<HTMLElement>('[data-lb-zoom-label]');
+
+    let items: Item[] = [];
+    let index = 0;
+    let opener: HTMLElement | null = null;
+
+    const toItem = (el: HTMLElement): Item => ({
+      src: el.dataset.src ?? '',
+      width: Number(el.dataset.width) || 0,
+      height: Number(el.dataset.height) || 0,
+      alt: el.dataset.alt ?? '',
+      caption: el.dataset.caption ?? '',
+      trigger: el,
+    });
+
+    const setZoom = (on: boolean) => {
+      if (on) {
+        // At least the image's own width, and clearly larger than the fitted view.
+        const fitted = img.getBoundingClientRect().width;
+        const target = Math.max(items[index].width, fitted * 1.8);
+        dialog.style.setProperty('--zoom-w', `${Math.round(Math.min(target, items[index].width * 2))}px`);
+      }
+      dialog.classList.toggle('is-zoomed', on);
+      zoom.setAttribute('aria-pressed', String(on));
+      zoomLabel.textContent = on ? 'Perkecil' : 'Perbesar';
+      stage.scrollTo({ top: 0, left: (stage.scrollWidth - stage.clientWidth) / 2 });
+    };
+
+    const show = (i: number) => {
+      index = Math.max(0, Math.min(items.length - 1, i));
+      const item = items[index];
+      setZoom(false);
+      if (img.getAttribute('src') !== item.src) {
+        img.classList.add('is-loading');
+        img.onload = () => img.classList.remove('is-loading');
+      }
+      img.src = item.src;
+      img.alt = item.alt;
+      if (item.width) img.width = item.width;
+      if (item.height) img.height = item.height;
+      // Small originals (e.g. the certificate) are shown a bit larger than 1:1 for legibility.
+      img.style.width = item.width && item.width < 1000 ? `${Math.round(item.width * 1.5)}px` : '';
+      caption.textContent = item.caption;
+
+      const multiple = items.length > 1;
+      nav.hidden = !multiple;
+      prev.disabled = index === 0;
+      next.disabled = index === items.length - 1;
+      count.textContent = `${index + 1} / ${items.length}`;
+
+      // Warm the neighbours so browsing feels instant.
+      [items[index - 1], items[index + 1]].forEach((n) => {
+        if (n) new Image().src = n.src;
+      });
+    };
+
+    const open = (trigger: HTMLElement) => {
+      const group = trigger.dataset.lightbox;
+      const all = Array.from(document.querySelectorAll<HTMLElement>(`[data-lightbox="${group}"]`));
+      items = all.map(toItem);
+      opener = trigger;
+      show(all.indexOf(trigger));
+      lockScroll();
+      dialog.showModal();
+    };
+
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as HTMLElement).closest<HTMLElement>('[data-lightbox]');
+      if (!trigger) return;
+      e.preventDefault();
+      open(trigger);
+    });
+
+    dialog.addEventListener('close', () => {
+      // The close event is async; ignore it if the lightbox was reopened meanwhile.
+      if (dialog.open) return;
+      unlockScroll();
+      setZoom(false);
+      img.removeAttribute('src');
+      // Return focus to whatever opened the lightbox, even if the list scrolled.
+      opener?.focus({ preventScroll: false });
+    });
+
+    q<HTMLButtonElement>('[data-lb-close]').addEventListener('click', () => dialog.close());
+    prev.addEventListener('click', () => show(index - 1));
+    next.addEventListener('click', () => show(index + 1));
+    zoom.addEventListener('click', () => setZoom(!dialog.classList.contains('is-zoomed')));
+    img.addEventListener('click', () => setZoom(!dialog.classList.contains('is-zoomed')));
+
+    // Clicking the empty area around the image closes the lightbox.
+    stage.addEventListener('click', (e) => {
+      if (e.target === stage) dialog.close();
+    });
+
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && !prev.disabled && items.length > 1) {
+        e.preventDefault();
+        show(index - 1);
+      } else if (e.key === 'ArrowRight' && !next.disabled && items.length > 1) {
+        e.preventDefault();
+        show(index + 1);
+      }
+    });
+
+    // Horizontal swipe browses the set (only when not zoomed in).
+    let startX = 0;
+    let startY = 0;
+    stage.addEventListener(
+      'touchstart',
+      (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      },
+      { passive: true },
+    );
+    stage.addEventListener(
+      'touchend',
+      (e) => {
+        if (dialog.classList.contains('is-zoomed') || items.length < 2) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+          show(index + (dx < 0 ? 1 : -1));
+        }
+      },
+      { passive: true },
+    );
+  }
+</script>

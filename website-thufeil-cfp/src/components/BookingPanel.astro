@@ -1,0 +1,144 @@
+---
+/*
+ * Booking panel — renders one of two states from src/config/site.ts:
+ *
+ *  • Booking live  (booking.enabled = true and booking.calUrl set):
+ *      the Cal.com calendar is embedded inline, with a fallback link.
+ *  • Booking not live (default):
+ *      the real channels that work today — Instagram DM and the
+ *      consultation form on the IFAC profile.
+ *
+ * WhatsApp is shown in both states; it stays disabled until
+ * whatsapp.enabled = true and whatsapp.number is filled in.
+ */
+import Icon from './Icon.astro';
+import { booking, isBookingLive, isWhatsappLive, whatsappHref, links } from '../config/site';
+
+const cal = isBookingLive ? new URL(booking.calUrl) : null;
+---
+
+<div class:list={['booking', { 'booking--live': isBookingLive }]}>
+  {
+    isBookingLive && cal ? (
+      <Fragment>
+        <p class="booking__label">Pilih jadwal</p>
+        <div
+          class="booking__cal"
+          id="cal-inline"
+          data-cal-origin={cal.origin}
+          data-cal-link={cal.pathname.replace(/^\//, '')}
+        />
+        <a class="text-link booking__fallback" href={booking.calUrl} target="_blank" rel="noopener noreferrer">
+          Buka kalender di tab baru
+          <Icon name="external" />
+        </a>
+      </Fragment>
+    ) : (
+      <Fragment>
+        <p class="booking__label">Atur jadwal lewat</p>
+        <div class="booking__actions">
+          <a class="btn btn--primary" href={links.instagramDm} target="_blank" rel="noopener noreferrer">
+            <Icon name="instagram" />
+            Kirim DM di Instagram
+            <span class="sr-only">(tab baru)</span>
+          </a>
+          <a class="btn btn--outline" href={links.ifacProfile} target="_blank" rel="noopener noreferrer">
+            Isi formulir di profil IFAC
+            <Icon name="external" />
+            <span class="sr-only">(tab baru)</span>
+          </a>
+        </div>
+      </Fragment>
+    )
+  }
+
+  <div class="booking__wa">
+    {
+      isWhatsappLive && whatsappHref ? (
+        <a class="btn btn--outline" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+          <Icon name="whatsapp" />
+          Hubungi via WhatsApp
+          <span class="sr-only">(tab baru)</span>
+        </a>
+      ) : (
+        <span class="btn booking__wa-off" role="link" aria-disabled="true" aria-describedby="wa-note">
+          <Icon name="whatsapp" />
+          Hubungi via WhatsApp
+        </span>
+      )
+    }
+    {!isWhatsappLive && <span class="booking__note" id="wa-note">Nomor WhatsApp belum tersedia.</span>}
+  </div>
+</div>
+
+<style>
+  .booking {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 0 rgb(20 24 43 / 0.08);
+  }
+
+  .booking__label {
+    font-size: var(--fs-label);
+    font-weight: 650;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .booking__actions {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .booking__wa {
+    display: grid;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .booking__wa .btn {
+    width: 100%;
+  }
+
+  .booking__wa-off {
+    user-select: none;
+  }
+
+  .booking__note {
+    font-size: var(--fs-caption);
+    color: var(--ink-3);
+    text-align: center;
+  }
+
+  .booking__cal {
+    min-height: 34rem;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .booking__fallback {
+    justify-self: start;
+  }
+</style>
+
+{
+  isBookingLive && (
+    <script is:inline>
+      // Official Cal.com inline embed snippet, only rendered when booking is live.
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      (function () {
+        var el = document.getElementById('cal-inline');
+        if (!el) return;
+        Cal('init', { origin: el.dataset.calOrigin });
+        Cal('inline', { elementOrSelector: '#cal-inline', calLink: el.dataset.calLink, config: { layout: 'month_view' } });
+        Cal('ui', { theme: 'light' });
+      })();
+    </script>
+  )
+}

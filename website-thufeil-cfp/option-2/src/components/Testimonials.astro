@@ -1,0 +1,172 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import { testimonials } from '../data/content';
+
+const items = await Promise.all(
+  testimonials.map(async (t) => ({
+    ...t,
+    full: await getImage({ src: t.image, width: 1100, format: 'webp', quality: 84 }),
+  })),
+);
+const total = items.length;
+---
+
+<section class="testi" id="testimoni" aria-labelledby="testi-title" data-rail data-autoplay="3500">
+  <header class="testi__head wrap">
+    <div>
+      <p class="label label--sun" data-reveal>Testimoni</p>
+      <h2 class="testi__title display" id="testi-title" data-split>Kata mereka, setelah ngobrol.</h2>
+    </div>
+    <div class="rail__controls" data-reveal>
+      <button class="rail__btn" type="button" aria-label="Jeda putar otomatis" data-rail-toggle data-state="playing">
+        <Icon name="pause" class="icon icon--pause" />
+        <Icon name="play" class="icon icon--play" />
+      </button>
+      <button class="rail__btn" type="button" aria-label="Testimoni sebelumnya" data-rail-prev>
+        <Icon name="back" />
+      </button>
+      <button class="rail__btn" type="button" aria-label="Testimoni berikutnya" data-rail-next>
+        <Icon name="arrow" />
+      </button>
+    </div>
+  </header>
+
+  <ul class="testi__track rail__track" role="list" aria-label={`${total} screenshot testimoni`} data-rail-track>
+    {
+      items.map((t, i) => (
+        <li>
+          <button
+            class="phone"
+            type="button"
+            aria-haspopup="dialog"
+            data-lightbox="testimonials"
+            data-src={t.full.src}
+            data-width={t.full.attributes.width}
+            data-height={t.full.attributes.height}
+            data-alt={t.alt}
+            data-caption={`Testimoni ${i + 1} dari ${total}`}
+          >
+            <span class="phone__screen">
+              <Image
+                src={t.image}
+                widths={[240, 360, 480]}
+                sizes="(min-width: 64rem) 15rem, 12rem"
+                format="webp"
+                quality={80}
+                loading="lazy"
+                alt={t.alt}
+              />
+              <span class="phone__zoom" aria-hidden="true"><Icon name="expand" /></span>
+            </span>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="rail__foot wrap">
+    <p class="rail__hint">Klik untuk membaca lebih jelas.</p>
+    <span class="rail__bar" aria-hidden="true"><span data-rail-bar></span></span>
+  </div>
+</section>
+
+<style>
+  .testi {
+    position: relative;
+    padding-block: var(--section);
+    background: var(--night);
+    overflow: clip;
+  }
+
+  .testi__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem 2rem;
+    margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+
+  .testi__title {
+    margin-top: 1.25rem;
+    font-size: clamp(2.5rem, 1.5rem + 3.8vw, 5.25rem);
+    max-width: 22ch;
+  }
+
+  .testi__track {
+    --rail-gap: clamp(0.75rem, 0.5rem + 0.8vw, 1.25rem);
+    padding-block: 0.75rem;
+  }
+
+  .phone {
+    display: block;
+    width: clamp(11rem, 8.5rem + 7vw, 15rem);
+    cursor: zoom-in;
+  }
+
+  .phone__screen {
+    position: relative;
+    display: block;
+    padding: 0.35rem;
+    border-radius: 1.6rem;
+    background: linear-gradient(160deg, #2a3150, #0b0f1e 60%);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.1),
+      0 24px 48px -24px rgb(0 0 0 / 0.8);
+    transition: transform 0.6s var(--ease);
+  }
+
+  .phone__screen :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 1.3rem;
+  }
+
+  .phone__zoom {
+    position: absolute;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--sun);
+    color: var(--ink);
+    opacity: 0;
+    transform: scale(0.5);
+    transition:
+      opacity 0.4s var(--ease),
+      transform 0.5s var(--ease);
+  }
+
+  .phone__zoom .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .phone:hover .phone__screen,
+  .phone:focus-visible .phone__screen {
+    transform: translateY(-0.4rem);
+  }
+
+  .phone:hover .phone__zoom,
+  .phone:focus-visible .phone__zoom {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Pause / play swap */
+  [data-rail-toggle] :global(.icon--play),
+  [data-rail-toggle][data-state='paused'] :global(.icon--pause) {
+    display: none;
+  }
+
+  [data-rail-toggle][data-state='paused'] :global(.icon--play) {
+    display: block;
+  }
+</style>

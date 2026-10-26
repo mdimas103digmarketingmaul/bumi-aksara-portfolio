@@ -1,0 +1,163 @@
+---
+import { expertise } from '../data/content';
+---
+
+<section class="section exp" id="keahlian" aria-labelledby="exp-title">
+  <div class="container">
+    <header class="exp__head" data-reveal>
+      <div class="exp__head-main">
+        <span class="eyebrow">Keahlian</span>
+        <h2 class="h2" id="exp-title">Dari cash flow <em>sampai waris</em>.</h2>
+      </div>
+      <p class="lead">Semua dibahas dengan kacamata perencanaan keuangan syariah.</p>
+    </header>
+
+    <ol class="exp__list" role="list">
+      {
+        expertise.map((item, i) => (
+          <li class:list={['exp__item', { 'exp__item--first': i === 0 }]} data-reveal>
+            <span class="exp__num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div class="exp__title-wrap">
+              <h3 class="exp__title">{item.title}</h3>
+              {i === 0 && <span class="exp__tag">Titik awal</span>}
+            </div>
+            <div class="exp__text">
+              <p class="exp__q">“{item.question}”</p>
+              <p class="exp__body">{item.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .exp__head {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  }
+
+  .exp__head-main {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 60rem) {
+    .exp__head {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      align-items: end;
+      gap: 3rem;
+    }
+
+    .exp__head .lead {
+      justify-self: end;
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  .exp__list {
+    border-top: 2px solid var(--ink);
+  }
+
+  .exp__item {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 0.4rem 1rem;
+    padding-block: clamp(1.5rem, 1.2rem + 1vw, 2.1rem);
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .exp__num {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+    padding-top: 0.2rem;
+  }
+
+  .exp__title-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.9rem;
+  }
+
+  .exp__title {
+    font-size: var(--fs-h3);
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  .exp__tag {
+    font-size: var(--fs-label);
+    font-weight: 650;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: linear-gradient(transparent 55%, rgb(233 184 36 / 0.55) 55%);
+    padding-inline: 0.15rem;
+  }
+
+  .exp__text {
+    grid-column: 2;
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+  }
+
+  .exp__q {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.3rem, 1.15rem + 0.6vw, 1.65rem);
+    line-height: 1.2;
+    color: var(--green);
+  }
+
+  .exp__body {
+    color: var(--ink-2);
+    max-width: 36rem;
+  }
+
+  @media (min-width: 48rem) {
+    .exp__item {
+      grid-template-columns: 3.5rem minmax(0, 0.9fr) minmax(0, 1.25fr);
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .exp__text {
+      grid-column: 3;
+      margin-top: 0;
+    }
+  }
+
+  /* The check-up is the foundation for every other priority, so it reads first. */
+  .exp__item--first {
+    padding-block: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+
+  .exp__item--first .exp__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 1.5rem + 2vw, 2.9rem);
+    line-height: 1;
+  }
+
+  .exp__item--first .exp__title-wrap {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .exp__item--first .exp__q {
+    font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  }
+
+  .exp__item--first .exp__body {
+    font-size: 1.0625rem;
+    color: var(--ink);
+  }
+</style>

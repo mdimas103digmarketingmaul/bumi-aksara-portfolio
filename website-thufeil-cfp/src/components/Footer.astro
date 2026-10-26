@@ -1,0 +1,118 @@
+---
+import Icon from './Icon.astro';
+import { links, site } from '../config/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer on-dark">
+  <div class="container">
+    <div class="footer__top">
+      <div>
+        <p class="footer__name">Thufeil M. Tyansah, CFP<sup class="reg">®</sup></p>
+        <p class="footer__role">{site.role}</p>
+      </div>
+
+      <ul class="footer__links" role="list">
+        <li>
+          <a href={links.instagram} target="_blank" rel="noopener noreferrer">
+            <Icon name="instagram" />
+            Instagram {links.instagramHandle}
+            <span class="sr-only">(tab baru)</span>
+          </a>
+        </li>
+        <li>
+          <a href={links.ifacProfile} target="_blank" rel="noopener noreferrer">
+            <Icon name="external" />
+            Profil di IFAC
+            <span class="sr-only">(tab baru)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__note">
+        Konten di situs ini bersifat edukasi umum, bukan nasihat keuangan personal. Setiap keputusan keuangan perlu
+        disesuaikan dengan kondisi masing-masing.
+      </p>
+      <p class="footer__copy">© {year} Thufeil Muhammad Tyansah</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: var(--on-dark);
+    padding-block: clamp(3.5rem, 2.5rem + 4vw, 6rem) 2rem;
+  }
+
+  .footer__top {
+    display: grid;
+    gap: 2rem;
+    padding-bottom: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  @media (min-width: 48rem) {
+    .footer__top {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+
+  .footer__name {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 1.5rem + 3vw, 4rem);
+    line-height: 1;
+  }
+
+  .footer__role {
+    margin-top: 0.6rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+    color: var(--mustard);
+  }
+
+  .footer__links {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .footer__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--on-dark);
+    opacity: 0.86;
+    transition: opacity 0.2s var(--ease-out);
+  }
+
+  .footer__links a:hover {
+    opacity: 1;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+
+  .footer__bottom {
+    display: grid;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    font-size: var(--fs-caption);
+    color: var(--on-dark-2);
+  }
+
+  @media (min-width: 48rem) {
+    .footer__bottom {
+      grid-template-columns: minmax(0, 36rem) auto;
+      justify-content: space-between;
+      align-items: start;
+    }
+  }
+</style>

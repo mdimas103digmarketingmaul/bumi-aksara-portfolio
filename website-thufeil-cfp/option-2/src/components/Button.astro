@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'sun' | 'ink' | 'ghost';
+  icon?: 'instagram' | 'whatsapp';
+  arrow?: boolean;
+  external?: boolean;
+  class?: string;
+}
+
+const { href, label, variant = 'sun', icon, arrow = true, external = false, class: className } = Astro.props;
+const ext = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a class:list={['btn', variant !== 'sun' && `btn--${variant}`, className]} href={href} data-magnetic {...ext}>
+  {icon && <Icon name={icon} />}
+  <span class="roll"><span>{label}</span><span aria-hidden="true">{label}</span></span>
+  {
+    arrow && (
+      <span class="btn__arrow" aria-hidden="true">
+        <Icon name={external ? 'external' : 'arrow'} />
+      </span>
+    )
+  }
+  {external && <span class="sr-only">(tab baru)</span>}
+</a>

@@ -1,0 +1,171 @@
+---
+import Button from './Button.astro';
+import { expertise } from '../data/content';
+import { bookingAnchor } from '../config/site';
+---
+
+<section class="exp on-light" id="keahlian" aria-labelledby="exp-title">
+  <div class="wrap exp__grid">
+    <header class="exp__head">
+      <p class="label" data-reveal>Keahlian</p>
+      <h2 class="exp__title display" id="exp-title" data-split>Yang bisa kita bahas</h2>
+      <p class="exp__lead" data-reveal>
+        Enam area, satu kacamata: perencanaan keuangan syariah. Belum yakin mulai dari mana? Financial check-up
+        biasanya jadi titik awal.
+      </p>
+      <div class="exp__cta exp__cta--side" data-reveal>
+        <Button href={bookingAnchor} label="Konsultasi gratis" variant="ink" />
+      </div>
+    </header>
+
+    <ol class="exp__list" role="list">
+      {
+        expertise.map((item, i) => (
+          <li class="topic" data-reveal>
+            <span class="topic__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="topic__title">{item.title}</h3>
+            <p class="topic__q">“{item.question}”</p>
+            <p class="topic__body">{item.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <!-- Single-column layouts: the button follows the topics instead of interrupting them. -->
+    <div class="exp__cta exp__cta--end" data-reveal>
+      <Button href={bookingAnchor} label="Konsultasi gratis" variant="ink" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .exp {
+    position: relative;
+    padding-block: var(--section);
+  }
+
+  .exp__grid {
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 3vw, 4rem);
+  }
+
+  .exp__head {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+    align-content: start;
+  }
+
+  .exp__title {
+    font-size: var(--t-lg);
+    max-width: 8ch;
+  }
+
+  .exp__lead {
+    max-width: 26rem;
+    color: var(--ink-soft);
+  }
+
+  .exp__cta--side {
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 63.99rem) {
+    .exp__cta--side {
+      display: none;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .exp__cta--end {
+      display: none;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .exp__grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: start;
+    }
+
+    /* The heading stays in view while the topics pass by. */
+    .exp__head {
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+    }
+  }
+
+  /* ─── Topics: small, all readable at a glance ─── */
+  .exp__list {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 40rem) {
+    .exp__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  .topic {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    gap: 0.6rem;
+    padding: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    border-radius: var(--r-md);
+    background: #fffdf8;
+    box-shadow: inset 0 0 0 1px var(--line-l);
+    transition:
+      background-color 0.5s var(--ease),
+      color 0.5s var(--ease),
+      transform 0.6s var(--ease);
+  }
+
+  .topic:hover {
+    background: var(--night);
+    color: var(--cream);
+    transform: translateY(-0.25rem);
+  }
+
+  .topic__num {
+    font-size: var(--t-label);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-soft);
+    transition: color 0.5s var(--ease);
+  }
+
+  .topic:hover .topic__num {
+    color: var(--sun);
+  }
+
+  .topic__title {
+    margin-top: 0.4rem;
+    font-family: var(--f-display);
+    font-stretch: 70%;
+    font-weight: 780;
+    font-size: clamp(1.5rem, 1.25rem + 0.8vw, 2rem);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .topic__q {
+    font-weight: 550;
+    line-height: 1.4;
+  }
+
+  .topic__body {
+    font-size: var(--t-small);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    transition: color 0.5s var(--ease);
+  }
+
+  .topic:hover .topic__body {
+    color: var(--fog);
+  }
+</style>

@@ -1,0 +1,178 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { instagramPosts } from '../data/content';
+import { links } from '../config/site';
+---
+
+<section class="section insight" id="insight" aria-labelledby="insight-title">
+  <div class="container insight__grid">
+    <header class="insight__intro" data-reveal>
+      <span class="eyebrow">Insight</span>
+      <h2 class="h2" id="insight-title">Belajar finansial, <em>satu topik</em> dalam satu waktu.</h2>
+      <p class="lead">Carousel, sesi live, dan webinar: dari ekonomi yang sedang goyah, rezeki anak, sampai wajib halal.</p>
+      <a class="btn btn--primary insight__cta" href={links.instagram} target="_blank" rel="noopener noreferrer">
+        <Icon name="instagram" />
+        Buka Instagram {links.instagramHandle}
+        <span class="sr-only">(tab baru)</span>
+      </a>
+    </header>
+
+    <ol class="posts" role="list">
+      {
+        instagramPosts.map((post, i) => (
+          <li class="post">
+            <a class="post__link" href={links.instagram} target="_blank" rel="noopener noreferrer">
+              <span class="post__media">
+                <Image
+                  class="post__img"
+                  src={post.image}
+                  widths={[240, 360, 540]}
+                  sizes="(min-width: 64rem) 15rem, (min-width: 40rem) 30vw, 45vw"
+                  format="webp"
+                  quality={78}
+                  loading="lazy"
+                  alt={post.alt}
+                />
+              </span>
+              <span class="post__meta">
+                <span class="post__num">{String(i + 1).padStart(2, '0')}</span>
+                <span class="post__kind">{post.kind}</span>
+              </span>
+              <span class="post__title">{post.title}</span>
+              <span class="sr-only">— buka Instagram (tab baru)</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .insight__grid {
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 3vw, 4rem);
+  }
+
+  .insight__intro {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    justify-items: start;
+  }
+
+  .insight__intro .lead {
+    margin-top: 0.25rem;
+    max-width: 24rem;
+  }
+
+  .insight__cta {
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 64rem) {
+    .insight__grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      gap: clamp(3rem, 5vw, 5.5rem);
+      align-items: start;
+    }
+
+    .insight__intro {
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+    }
+  }
+
+  /* Order 1–9 reads left to right; alternating columns sit lower so the
+     grid feels laid out by hand rather than tiled. */
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 0.875rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .post:nth-child(even) {
+    transform: translateY(2.5rem);
+  }
+
+  @media (min-width: 40rem) {
+    .posts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.5rem clamp(1rem, 2vw, 1.75rem);
+      padding-bottom: 3.5rem;
+    }
+
+    .post:nth-child(even) {
+      transform: none;
+    }
+
+    .post:nth-child(3n + 2) {
+      transform: translateY(3.5rem);
+    }
+  }
+
+  .post__link {
+    display: grid;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+
+  .post__media {
+    display: block;
+    overflow: hidden;
+    border-radius: 3px;
+    aspect-ratio: 4 / 5;
+    background: var(--paper-deep);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+
+  .post__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-out);
+  }
+
+  .post__link:hover .post__img {
+    transform: scale(1.035);
+  }
+
+  .post__meta {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+    font-size: var(--fs-label);
+    font-weight: 650;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .post__num {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+
+  .post__title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-wrap: pretty;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color 0.25s var(--ease-out);
+  }
+
+  .post__link:hover .post__title {
+    text-decoration-color: var(--line-strong);
+  }
+
+  @media (max-width: 30rem) {
+    .post__title {
+      font-size: 0.875rem;
+    }
+  }
+</style>

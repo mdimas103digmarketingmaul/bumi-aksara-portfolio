@@ -1,0 +1,328 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/profile/thufeil-portrait.png';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { bookingAnchor } from '../config/site';
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title" data-hero>
+  <div class="hero__glow" aria-hidden="true" data-hero-glow></div>
+
+  <div class="hero__figure" data-hero-figure>
+    <div class="hero__mouse" data-hero-mouse>
+      <Image
+        class="hero__portrait"
+        src={portrait}
+        widths={[480, 720, 858]}
+        sizes="(min-width: 64rem) 56rem, 130vw"
+        format="webp"
+        quality={90}
+        loading="eager"
+        fetchpriority="high"
+        alt="Thufeil M. Tyansah tersenyum dengan tangan bersilang, mengenakan kacamata dan jaket varsity navy bertuliskan semua mampu sejahtera."
+        data-hero-portrait
+      />
+    </div>
+  </div>
+
+  <div class="hero__shade" aria-hidden="true"></div>
+
+  <!-- Content flows top to bottom, so spacing between blocks can never collapse. -->
+  <div class="hero__inner" data-hero-inner>
+    <h1 class="sr-only" id="hero-title">Thufeil M. Tyansah, CFP® — Gen-Z Financial Planner</h1>
+
+    <div class="hero__top wrap" data-hero-fade>
+      <p class="label label--sun">Gen-Z Financial Planner</p>
+      <p class="hero__creds">Perencana keuangan syariah · CFP® · AWPs®</p>
+    </div>
+
+    <!-- Layered name: the giant word sits behind the portrait. -->
+    <div class="hero__name wrap" aria-hidden="true" data-hero-name>
+      <p class="hero__giant display" data-hero-giant>Thufeil</p>
+      <p class="hero__lockup display" data-hero-fade>M. Tyansah, CFP<sup class="reg">®</sup></p>
+    </div>
+
+    <div class="hero__bottom wrap">
+      <div class="hero__intro" data-hero-fade>
+        <p class="hero__text">
+          <strong>Teman ngobrol soal uang, tanpa judging.</strong>
+          Dari gaji yang numpang lewat, cicilan, investasi syariah, sampai zakat dan waris.
+        </p>
+        <div class="hero__actions">
+          <Button href={bookingAnchor} label="Konsultasi gratis 30 menit" />
+          <Button href="#tentang" label="Kenalan dulu" variant="ghost" arrow={false} class="hero__ghost" />
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#tentang" data-hero-fade>
+        <span>Scroll</span>
+        <span class="hero__scroll-line" aria-hidden="true"><span></span></span>
+        <Icon name="down" />
+        <span class="sr-only">ke bagian Tentang</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    /* Shared by the layout and the name size below. */
+    --hero-h: clamp(44rem, 100svh, 64rem);
+    /* Everything stacked under the giant name: top row, lockup, intro, gaps, bottom space. */
+    --hero-rest: 32rem;
+    --name-gap: clamp(1.25rem, 0.75rem + 1.5vh, 2rem);
+    /* Spans the content width (ratio measured for Archivo 62%/820), but shrinks
+       on short screens so the intro and buttons always keep their breathing room. */
+    --giant-fs: min(
+      calc((min(100vw, var(--max) + var(--gutter) * 2) - var(--gutter) * 2) / 2.95),
+      calc((var(--hero-h) - var(--hero-rest)) / 0.8)
+    );
+    --lockup-gap: clamp(0.75rem, 0.5rem + 0.6vw, 1.1rem);
+    --lockup-fs: clamp(1.5rem, 0.9rem + 2.6vw, 3.5rem);
+    position: relative;
+    min-height: var(--hero-h);
+    background: var(--night);
+    overflow: clip;
+  }
+
+  /* A single soft stage light behind the portrait. */
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(42% 52% at 57% 72%, rgb(52 66 128 / 0.55), transparent 70%),
+      radial-gradient(70% 60% at 50% 110%, rgb(247 194 27 / 0.08), transparent 70%);
+  }
+
+  .hero__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: var(--hero-h);
+    /* The next section overlaps by --r-lg, so the bottom space includes it. */
+    padding-block: calc(var(--nav-h) + 1.25rem) calc(var(--r-lg) + clamp(3rem, 2rem + 3.5vh, 5rem));
+    transform-origin: 50% 100%;
+    pointer-events: none;
+  }
+
+  .hero__inner > * {
+    pointer-events: auto;
+  }
+
+  .hero__top {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero__creds {
+    font-size: var(--t-small);
+    color: var(--fog);
+  }
+
+  .hero__name {
+    position: relative;
+    z-index: 1;
+    margin-top: var(--name-gap);
+  }
+
+  .hero__giant {
+    font-size: var(--giant-fs);
+    line-height: 0.8;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    white-space: nowrap;
+  }
+
+  .hero__lockup {
+    margin-top: var(--lockup-gap);
+    font-size: var(--lockup-fs);
+    line-height: 0.9;
+    color: var(--sun);
+  }
+
+  .hero__figure {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    z-index: 2;
+    width: min(56rem, 62vw, calc((100svh - var(--nav-h) - 2rem) * 1.075));
+    translate: -42% 0;
+  }
+
+  .hero__portrait {
+    width: 100%;
+    height: auto;
+    /* Fade the crop line into the night instead of a hard cut. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent 98%);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .hero__shade {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 3;
+    height: 45%;
+    background: linear-gradient(to top, rgb(8 12 26 / 0.94), rgb(8 12 26 / 0.6) 45%, transparent);
+    pointer-events: none;
+  }
+
+  .hero__bottom {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    /* Pushed to the bottom, never closer than this to the lockup. */
+    margin-top: auto;
+    padding-top: clamp(2.5rem, 1.75rem + 2.5vh, 4rem);
+  }
+
+  .hero__intro {
+    max-width: 31rem;
+  }
+
+  .hero__text {
+    font-size: var(--t-lead);
+    line-height: 1.6;
+    color: var(--fog);
+    text-wrap: pretty;
+  }
+
+  .hero__text strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    color: var(--cream);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .hero__scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: var(--t-label);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fog);
+    text-decoration: none;
+  }
+
+  .hero__scroll-line {
+    position: relative;
+    width: 1px;
+    height: 3.5rem;
+    background: var(--line-d);
+    overflow: hidden;
+  }
+
+  .hero__scroll-line span {
+    position: absolute;
+    inset: 0;
+    background: var(--sun);
+    animation: drip 2.2s var(--ease-in-out) infinite;
+  }
+
+  .hero__scroll .icon {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  @keyframes drip {
+    0% {
+      transform: translateY(-100%);
+    }
+    55%,
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  /* ─── Tablet & phone: name on top, portrait fills the lower half ─── */
+  @media (max-width: 63.99rem) {
+    .hero {
+      --hero-h: max(44rem, 100svh);
+      --name-gap: clamp(1.5rem, 4vh, 2.5rem);
+    }
+
+    .hero__figure {
+      width: min(130vw, 44rem);
+      translate: -50% 0;
+    }
+
+    .hero__scroll {
+      display: none;
+    }
+
+    .hero__intro {
+      max-width: 32rem;
+    }
+
+    /* Only behind the text block, so the face stays clear. */
+    .hero__shade {
+      height: 40%;
+      background: linear-gradient(to top, rgb(8 12 26 / 0.97) 35%, rgb(8 12 26 / 0.85) 65%, transparent);
+    }
+  }
+
+  /* Phones: hang the portrait just below the name instead of from the bottom
+     edge, so tall screens don't leave a gap above the head. */
+  @media (max-width: 47.99rem) {
+    .hero__figure {
+      top: calc(
+        var(--nav-h) + 1.25rem + 1.2rem + var(--name-gap) + var(--giant-fs) * 0.8 + var(--lockup-gap) +
+          var(--lockup-fs) * 0.9 + 0.25rem
+      );
+      bottom: auto;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .hero__creds {
+      display: none;
+    }
+
+    .hero__actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 1.5rem;
+    }
+
+    .hero__actions :global(.btn) {
+      width: 100%;
+    }
+
+    .hero__actions :global(.hero__ghost) {
+      display: none;
+    }
+
+    .hero__text {
+      font-size: 1rem;
+    }
+  }
+
+  /* Hidden until the intro timeline plays (only when motion is on). */
+  :global(.motion) [data-hero-fade],
+  :global(.motion) .hero__portrait,
+  :global(.motion) .hero__glow {
+    opacity: 0;
+  }
+
+  :global(.motion) .hero__giant {
+    visibility: hidden;
+  }
+</style>

@@ -1,0 +1,301 @@
+---
+import { bookingAnchor } from '../config/site';
+
+const items = [
+  { href: '#tentang', label: 'Tentang' },
+  { href: '#keahlian', label: 'Keahlian' },
+  { href: '#testimoni', label: 'Testimoni' },
+  { href: '#insight', label: 'Insight' },
+];
+---
+
+<header class="nav" data-nav>
+  <div class="container nav__bar">
+    <a class="nav__brand" href="#top" aria-label="Thufeil M. Tyansah, CFP® — kembali ke atas">
+      <span class="nav__name">Thufeil M. Tyansah</span>
+      <span class="nav__cred">CFP<sup>®</sup></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Navigasi utama">
+      <ul role="list">
+        {items.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="nav__actions">
+      <a class="btn btn--primary nav__cta" href={bookingAnchor}>
+        <span class="nav__cta-long">Jadwalkan Konsultasi</span>
+        <span class="nav__cta-short" aria-hidden="true">Konsultasi</span>
+      </a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
+        <span class="sr-only" data-nav-toggle-label>Buka menu</span>
+        <span class="nav__toggle-lines" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__menu" id="nav-menu" data-nav-menu hidden>
+    <nav class="container" aria-label="Navigasi seluler">
+      <ul role="list">
+        {items.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        <li><a href={bookingAnchor}>Konsultasi</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    transition:
+      background-color 0.35s var(--ease-out),
+      box-shadow 0.35s var(--ease-out),
+      transform 0.45s var(--ease-out);
+  }
+
+  .nav.is-scrolled,
+  .nav.is-open {
+    background: rgb(243 238 227 / 0.92);
+    backdrop-filter: saturate(1.2) blur(10px);
+    -webkit-backdrop-filter: saturate(1.2) blur(10px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+
+  .nav.is-open {
+    background: var(--paper);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .nav.is-hidden:not(.is-open) {
+    transform: translateY(-100%);
+  }
+
+  .nav__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: var(--nav-h);
+  }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav__name {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    line-height: 1;
+  }
+
+  .nav__cred {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--green);
+  }
+
+  .nav__cred sup {
+    font-size: 0.7em;
+  }
+
+  .nav__links ul {
+    display: flex;
+    gap: clamp(1.25rem, 2.4vw, 2.25rem);
+  }
+
+  .nav__links a {
+    position: relative;
+    font-size: 0.875rem;
+    font-weight: 550;
+    text-decoration: none;
+    color: var(--ink-2);
+    padding-block: 0.5rem;
+    transition: color 0.2s var(--ease-out);
+  }
+
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.2rem;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .nav__links a:hover {
+    color: var(--ink);
+  }
+
+  .nav__links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav__cta {
+    min-height: 2.75rem;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.875rem;
+  }
+
+  .nav__cta-short {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    border-radius: var(--radius);
+  }
+
+  .nav__toggle-lines,
+  .nav__toggle-lines::before {
+    display: block;
+    width: 1.25rem;
+    height: 1.5px;
+    background: var(--ink);
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .nav__toggle-lines {
+    position: relative;
+    transform: translateY(-3px);
+  }
+
+  .nav__toggle-lines::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+  }
+
+  .nav.is-open .nav__toggle-lines {
+    transform: translateY(0) rotate(45deg);
+  }
+
+  .nav.is-open .nav__toggle-lines::before {
+    transform: translateY(-6px) rotate(-90deg);
+  }
+
+  .nav__menu {
+    height: calc(100dvh - var(--nav-h));
+    overflow-y: auto;
+    border-top: 1px solid var(--line);
+    padding-block: 1rem 2rem;
+  }
+
+  .nav__menu a {
+    display: block;
+    padding-block: 0.7rem;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1.1;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (max-width: 56rem) {
+    .nav__links {
+      display: none;
+    }
+
+    .nav__toggle {
+      display: grid;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .nav__cta-long {
+      display: none;
+    }
+
+    .nav__cta-short {
+      display: inline;
+    }
+
+    .nav__name {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (max-width: 22.5rem) {
+    .nav__cred {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const label = document.querySelector<HTMLElement>('[data-nav-toggle-label]');
+  const menu = document.querySelector<HTMLElement>('[data-nav-menu]');
+
+  if (nav && toggle && menu && label) {
+    const setOpen = (open: boolean) => {
+      nav.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      label.textContent = open ? 'Tutup menu' : 'Buka menu';
+      menu.hidden = !open;
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+
+    toggle.addEventListener('click', () => setOpen(menu.hidden));
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    window.matchMedia('(min-width: 56.0625rem)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+
+    // Solid background once the page scrolls; hide while scrolling down,
+    // reveal again when the visitor scrolls up.
+    let lastY = window.scrollY;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      nav.classList.toggle('is-scrolled', y > 8);
+      if (y > 480 && y > lastY + 2) nav.classList.add('is-hidden');
+      else if (y < lastY - 2 || y <= 480) nav.classList.remove('is-hidden');
+      lastY = y;
+      ticking = false;
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+    update();
+
+    // Keep the header visible while keyboard focus is inside it.
+    nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
+  }
+</script>

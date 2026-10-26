@@ -1,0 +1,329 @@
+---
+import Button from './Button.astro';
+import { bookingAnchor, links } from '../config/site';
+
+const items = [
+  { href: '#tentang', label: 'Tentang' },
+  { href: '#keahlian', label: 'Keahlian' },
+  { href: '#testimoni', label: 'Testimoni' },
+];
+---
+
+<header class="nav" data-nav>
+  <div class="nav__bar wrap">
+    <a class="nav__brand" href="#top" aria-label="Thufeil M. Tyansah, CFP® — ke atas">
+      <span class="display">Thufeil</span>
+      <span class="nav__cfp">CFP®</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Navigasi utama">
+      <ul role="list">
+        {
+          items.map((item) => (
+            <li>
+              <a href={item.href}>
+                <span class="roll">
+                  <span>{item.label}</span>
+                  <span aria-hidden="true">{item.label}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="nav__end">
+      <Button href={bookingAnchor} label="Konsultasi gratis" class="nav__cta" arrow={false} />
+      <button class="nav__burger" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+        <span class="sr-only" data-menu-label>Buka menu</span>
+        <span class="nav__burger-lines" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" data-menu hidden>
+  <nav class="menu__inner wrap" aria-label="Menu">
+    <ol class="menu__list" role="list">
+      {
+        [...items, { href: bookingAnchor, label: 'Konsultasi' }].map((item, i) => (
+          <li>
+            <a class="menu__link" href={item.href} data-menu-link>
+              <span class="menu__num">0{i + 1}</span>
+              <span class="display">{item.label}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="menu__foot" data-menu-link>
+      <a href={links.instagram} target="_blank" rel="noopener noreferrer">Instagram {links.instagramHandle}</a>
+      <a href={links.threads} target="_blank" rel="noopener noreferrer">Threads</a>
+      <a href={links.ifacProfile} target="_blank" rel="noopener noreferrer">Profil IFAC</a>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 120;
+    padding-top: 0.75rem;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .nav.is-hidden {
+    transform: translateY(-120%);
+  }
+
+  .nav__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: calc(var(--nav-h) - 0.75rem);
+  }
+
+  /* Glass sits on its own layer so it can fade in after the hero. */
+  .nav__bar::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc(var(--gutter) - 0.75rem);
+    z-index: -1;
+    border-radius: 999px;
+    background: rgb(8 12 26 / 0.86);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    box-shadow: inset 0 0 0 1px var(--line-d);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+  }
+
+  .nav__bar {
+    position: relative;
+    padding-inline: calc(var(--gutter) + 0.5rem);
+  }
+
+  .nav.is-solid .nav__bar::before,
+  .nav.is-open .nav__bar::before {
+    opacity: 1;
+  }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--cream);
+  }
+
+  .nav__brand .display {
+    font-size: 1.85rem;
+    line-height: 0.9;
+  }
+
+  .nav__cfp {
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--sun);
+  }
+
+  .nav__links ul {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .nav__links a {
+    display: block;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--cream);
+    text-decoration: none;
+    transition: background-color 0.3s var(--ease);
+  }
+
+  .nav__links a:hover {
+    background: rgb(243 239 230 / 0.08);
+  }
+
+  .nav__end {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav__end :global(.nav__cta) {
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  .nav__burger {
+    display: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    border-radius: 50%;
+    background: rgb(243 239 230 / 0.1);
+  }
+
+  .nav__burger-lines,
+  .nav__burger-lines::after {
+    display: block;
+    width: 1.1rem;
+    height: 1.5px;
+    background: var(--cream);
+    transition: transform 0.5s var(--ease);
+  }
+
+  .nav__burger-lines {
+    position: relative;
+    transform: translateY(-3px);
+  }
+
+  .nav__burger-lines::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+  }
+
+  .nav.is-open .nav__burger-lines {
+    transform: rotate(45deg);
+  }
+
+  .nav.is-open .nav__burger-lines::after {
+    transform: translateY(-6px) rotate(-90deg);
+  }
+
+  @media (max-width: 60rem) {
+    .nav__links {
+      display: none;
+    }
+
+    .nav__burger {
+      display: grid;
+    }
+  }
+
+  @media (max-width: 26rem) {
+    .nav__end :global(.nav__cta) {
+      display: none;
+    }
+  }
+
+  /* ─── Full-screen menu ─── */
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    background: var(--night);
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.8s var(--ease-in-out);
+  }
+
+  .menu.is-open {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .menu__inner {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+    padding-top: calc(var(--nav-h) + 2rem);
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
+
+  .menu__list {
+    align-self: center;
+  }
+
+  .menu__link {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.35rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-d);
+  }
+
+  .menu__link .display {
+    font-size: clamp(3.25rem, 15vw, 6rem);
+  }
+
+  .menu__num {
+    font-size: var(--t-small);
+    color: var(--sun);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .menu__foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-size: var(--t-small);
+    color: var(--fog);
+  }
+
+  .menu__foot a {
+    text-decoration: none;
+  }
+</style>
+
+<script>
+  import { lockScroll, unlockScroll } from '../scripts/scroll';
+
+  const nav = document.querySelector<HTMLElement>('[data-nav]')!;
+  const menu = document.querySelector<HTMLElement>('[data-menu]')!;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]')!;
+  const label = document.querySelector<HTMLElement>('[data-menu-label]')!;
+
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    label.textContent = open ? 'Tutup menu' : 'Buka menu';
+    nav.classList.toggle('is-open', open);
+    nav.classList.remove('is-hidden');
+    if (open) {
+      menu.hidden = false;
+      requestAnimationFrame(() => menu.classList.add('is-open'));
+      lockScroll();
+    } else {
+      menu.classList.remove('is-open');
+      unlockScroll();
+      setTimeout(() => {
+        if (!menu.classList.contains('is-open')) menu.hidden = true;
+      }, 800);
+    }
+  };
+
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+  window.matchMedia('(min-width: 60.0625rem)').addEventListener('change', (e) => {
+    if (e.matches) setOpen(false);
+  });
+
+  // Glass bar after the hero; hide on the way down, return on the way up.
+  let lastY = window.scrollY;
+  const onScroll = () => {
+    const y = window.scrollY;
+    nav.classList.toggle('is-solid', y > 40);
+    if (y > window.innerHeight && y > lastY + 4) nav.classList.add('is-hidden');
+    else if (y < lastY - 4 || y < window.innerHeight) nav.classList.remove('is-hidden');
+    lastY = y;
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
+</script>

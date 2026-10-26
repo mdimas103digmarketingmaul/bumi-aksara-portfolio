@@ -1,0 +1,43 @@
+---
+// Minimal stroke icon set. Only icons that carry meaning (external link,
+// platform, close, navigation) — never decoration.
+interface Props {
+  name: 'external' | 'instagram' | 'whatsapp' | 'close' | 'prev' | 'next' | 'expand' | 'menu' | 'arrow' | 'down' | 'up' | 'back' | 'pause' | 'play' | 'threads' | 'pin';
+  class?: string;
+}
+const { name, class: className = 'icon' } = Astro.props;
+---
+
+<svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {name === 'external' && <path d="M8 16 16 8M9.5 8H16v6.5" />}
+  {name === 'instagram' && (
+    <Fragment>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+      <circle cx="12" cy="12" r="3.8" />
+      <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+    </Fragment>
+  )}
+  {name === 'whatsapp' && (
+    <path d="M4 20l1.2-4A8 8 0 1 1 8 18.8L4 20Zm5.1-11.3c-.3.9 0 2.2 1.3 3.6 1.4 1.5 2.8 2 3.7 1.7l.8-1.1-1.6-.9-.7.7c-.6-.2-1.6-1-2-1.9l.6-.7-.8-1.7-1.3.3Z" />
+  )}
+  {name === 'close' && <path d="M6 6l12 12M18 6 6 18" />}
+  {name === 'prev' && <path d="M14.5 6 8.5 12l6 6" />}
+  {name === 'next' && <path d="M9.5 6l6 6-6 6" />}
+  {name === 'expand' && <path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5" />}
+  {name === 'menu' && <path d="M4 8h16M4 16h16" />}
+  {name === 'arrow' && <path d="M5 12h14M13 6l6 6-6 6" />}
+  {name === 'down' && <path d="M12 5v14M6 13l6 6 6-6" />}
+  {name === 'up' && <path d="M12 19V5M6 11l6-6 6 6" />}
+  {name === 'back' && <path d="M19 12H5M11 6l-6 6 6 6" />}
+  {name === 'pause' && <path d="M9 6v12M15 6v12" />}
+  {name === 'play' && <path d="M8 5.5v13l10-6.5-10-6.5Z" />}
+  {name === 'threads' && (
+    <path d="M17.6 8.2C16.6 5.4 14.5 4 11.9 4 8 4 5.5 7 5.5 12s2.5 8 6.4 8c3.4 0 5.8-2 5.8-4.7 0-2.6-2.1-4.1-5.1-4.1-2.6 0-4 1.2-4 2.8 0 1.5 1.2 2.4 2.8 2.4 2.5 0 3.7-1.9 3.7-4.9 0-2.4-1.4-3.6-3.3-3.6-1.3 0-2.3.5-2.9 1.4" />
+  )}
+  {name === 'pin' && (
+    <Fragment>
+      <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" />
+      <circle cx="12" cy="10" r="2.3" />
+    </Fragment>
+  )}
+</svg>

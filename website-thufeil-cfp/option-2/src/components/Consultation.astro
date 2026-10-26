@@ -1,0 +1,122 @@
+---
+import BookingPanel from './BookingPanel.astro';
+import { booking, isBookingLive } from '../config/site';
+
+const steps = [
+  {
+    title: 'Atur jadwal',
+    body: isBookingLive
+      ? 'Pilih waktu yang kosong langsung di kalender.'
+      : 'Hubungi lewat kanal yang paling nyaman buatmu, lalu kita sepakati waktunya.',
+  },
+  {
+    title: 'Ceritakan kondisimu',
+    body: 'Penghasilan, pengeluaran, utang, atau tujuan yang lagi kamu pikirkan. Nggak perlu rapi.',
+  },
+  {
+    title: `Ngobrol ${booking.durationMinutes} menit`,
+    body: 'Lewat video call. Kita petakan kondisimu dan tentukan apa yang sebaiknya dikerjakan lebih dulu.',
+  },
+];
+---
+
+<section class:list={['cta on-sun', { 'cta--live': isBookingLive }]} id="konsultasi" aria-labelledby="cta-title">
+  <div class="wrap">
+    <p class="label" data-reveal>Konsultasi gratis · {booking.durationMinutes} menit · online</p>
+    <h2 class="cta__title display" id="cta-title" data-chars>Yuk, ngobrol.</h2>
+
+    <div class="cta__grid">
+      <div class="cta__copy">
+        <p class="cta__lead" data-reveal>
+          Bawa pertanyaanmu, serapi atau seberantakan apa pun kondisi keuanganmu sekarang.
+        </p>
+        <ol class="steps" role="list">
+          {
+            steps.map((s, i) => (
+              <li class="step" data-reveal>
+                <span class="step__num display">0{i + 1}</span>
+                <div>
+                  <h3 class="step__title">{s.title}</h3>
+                  <p class="step__body">{s.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="cta__panel" data-reveal>
+        <BookingPanel />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    z-index: 2;
+    padding-block: var(--section);
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
+  }
+
+  .cta__title {
+    margin-top: 1rem;
+    font-size: clamp(4.25rem, 1rem + 13.5vw, 15rem);
+    line-height: 0.8;
+  }
+
+  .cta__grid {
+    display: grid;
+    gap: 3rem;
+    margin-top: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  }
+
+  @media (min-width: 60rem) {
+    .cta:not(.cta--live) .cta__grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4.5fr);
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: start;
+    }
+  }
+
+  .cta__lead {
+    max-width: 30rem;
+    font-size: var(--t-lead);
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .steps {
+    margin-top: 2.5rem;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1.4rem;
+    border-top: 1px solid rgb(10 14 28 / 0.2);
+  }
+
+  .step:last-child {
+    border-bottom: 1px solid rgb(10 14 28 / 0.2);
+  }
+
+  .step__num {
+    font-size: 2.75rem;
+    line-height: 0.85;
+  }
+
+  .step__title {
+    font-size: 1.125rem;
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  .step__body {
+    margin-top: 0.3rem;
+    color: rgb(10 14 28 / 0.75);
+    max-width: 32rem;
+  }
+</style>
