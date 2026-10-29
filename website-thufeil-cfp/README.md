@@ -88,7 +88,7 @@ Komponen `Button` otomatis nonaktif bila `href` tidak diisi.
 2. Ganti foto di `src/assets/profile/` dan import-nya di `Hero.astro` (rasio potret saat ini 0,756;
    sesuaikan angka itu di `.hero__figure` bila rasio foto baru berbeda).
 3. Lebar nama raksasa di hero diatur `--giant-ratio` di `Hero.astro` (lebar nama dalam em untuk
-   Archivo 62%/820). "HAIKAL" = 2,64; "THUFEIL" = 2,95.
+   Archivo 62%/820). "HAIKAL" = 2,86 (dengan letter-spacing 0,03em).
 4. Beri `href` pada `Button` yang sekarang nonaktif (`BookingPanel.astro`, `Insight.astro`),
    kembalikan link di `Footer.astro`, `Nav.astro`, dan `Credentials.astro`.
 5. Ganti testimoni, insight, dan sertifikat dengan aset asli, lalu jalankan `node scripts/make-og.mjs`.

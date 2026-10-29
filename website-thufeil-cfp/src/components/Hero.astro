@@ -69,17 +69,12 @@ import { bookingAnchor, site } from '../config/profile';
   .hero {
     /* Shared by the layout and the name size below. */
     --hero-h: clamp(44rem, 100svh, 64rem);
-    /* Everything stacked under the giant name: top row, lockup, intro, gaps, bottom space. */
-    --hero-rest: 32rem;
     --name-gap: clamp(1.25rem, 0.75rem + 1.5vh, 2rem);
-    /* Width of the first name in em (Archivo 62%/820), so the giant word spans
-       the content width. It shrinks on short screens so the intro and buttons
-       always keep their breathing room. */
-    --giant-ratio: 2.64;
-    --giant-fs: min(
-      calc((min(100vw, var(--max) + var(--gutter) * 2) - var(--gutter) * 2) / var(--giant-ratio)),
-      calc((var(--hero-h) - var(--hero-rest)) / 0.8)
-    );
+    /* Width of the first name in em (Archivo 62%/820, incl. letter-spacing), so
+       the giant word always spans the content width. On short screens the hero
+       grows taller instead of shrinking the name. */
+    --giant-ratio: 2.86;
+    --giant-fs: calc((min(100vw, var(--max) + var(--gutter) * 2) - var(--gutter) * 2) / var(--giant-ratio));
     --lockup-gap: clamp(0.75rem, 0.5rem + 0.6vw, 1.1rem);
     --lockup-fs: clamp(1.5rem, 0.9rem + 2.6vw, 3.5rem);
     position: relative;
@@ -135,7 +130,8 @@ import { bookingAnchor, site } from '../config/profile';
   .hero__giant {
     font-size: var(--giant-fs);
     line-height: 0.8;
-    letter-spacing: -0.01em;
+    /* Positive tracking keeps diagonal glyphs (K, A) from touching. */
+    letter-spacing: 0.03em;
     color: var(--cream);
     white-space: nowrap;
   }

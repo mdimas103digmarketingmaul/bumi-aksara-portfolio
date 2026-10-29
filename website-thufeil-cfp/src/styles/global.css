@@ -253,6 +253,9 @@ sup.reg {
   vertical-align: top;
   padding-bottom: 0.08em;
   margin-bottom: -0.08em;
+  /* Glyphs like A overhang their advance width; widen the mask so they aren't cut. */
+  padding-inline: 0.08em;
+  margin-inline: -0.08em;
 }
 
 .wi {
