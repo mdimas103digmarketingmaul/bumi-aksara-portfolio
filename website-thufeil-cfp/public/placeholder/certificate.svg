@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1131" viewBox="0 0 1600 1131">
+  <title>Certificate placeholder</title>
+  <defs>
+    <pattern id="guilloche" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="14" cy="14" r="12" fill="none" stroke="#182042" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="seal" cx="40%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#ffd54a"/>
+      <stop offset="1" stop-color="#e0a800"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Paper -->
+  <rect width="1600" height="1131" fill="#fbf8f1"/>
+  <rect x="40" y="40" width="1520" height="1051" fill="url(#guilloche)"/>
+  <rect x="40" y="40" width="1520" height="1051" fill="none" stroke="#182042" stroke-width="6"/>
+  <rect x="64" y="64" width="1472" height="1003" fill="none" stroke="#182042" stroke-width="1.5"/>
+  <rect x="76" y="76" width="1448" height="979" fill="none" stroke="#f7c21b" stroke-width="3"/>
+
+  <!-- Corner ornaments -->
+  <g fill="#f7c21b">
+    <path d="M76 76h90v8H84v82h-8z"/>
+    <path d="M1524 76h-90v8h82v82h8z"/>
+    <path d="M76 1055h90v-8H84v-82h-8z"/>
+    <path d="M1524 1055h-90v-8h82v-82h8z"/>
+  </g>
+
+  <!-- Heading -->
+  <text x="800" y="210" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="10" fill="#182042" fill-opacity="0.6">PLACEHOLDER</text>
+  <text x="800" y="355" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="150" fill="#080c1a">Certificate</text>
+  <text x="800" y="425" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="28" letter-spacing="6" fill="#182042">CERTIFIED FINANCIAL PLANNER</text>
+  <rect x="740" y="455" width="120" height="4" fill="#f7c21b"/>
+
+  <!-- Name and body, drawn as bars -->
+  <text x="800" y="540" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="24" fill="#182042" fill-opacity="0.6">diberikan kepada</text>
+  <rect x="470" y="580" width="660" height="34" rx="17" fill="#182042" fill-opacity="0.85"/>
+  <rect x="430" y="660" width="740" height="14" rx="7" fill="#182042" fill-opacity="0.16"/>
+  <rect x="480" y="692" width="640" height="14" rx="7" fill="#182042" fill-opacity="0.16"/>
+  <rect x="560" y="724" width="480" height="14" rx="7" fill="#182042" fill-opacity="0.16"/>
+
+  <!-- Signatures -->
+  <path d="M240 900c40-40 70 10 100-20s50-30 70 0 40 10 70-12" fill="none" stroke="#182042" stroke-width="3" stroke-linecap="round"/>
+  <rect x="220" y="930" width="320" height="2" fill="#182042"/>
+  <rect x="290" y="950" width="180" height="12" rx="6" fill="#182042" fill-opacity="0.2"/>
+
+  <path d="M1080 900c30-30 60 20 90-10s60-25 80 5 30 5 60-15" fill="none" stroke="#182042" stroke-width="3" stroke-linecap="round"/>
+  <rect x="1060" y="930" width="320" height="2" fill="#182042"/>
+  <rect x="1130" y="950" width="180" height="12" rx="6" fill="#182042" fill-opacity="0.2"/>
+
+  <!-- Seal -->
+  <g transform="translate(800 905)">
+    <circle r="92" fill="url(#seal)"/>
+    <circle r="78" fill="none" stroke="#080c1a" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="4 6"/>
+    <path d="M0-46 13.5-15.5 46.4-14.3 20.6 6.2 29.4 38.2 0 19.5-29.4 38.2-20.6 6.2-46.4-14.3-13.5-15.5Z" fill="#080c1a"/>
+  </g>
+</svg>

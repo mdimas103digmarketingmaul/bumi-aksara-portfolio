@@ -7,7 +7,7 @@ import Icon from './Icon.astro';
  */
 ---
 
-<dialog class="lb on-dark" aria-labelledby="lb-caption" data-lb>
+<dialog class="lb" aria-labelledby="lb-caption" data-lb>
   <div class="lb__bar">
     <p class="lb__caption" id="lb-caption" aria-live="polite" data-lb-caption></p>
     <div class="lb__tools">
@@ -49,7 +49,7 @@ import Icon from './Icon.astro';
     padding: 0;
     border: 0;
     background: transparent;
-    color: var(--on-dark);
+    color: var(--cream);
     overflow: hidden;
   }
 
@@ -59,16 +59,17 @@ import Icon from './Icon.astro';
   }
 
   .lb::backdrop {
-    background: rgb(12 15 30 / 0.985);
+    background: rgb(8 12 26 / 0.96);
+    backdrop-filter: blur(12px);
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .lb[open] {
-      animation: lb-in 0.3s var(--ease-out);
+      animation: lb-in 0.3s var(--ease);
     }
 
     .lb[open]::backdrop {
-      animation: lb-fade 0.3s var(--ease-out);
+      animation: lb-fade 0.3s var(--ease);
     }
   }
 
@@ -95,7 +96,7 @@ import Icon from './Icon.astro';
 
   .lb__caption {
     font-size: var(--fs-small);
-    color: var(--on-dark-2);
+    color: var(--fog);
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -114,10 +115,10 @@ import Icon from './Icon.astro';
     gap: 0.45rem;
     min-height: 2.75rem;
     padding: 0 0.85rem;
-    border-radius: var(--radius);
+    border-radius: 999px;
     font-size: var(--fs-small);
     font-weight: 600;
-    transition: background-color 0.2s var(--ease-out);
+    transition: background-color 0.2s var(--ease);
   }
 
   .lb__btn:hover {
@@ -149,7 +150,7 @@ import Icon from './Icon.astro';
     background: rgb(243 238 227 / 0.06);
     cursor: zoom-in;
     user-select: none;
-    transition: opacity 0.25s var(--ease-out);
+    transition: opacity 0.25s var(--ease);
   }
 
   .lb__img.is-loading {
@@ -190,16 +191,17 @@ import Icon from './Icon.astro';
     place-items: center;
     width: 3rem;
     height: 3rem;
-    border: 1px solid var(--line-dark);
+    border: 1px solid var(--line-d);
     border-radius: 50%;
     transition:
-      background-color 0.2s var(--ease-out),
-      border-color 0.2s var(--ease-out);
+      background-color 0.2s var(--ease),
+      border-color 0.2s var(--ease);
   }
 
   .lb__arrow:hover:not(:disabled) {
     background: rgb(243 238 227 / 0.1);
-    border-color: rgb(243 238 227 / 0.4);
+    border-color: var(--sun);
+    color: var(--sun);
   }
 
   .lb__arrow:disabled {
@@ -217,7 +219,7 @@ import Icon from './Icon.astro';
     text-align: center;
     font-size: var(--fs-small);
     font-variant-numeric: tabular-nums;
-    color: var(--on-dark-2);
+    color: var(--fog);
   }
 
   @media (max-width: 30rem) {
@@ -238,6 +240,8 @@ import Icon from './Icon.astro';
 </style>
 
 <script>
+  import { lockScroll, unlockScroll } from '../scripts/scroll';
+
   interface Item {
     src: string;
     width: number;
@@ -321,7 +325,7 @@ import Icon from './Icon.astro';
       items = all.map(toItem);
       opener = trigger;
       show(all.indexOf(trigger));
-      document.documentElement.style.overflow = 'hidden';
+      lockScroll();
       dialog.showModal();
     };
 
@@ -335,7 +339,7 @@ import Icon from './Icon.astro';
     dialog.addEventListener('close', () => {
       // The close event is async; ignore it if the lightbox was reopened meanwhile.
       if (dialog.open) return;
-      document.documentElement.style.overflow = '';
+      unlockScroll();
       setZoom(false);
       img.removeAttribute('src');
       // Return focus to whatever opened the lightbox, even if the list scrolled.

@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Preloader from '../components/Preloader.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
+import Manifesto from '../components/Manifesto.astro';
 import Credentials from '../components/Credentials.astro';
-import About from '../components/About.astro';
 import Expertise from '../components/Expertise.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Insight from '../components/Insight.astro';
@@ -13,11 +14,12 @@ import Lightbox from '../components/Lightbox.astro';
 ---
 
 <Base>
+  <Preloader />
   <Nav />
-  <main id="main">
+  <main id="main" class="main">
     <Hero />
+    <Manifesto />
     <Credentials />
-    <About />
     <Expertise />
     <Testimonials />
     <Insight />
@@ -26,3 +28,11 @@ import Lightbox from '../components/Lightbox.astro';
   <Footer />
   <Lightbox />
 </Base>
+
+<style>
+  /* Main sits above the footer so the footer can be revealed from underneath. */
+  .main {
+    position: relative;
+    z-index: 2;
+  }
+</style>

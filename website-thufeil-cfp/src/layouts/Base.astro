@@ -1,9 +1,9 @@
 ---
-import '@fontsource/instrument-serif/400.css';
-import '@fontsource/instrument-serif/400-italic.css';
-import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/geist';
+import 'lenis/dist/lenis.css';
 import '../styles/global.css';
-import { site } from '../config/site';
+import { site } from '../config/profile';
 
 interface Props {
   title?: string;
@@ -12,7 +12,6 @@ interface Props {
 
 const { title = site.title, description = site.description } = Astro.props;
 
-// Canonical / absolute URLs only exist once `siteUrl` is configured.
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
 const ogImage = Astro.site ? new URL(site.ogImage, Astro.site).href : site.ogImage;
 
@@ -20,11 +19,10 @@ const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: site.fullName,
-  alternateName: 'Thufeil M. Tyansah',
+  alternateName: site.name,
   jobTitle: 'Financial Planner',
   honorificSuffix: 'S.E., CFP®, AWPs®',
   description,
-  sameAs: ['https://www.instagram.com/thufeil.cfp/', 'https://www.ifac.or.id/thufeil/'],
   ...(canonical ? { url: canonical } : {}),
 };
 ---
@@ -33,10 +31,10 @@ const personSchema = {
 <html lang="id">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f3eee3" />
+    <meta name="theme-color" content="#080c1a" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {canonical && <link rel="canonical" href={canonical} />}
 
@@ -48,7 +46,7 @@ const personSchema = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Thufeil M. Tyansah, CFP®, Gen-Z Financial Planner" />
+    <meta property="og:image:alt" content={`${site.name}, ${site.role}`} />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -56,30 +54,32 @@ const personSchema = {
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    <!--
+      Motion is opt-in: content is only hidden for animation when JS runs and
+      the visitor hasn't asked for reduced motion. If the motion bundle never
+      starts, the safety timer shows everything anyway.
+    -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        d.classList.add('motion');
+        try {
+          if (!sessionStorage.getItem('hk-intro')) d.classList.add('intro');
+        } catch (e) {}
+        setTimeout(function () {
+          if (!d.classList.contains('motion-ready')) d.classList.remove('motion', 'intro');
+        }, 4000);
+      })();
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Langsung ke konten</a>
     <slot />
-
     <script>
-      // Reveal a handful of marked elements once they enter the viewport.
-      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (!entry.isIntersecting) continue;
-              entry.target.classList.add('is-in');
-              io.unobserve(entry.target);
-            }
-          },
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
-        );
-        targets.forEach((el) => io.observe(el));
-      } else {
-        targets.forEach((el) => el.classList.add('is-in'));
-      }
+      import '../scripts/motion';
+      import '../scripts/rail';
     </script>
   </body>
 </html>

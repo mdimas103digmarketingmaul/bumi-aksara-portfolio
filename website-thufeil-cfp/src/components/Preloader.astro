@@ -1,0 +1,75 @@
+---
+import { site } from '../config/profile';
+
+// First-visit intro (once per session). Purely decorative: hidden from
+// assistive tech, skipped entirely with reduced motion or without JS.
+const words = ['Gaji.', 'Cicilan.', 'Investasi.', 'Zakat.', 'Kamu.'];
+---
+
+<div class="pre" aria-hidden="true" data-pre>
+  <div class="pre__stage">
+    {words.map((w) => <span class="pre__word display" data-pre-word>{w}</span>)}
+  </div>
+  <div class="pre__foot wrap">
+    <span>{site.name}</span>
+    <span class="pre__count"><span data-pre-count>0</span>%</span>
+  </div>
+  <div class="pre__bar"><span data-pre-bar></span></div>
+</div>
+
+<style>
+  .pre {
+    display: none;
+  }
+
+  :global(.intro) .pre {
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    display: grid;
+    grid-template-rows: 1fr auto auto;
+    background: var(--night);
+    color: var(--cream);
+  }
+
+  .pre__stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+
+  .pre__word {
+    position: absolute;
+    font-size: var(--t-xl);
+    opacity: 0;
+  }
+
+  .pre__word:last-child {
+    color: var(--sun);
+  }
+
+  .pre__foot {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 1.5rem;
+    font-size: var(--t-small);
+    color: var(--fog);
+  }
+
+  .pre__count {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pre__bar {
+    height: 2px;
+    background: var(--line-d);
+  }
+
+  .pre__bar span {
+    display: block;
+    height: 100%;
+    background: var(--sun);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+</style>

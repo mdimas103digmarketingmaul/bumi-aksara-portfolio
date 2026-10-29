@@ -1,16 +1,30 @@
 /**
- * Page content. Every fact here is sourced from Thufeil's IFAC profile
- * (ifac.or.id/thufeil), his CFP® certificate, or the supplied Instagram assets.
- * Do not add numbers or claims that cannot be checked against a source.
+ * Page content for the main page (/). The persona, numbers, certificate
+ * details and testimonials are placeholders for the design proposal.
+ * Replace them with verified facts before the site goes live.
  */
 import type { ImageMetadata } from 'astro';
+import postTalk from '../assets/insight/post-talk.jpg';
+import postDesk from '../assets/insight/post-desk.jpg';
+import postFamily from '../assets/insight/post-family.jpg';
+import postHustle from '../assets/insight/post-hustle.jpg';
 
 export const certificate = {
   mark: 'CFP®',
   name: 'Certified Financial Planner',
   issuer: 'FPSB Indonesia',
-  number: '2500 0725',
-  validUntil: '31 Desember 2027',
+  number: '2500 1384',
+  validUntil: '31 Desember 2028',
+};
+
+export const about = {
+  stats: [
+    { value: 15, suffix: '+', label: 'Tahun berkecimpung di dunia keuangan dan perbankan syariah' },
+    { value: 10000, suffix: '+', label: 'Klien dan peserta kelas yang sudah didampingi' },
+  ],
+  /** A goal, not a track record: shown as a sentence, never as a big number. */
+  mission: 'Membawa 10 juta anak muda Indonesia melek keuangan syariah pada 2040.',
+  principle: 'Rezeki yang berkah bukan soal seberapa banyak, tapi seberapa tenang kita menjalaninya.',
 };
 
 export const credentials: { code: string; name: string }[] = [
@@ -19,7 +33,7 @@ export const credentials: { code: string; name: string }[] = [
   { code: 'AASI', name: 'Lisensi Asosiasi Asuransi Syariah Indonesia' },
   { code: 'ToT', name: 'Training of Trainers Pasar Modal Syariah Indonesia' },
   { code: 'SMI', name: 'Sekolah Muamalah Indonesia' },
-  { code: 'S.E.', name: 'Lulusan terbaik Ekonomi Syariah' },
+  { code: 'S.E.', name: 'Sarjana Ekonomi Syariah' },
 ];
 
 export interface Expertise {
@@ -31,127 +45,176 @@ export interface Expertise {
 export const expertise: Expertise[] = [
   {
     title: 'Financial Check-Up',
-    question: 'Sebenarnya keuanganku sehat nggak, sih?',
-    body: 'Memetakan arus kas, aset, utang, dan dana darurat untuk menentukan apa yang perlu dibereskan lebih dulu.',
+    question: 'Gajian tanggal 25, tanggal 5 sudah tipis?',
+    body: 'Membedah arus kas, aset, utang, dan dana darurat supaya jelas mana yang paling mendesak untuk dibenahi.',
   },
   {
     title: 'Investasi & Produk Syariah',
-    question: 'Mulai investasi syariah dari mana?',
-    body: 'Menghitung kebutuhan dana pendidikan anak, hari tua, atau ibadah, lalu memilih instrumen yang sesuai profil risiko — bukan yang sedang ramai.',
+    question: 'Reksa dana, sukuk, atau emas dulu?',
+    body: 'Menghitung target dana pendidikan, pensiun, atau ibadah, lalu memilih instrumen sesuai profil risiko, bukan sesuai tren.',
   },
   {
     title: 'Utang & Pemulihan',
-    question: 'Cicilan banyak, yang mana dulu?',
-    body: 'Memetakan semua kewajiban, termasuk utang konsumtif dan pinjol, lalu menyusun rencana pelunasan yang realistis.',
+    question: 'Paylater numpuk, mulai lunasin dari mana?',
+    body: 'Mendata semua kewajiban, termasuk kartu kredit dan pinjol, lalu menyusun urutan pelunasan yang masuk akal.',
   },
   {
     title: 'Asuransi Syariah',
-    question: 'Perlu proteksi apa, dan seberapa besar?',
-    body: 'Menghitung kebutuhan asuransi kesehatan, sakit kritis, dan jiwa sesuai anggaran, lalu mengevaluasinya berkala.',
+    question: 'Sudah punya BPJS, masih perlu asuransi?',
+    body: 'Menakar kebutuhan proteksi kesehatan, penyakit kritis, dan jiwa sesuai anggaran, lalu meninjaunya secara berkala.',
   },
   {
     title: 'Fiqh Muamalah',
-    question: 'Akad ini sudah sesuai syariah?',
-    body: 'Diskusi soal akad dan transaksi sehari-hari: jual beli, utang piutang, kerja sama usaha, sampai produk keuangan modern.',
+    question: 'Transaksi ini halal nggak, ya?',
+    body: 'Membahas akad sehari-hari: jual beli, utang piutang, kongsi usaha, hingga produk keuangan digital.',
   },
   {
     title: 'Zakat & Waris',
-    question: 'Zakat hartaku berapa?',
-    body: 'Menghitung zakat harta, merencanakan pembagian waris sesuai hukum yang berlaku, dan menyiapkan likuiditas keluarga.',
+    question: 'Gimana cara hitung zakat penghasilan?',
+    body: 'Menghitung zakat harta dan penghasilan, merencanakan waris sesuai ketentuan, dan menjaga likuiditas keluarga.',
   },
 ];
 
-// ─── Instagram posts (order 1–9 follows the supplied files) ───────
+// ─── Insight posts (placeholders: generated photos + coded slides) ──
 
-const igImages = import.meta.glob<{ default: ImageMetadata }>('../assets/instagram/*.jpg', { eager: true });
-const ig = (n: number) => igImages[`../assets/instagram/post-${String(n).padStart(2, '0')}.jpg`].default;
+export type SlideTone = 'sun' | 'night' | 'cream' | 'navy';
 
-export interface InstagramPost {
-  image: ImageMetadata;
+export interface InsightPost {
   kind: string;
   title: string;
-  alt: string;
+  /** Large text printed on the post itself. */
+  headline: string;
+  /** Photo posts use a generated image; slide posts are drawn in CSS. */
+  image?: ImageMetadata;
+  imageAlt?: string;
+  tone?: SlideTone;
+  slides?: number;
 }
 
-export const instagramPosts: InstagramPost[] = [
+export const insightPosts: InsightPost[] = [
   {
-    image: ig(1),
     kind: 'Carousel',
-    title: 'Saham rungkad, harga naik, PHK di mana-mana',
-    alt: 'Slide kuning bertuliskan saham, emas, harga, dan PHK, dengan kalimat: yang kita punya turun, yang harus kita beli naik.',
+    title: 'Gaji naik, tabungan kok tetap segitu?',
+    headline: 'Gaji naik, tabungan kok tetap segitu?',
+    tone: 'sun',
+    slides: 7,
   },
   {
-    image: ig(2),
     kind: 'Talk',
-    title: 'Sakinah Finance Talks: Boost Your Career in Sharia Finance',
-    alt: 'Poster Sakinah Finance Talks dengan foto Thufeil sebagai pembicara topik Boost Your Career in Sharia Finance.',
+    title: 'Sharia Money Talks: karier di keuangan syariah',
+    headline: 'Karier di keuangan syariah',
+    image: postTalk,
+    imageAlt: 'Pembicara muda memegang mikrofon di panggung seminar kecil, penonton terlihat dari belakang.',
   },
   {
-    image: ig(3),
-    kind: 'Kolaborasi',
-    title: 'Ngatur keuangan itu kebutuhan sehari-hari',
-    alt: 'Ilustrasi uang dan koin bertuliskan budget for success, dengan judul: ngatur keuangan itu bukan pilihan, tapi kebutuhan sehari-hari.',
-  },
-  {
-    image: ig(4),
     kind: 'Carousel',
-    title: 'Anak lahir bersama rezekinya?',
-    alt: 'Slide bertanya apakah anak lahir bersama rezekinya, disertai tangkapan layar unggahan thufeil.cfp.',
+    title: 'Dana darurat dulu, investasi kemudian',
+    headline: 'Dana darurat dulu. Investasi kemudian.',
+    tone: 'night',
+    slides: 5,
   },
   {
-    image: ig(5),
-    kind: 'IG Live',
-    title: 'Stay Tenang, Stay on Track bersama Bank Hijra',
-    alt: 'Poster IG Live Bank Hijra bersama Thufeil bertema mengatur keuangan di tengah ekonomi yang tidak pasti.',
+    kind: 'Tutorial',
+    title: 'Template budgeting 50/30/20 versi syariah',
+    headline: 'Budgeting 50/30/20 versi syariah',
+    image: postDesk,
+    imageAlt: 'Meja kerja dari atas: laptop dengan grafik anggaran, buku catatan, kalkulator, kopi, dan beberapa koin.',
   },
   {
-    image: ig(6),
-    kind: 'Kolaborasi',
-    title: 'Pemasukan kurang? Cari side hustle',
-    alt: 'Ilustrasi dua panel: seseorang cemas karena pemasukan kurang, lalu bersemangat mengerjakan usaha sampingan.',
+    kind: 'Carousel',
+    title: 'Paylater itu utang, bukan diskon',
+    headline: 'Paylater itu utang. Bukan diskon.',
+    tone: 'cream',
+    slides: 6,
   },
   {
-    image: ig(7),
     kind: 'Webinar',
-    title: 'Membangun kekayaan dari investasi syariah',
-    alt: 'Poster webinar Savvy Society berjudul Membangun Kekayaan dari Investasi Syariah dengan Thufeil sebagai pembicara.',
+    title: 'Siapkan dana pendidikan anak sejak dini',
+    headline: 'Dana pendidikan anak, mulai kapan?',
+    image: postFamily,
+    imageAlt: 'Pasangan muda berdiskusi di sofa sambil melihat tablet, anak kecil bermain balok di dekat mereka.',
   },
   {
-    image: ig(8),
-    kind: 'Kolaborasi',
-    title: 'Capek sekarang, atau lebih capek nanti',
-    alt: 'Foto perbandingan: kerja sampingan sampai malam di usia muda, dan tetap bekerja keras di usia lanjut.',
+    kind: 'Edukasi',
+    title: 'Zakat penghasilan: cara hitungnya',
+    headline: 'Zakat penghasilan: hitungnya gimana?',
+    tone: 'navy',
+    slides: 4,
   },
   {
-    image: ig(9),
     kind: 'Kolaborasi',
-    title: 'Wajib halal: tidak siap atau tidak serius?',
-    alt: 'Slide Rabu Hijrah dan Sharia Future Network berjudul Wajib Halal: tidak siap atau tidak serius?',
+    title: 'Side hustle boleh, asal nggak burnout',
+    headline: 'Side hustle boleh, burnout jangan.',
+    image: postHustle,
+    imageAlt: 'Perempuan muda mengemas kotak produk di meja kerja pada malam hari, diterangi lampu meja dan laptop.',
   },
 ];
 
-// ─── Testimonials (original Instagram Story screenshots) ──────────
-// Alt text describes what is visible; it is not a quote.
-
-const tImages = import.meta.glob<{ default: ImageMetadata }>('../assets/testimonials/*.webp', { eager: true });
-const ts = (n: number) => tImages[`../assets/testimonials/testimoni-${String(n).padStart(2, '0')}.webp`].default;
+// ─── Testimonials (illustrative text, drawn as Story cards) ───────
 
 export interface Testimonial {
-  image: ImageMetadata;
-  alt: string;
+  name: string;
+  detail: string;
+  topic: string;
+  quote: string;
+  tone: SlideTone;
 }
 
 export const testimonials: Testimonial[] = [
-  'Story dari sesi diskusi keuangan via video call. Peserta menulis bahwa Thufeil tidak menghakimi dan memberi saran pengembangan yang konkret.',
-  'Story berisi foto laptop saat financial check-up online yang membahas cash flow, dana darurat, dan investasi.',
-  'Story dengan slide Rule of Thumb Budgeting. Peserta menyebut sesinya nyaman untuk berdiskusi dan membantu Gen-Z merencanakan keuangan.',
-  'Story berisi foto laptop saat sesi online. Peserta merasa terbantu mengecek dan mengelola kondisi keuangannya.',
-  'Story dengan tangkapan layar template Financial Check-Up. Peserta menyebut penjelasannya detail, mudah dipahami, dan disertai contoh konkret.',
-  'Story berisi percakapan WhatsApp. Klien menulis bahwa sarannya memberi insight yang tidak didapat di kelas dan bisa menjadi second opinion.',
-  'Story di atas cuplikan template perencanaan keuangan. Peserta menceritakan sesi tentang budgeting dan menilai kesehatan keuangan.',
-  'Story berisi tangkapan layar sesi check-up keuangan pribadi lewat video call di akhir pekan.',
-  'Story dengan slide Piramida Financial Planning. Peserta bercerita jadi lebih melek soal keuangannya setelah ngobrol santai.',
-  'Story berisi slide Piramida Financial Planning dan pesan terima kasih atas materi yang mudah dipahami.',
-  'Story dari sesi Financial Discussion 101 dengan slide Fundamental Financial Planning.',
-  'Story berisi foto laptop saat sesi online dengan slide Rule of Thumb Budgeting.',
-].map((alt, i) => ({ image: ts(i + 1), alt: `Testimoni ${i + 1}: ${alt}` }));
+  {
+    name: 'Nadia',
+    detail: 'Karyawan swasta, 24',
+    topic: 'Financial Check-Up',
+    quote: 'Akhirnya tahu uangku bocor ke mana. Dijelasin pelan-pelan, sama sekali nggak di-judge.',
+    tone: 'sun',
+  },
+  {
+    name: 'Rizal',
+    detail: 'Software engineer, 27',
+    topic: 'Investasi Syariah',
+    quote: 'Dulu ikut-ikutan beli saham karena FOMO. Sekarang punya rencana yang jelas dan sesuai syariah.',
+    tone: 'night',
+  },
+  {
+    name: 'Salsa & Dimas',
+    detail: 'Pengantin baru',
+    topic: 'Keuangan Keluarga',
+    quote: 'Ngobrolin uang sama pasangan jadi nggak canggung lagi. Pulang sesi langsung bikin anggaran bareng.',
+    tone: 'cream',
+  },
+  {
+    name: 'Fajar',
+    detail: 'Pemilik kedai kopi, 30',
+    topic: 'Utang & Pemulihan',
+    quote: 'Cicilan paylater sempat bikin pusing. Urutan pelunasannya realistis, enam bulan kemudian lunas.',
+    tone: 'navy',
+  },
+  {
+    name: 'Ayu',
+    detail: 'Guru SD, 29',
+    topic: 'Asuransi Syariah',
+    quote: 'Baru paham bedanya BPJS dan asuransi tambahan. Nggak ada paksaan beli produk apa pun.',
+    tone: 'sun',
+  },
+  {
+    name: 'Bagas',
+    detail: 'Fresh graduate, 22',
+    topic: 'Gaji Pertama',
+    quote: 'Gaji pertama langsung dibagi pos-posnya. Dana darurat jalan, sedekah juga jalan.',
+    tone: 'night',
+  },
+  {
+    name: 'Mira',
+    detail: 'Desainer lepas, 26',
+    topic: 'Penghasilan Tidak Tetap',
+    quote: 'Penghasilan freelance naik turun, tapi sekarang punya sistem. Contoh kasusnya relate banget.',
+    tone: 'cream',
+  },
+  {
+    name: 'Hendra',
+    detail: 'ASN, 33',
+    topic: 'Zakat & Waris',
+    quote: 'Hitungan zakat dan rencana waris keluarga jadi jelas. Orang tua juga ikut tenang.',
+    tone: 'navy',
+  },
+];

@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Omit, or set `disabled`, for a placeholder that looks like a button but is not a link. */
+  href?: string;
+  label: string;
+  variant?: 'sun' | 'ink' | 'ghost';
+  icon?: 'instagram' | 'whatsapp' | 'threads';
+  arrow?: boolean;
+  external?: boolean;
+  disabled?: boolean;
+  class?: string;
+}
+
+const { href, label, variant = 'sun', icon, arrow = true, external = false, disabled = !href, class: className } = Astro.props;
+const ext = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+const classes = ['btn', variant !== 'sun' && `btn--${variant}`, className];
+---
+
+{
+  disabled ? (
+    <span class:list={classes} role="link" aria-disabled="true">
+      {icon && <Icon name={icon} />}
+      <span>{label}</span>
+      <span class="btn__soon">Segera</span>
+    </span>
+  ) : (
+    <a class:list={classes} href={href} data-magnetic {...ext}>
+      {icon && <Icon name={icon} />}
+      <span class="roll"><span>{label}</span><span aria-hidden="true">{label}</span></span>
+      {arrow && (
+        <span class="btn__arrow" aria-hidden="true">
+          <Icon name={external ? 'external' : 'arrow'} />
+        </span>
+      )}
+      {external && <span class="sr-only">(tab baru)</span>}
+    </a>
+  )
+}

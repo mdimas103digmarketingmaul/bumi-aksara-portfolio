@@ -1,284 +1,331 @@
 ---
 import { Image } from 'astro:assets';
-import portrait from '../assets/profile/thufeil-portrait.png';
-import { bookingAnchor } from '../config/site';
+import portrait from '../assets/profile/haikal-portrait.png';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { bookingAnchor, site } from '../config/profile';
 ---
 
-<section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="container hero__grid">
-    <div class="hero__copy">
-      <h1 class="hero__title" id="hero-title">
-        <span class="hero__name">
-          <span class="hero__line"><span>Thufeil M.</span></span>
-          <span class="hero__line"><span>Tyansah, CFP<sup class="reg">®</sup></span></span>
-        </span>
-        <span class="hero__role">Gen-Z Financial Planner</span>
-      </h1>
+<section class="hero" id="top" aria-labelledby="hero-title" data-hero>
+  <div class="hero__glow" aria-hidden="true" data-hero-glow></div>
 
-      <p class="hero__lead">
-        Perencana keuangan syariah dan teman diskusi soal gaji, cicilan, investasi, sampai zakat. Tanpa judging, dengan
-        langkah yang realistis.
-      </p>
+  <div class="hero__figure" data-hero-figure>
+    <div class="hero__mouse" data-hero-mouse>
+      <Image
+        class="hero__portrait"
+        src={portrait}
+        widths={[420, 640, 1000]}
+        sizes="(min-width: 64rem) 40rem, 92vw"
+        format="webp"
+        quality={90}
+        loading="eager"
+        fetchpriority="high"
+        alt={`${site.fullName} tersenyum dengan tangan bersilang, mengenakan kacamata dan jaket varsity navy berlengan putih.`}
+        data-hero-portrait
+      />
+    </div>
+  </div>
 
-      <div class="hero__actions">
-        <a class="btn btn--primary" href={bookingAnchor}>Konsultasi Gratis 30 Menit</a>
-        <a class="text-link" href="#keahlian">Lihat keahlian</a>
-      </div>
+  <div class="hero__shade" aria-hidden="true"></div>
+
+  <!-- Content flows top to bottom, so spacing between blocks can never collapse. -->
+  <div class="hero__inner" data-hero-inner>
+    <h1 class="sr-only" id="hero-title">{site.name} — {site.role}</h1>
+
+    <div class="hero__top wrap" data-hero-fade>
+      <p class="label label--sun">Gen-Z Financial Planner</p>
+      <p class="hero__creds">Perencana keuangan syariah · CFP® · AWPs®</p>
     </div>
 
-    <figure class="hero__figure">
-      <div class="hero__frame">
-        <div class="hero__panel" aria-hidden="true"></div>
-        <Image
-          class="hero__portrait"
-          src={portrait}
-          widths={[420, 640, 858]}
-          sizes="(min-width: 64rem) 36rem, (min-width: 48rem) 40vw, (min-width: 40rem) 36rem, 92vw"
-          format="webp"
-          quality={86}
-          loading="eager"
-          fetchpriority="high"
-          alt="Thufeil M. Tyansah tersenyum dengan tangan bersilang, mengenakan kacamata dan jaket varsity navy."
-        />
+    <!-- Layered name: the giant word sits behind the portrait. -->
+    <div class="hero__name wrap" aria-hidden="true" data-hero-name>
+      <p class="hero__giant display" data-hero-giant>{site.firstName}</p>
+      <p class="hero__lockup display" data-hero-fade>{site.lockup}, CFP<sup class="reg">®</sup></p>
+    </div>
+
+    <div class="hero__bottom wrap">
+      <div class="hero__intro" data-hero-fade>
+        <p class="hero__text">
+          <strong>Ngobrol soal uang, santai tapi serius.</strong>
+          Dari gaji yang cepat habis, paylater, investasi syariah, sampai zakat dan waris keluarga.
+        </p>
+        <div class="hero__actions">
+          <Button href={bookingAnchor} label="Konsultasi gratis 30 menit" />
+          <Button href="#tentang" label="Kenalan dulu" variant="ghost" arrow={false} class="hero__ghost" />
+        </div>
       </div>
-      <figcaption class="hero__caption">
-        <span>Thufeil Muhammad Tyansah</span>
-        <span>S.E., CFP®, AWPs®</span>
-      </figcaption>
-    </figure>
+
+      <a class="hero__scroll" href="#tentang" data-hero-fade>
+        <span>Scroll</span>
+        <span class="hero__scroll-line" aria-hidden="true"><span></span></span>
+        <Icon name="down" />
+        <span class="sr-only">ke bagian Tentang</span>
+      </a>
+    </div>
   </div>
 </section>
 
 <style>
   .hero {
-    padding-top: calc(var(--nav-h) + clamp(1.5rem, 0.75rem + 3vw, 3.5rem));
-    padding-bottom: clamp(3.5rem, 2rem + 5vw, 6.5rem);
+    /* Shared by the layout and the name size below. */
+    --hero-h: clamp(44rem, 100svh, 64rem);
+    /* Everything stacked under the giant name: top row, lockup, intro, gaps, bottom space. */
+    --hero-rest: 32rem;
+    --name-gap: clamp(1.25rem, 0.75rem + 1.5vh, 2rem);
+    /* Width of the first name in em (Archivo 62%/820), so the giant word spans
+       the content width. It shrinks on short screens so the intro and buttons
+       always keep their breathing room. */
+    --giant-ratio: 2.64;
+    --giant-fs: min(
+      calc((min(100vw, var(--max) + var(--gutter) * 2) - var(--gutter) * 2) / var(--giant-ratio)),
+      calc((var(--hero-h) - var(--hero-rest)) / 0.8)
+    );
+    --lockup-gap: clamp(0.75rem, 0.5rem + 0.6vw, 1.1rem);
+    --lockup-fs: clamp(1.5rem, 0.9rem + 2.6vw, 3.5rem);
+    position: relative;
+    min-height: var(--hero-h);
+    background: var(--night);
+    overflow: clip;
   }
 
-  .hero__grid {
-    display: grid;
-    gap: clamp(2.5rem, 2rem + 3vw, 4rem);
-    align-items: end;
+  /* A single soft stage light behind the portrait. */
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(42% 52% at 57% 72%, rgb(52 66 128 / 0.55), transparent 70%),
+      radial-gradient(70% 60% at 50% 110%, rgb(247 194 27 / 0.08), transparent 70%);
   }
 
-  /* Tablet: its own two-column composition with a smaller type scale. */
-  @media (min-width: 48rem) and (max-width: 63.99rem) {
-    .hero__grid {
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
-      gap: 2rem;
-    }
-
-    .hero__name {
-      font-size: clamp(3.5rem, 1rem + 5.4vw, 4.4rem);
-    }
-
-    .hero__role {
-      font-size: 1.85rem;
-    }
-
-    .hero__copy {
-      padding-bottom: 2.75rem;
-    }
-
-    .hero__figure {
-      justify-self: end;
-    }
-
-    .hero .hero__caption {
-      flex-direction: column;
-      gap: 0.15rem;
-    }
+  .hero__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: var(--hero-h);
+    /* The next section overlaps by --r-lg, so the bottom space includes it. */
+    padding-block: calc(var(--nav-h) + 1.25rem) calc(var(--r-lg) + clamp(3rem, 2rem + 3.5vh, 5rem));
+    transform-origin: 50% 100%;
+    pointer-events: none;
   }
 
-  @media (min-width: 64rem) {
-    .hero__grid {
-      grid-template-columns: minmax(0, 6fr) minmax(0, 5.5fr);
-      gap: clamp(2rem, 4vw, 5rem);
-    }
-
-    .hero__copy {
-      padding-bottom: 4.5rem;
-    }
+  .hero__inner > * {
+    pointer-events: auto;
   }
 
-  .hero__title {
-    display: grid;
-    gap: clamp(0.6rem, 0.4rem + 0.8vw, 1.1rem);
+  .hero__top {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero__creds {
+    font-size: var(--t-small);
+    color: var(--fog);
   }
 
   .hero__name {
-    display: block;
-    font-family: var(--font-display);
-    font-size: var(--fs-display);
-    line-height: 0.96;
-    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+    margin-top: var(--name-gap);
   }
 
-  .hero__line {
-    display: block;
-    overflow: hidden;
-    padding-bottom: 0.08em;
-    margin-bottom: -0.08em;
+  .hero__giant {
+    font-size: var(--giant-fs);
+    line-height: 0.8;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    white-space: nowrap;
   }
 
-  .hero__line > span {
-    display: inline-block;
+  .hero__lockup {
+    margin-top: var(--lockup-gap);
+    font-size: var(--lockup-fs);
+    line-height: 0.9;
+    color: var(--sun);
   }
 
-  .hero__role {
-    display: block;
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: clamp(1.625rem, 1.15rem + 1.9vw, 2.75rem);
-    line-height: 1.1;
-    color: var(--green);
+  .hero__figure {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    z-index: 2;
+    /* 0.756 is the portrait's aspect ratio: the figure never outgrows the viewport height. */
+    width: min(42rem, 46vw, calc((100svh - var(--nav-h) - 2rem) * 0.756));
+    translate: -38% 0;
   }
 
-  .hero__lead {
-    margin-top: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+  .hero__portrait {
+    width: 100%;
+    height: auto;
+    /* Fade the crop line into the night instead of a hard cut. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent 98%);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .hero__shade {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 3;
+    height: 45%;
+    background: linear-gradient(to top, rgb(8 12 26 / 0.94), rgb(8 12 26 / 0.6) 45%, transparent);
+    pointer-events: none;
+  }
+
+  .hero__bottom {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    /* Pushed to the bottom, never closer than this to the lockup. */
+    margin-top: auto;
+    padding-top: clamp(2.5rem, 1.75rem + 2.5vh, 4rem);
+  }
+
+  .hero__intro {
     max-width: 31rem;
-    font-size: var(--fs-lead);
-    line-height: 1.55;
-    color: var(--ink-2);
+  }
+
+  .hero__text {
+    font-size: var(--t-lead);
+    line-height: 1.6;
+    color: var(--fog);
+    text-wrap: pretty;
+  }
+
+  .hero__text strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    color: var(--cream);
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem 1.75rem;
-    margin-top: clamp(1.75rem, 1.25rem + 1.5vw, 2.5rem);
+    gap: 0.75rem;
+    margin-top: 1.75rem;
   }
 
-  /* Portrait: transparent cut-out that breaks out of the top of a
-     green panel. The full image is always shown, so the face is never cropped. */
-  .hero__figure {
-    position: relative;
-    width: min(100%, 36rem);
-    justify-self: center;
-  }
-
-  @media (min-width: 64rem) {
-    .hero__figure {
-      justify-self: end;
-    }
-  }
-
-  .hero__frame {
-    position: relative;
-  }
-
-  .hero__panel {
-    position: absolute;
-    inset: 22% 5% 0;
-    background: var(--green);
-    transform-origin: bottom;
-  }
-
-  .hero__portrait {
-    position: relative;
-    width: 100%;
-    height: auto;
-  }
-
-  .hero__caption {
+  .hero__scroll {
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-inline: 5%;
-    padding-top: 0.85rem;
-    border-top: 1px solid var(--line-strong);
-    font-size: var(--fs-caption);
-    color: var(--ink-3);
-    letter-spacing: 0.01em;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: var(--t-label);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fog);
+    text-decoration: none;
   }
 
-  .hero__caption span:first-child {
-    color: var(--ink);
-    font-weight: 600;
+  .hero__scroll-line {
+    position: relative;
+    width: 1px;
+    height: 3.5rem;
+    background: var(--line-d);
+    overflow: hidden;
   }
 
-  @media (max-width: 22.5rem) {
-    .hero__caption {
-      flex-direction: column;
-      gap: 0.15rem;
+  .hero__scroll-line span {
+    position: absolute;
+    inset: 0;
+    background: var(--sun);
+    animation: drip 2.2s var(--ease-in-out) infinite;
+  }
+
+  .hero__scroll .icon {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  @keyframes drip {
+    0% {
+      transform: translateY(-100%);
+    }
+    55%,
+    100% {
+      transform: translateY(100%);
     }
   }
 
+  /* ─── Tablet & phone: name on top, portrait fills the lower half ─── */
+  @media (max-width: 63.99rem) {
+    .hero {
+      --hero-h: max(44rem, 100svh);
+      --name-gap: clamp(1.5rem, 4vh, 2.5rem);
+    }
+
+    .hero__figure {
+      width: min(96vw, 34rem);
+      translate: -50% 0;
+    }
+
+    .hero__scroll {
+      display: none;
+    }
+
+    .hero__intro {
+      max-width: 32rem;
+    }
+
+    /* Only behind the text block, so the face stays clear. */
+    .hero__shade {
+      height: 40%;
+      background: linear-gradient(to top, rgb(8 12 26 / 0.97) 35%, rgb(8 12 26 / 0.85) 65%, transparent);
+    }
+  }
+
+  /* Phones: hang the portrait just below the name instead of from the bottom
+     edge, so tall screens don't leave a gap above the head. */
   @media (max-width: 47.99rem) {
-    .hero__actions .btn {
-      flex: 1 1 100%;
+    .hero__figure {
+      top: calc(
+        var(--nav-h) + 1.25rem + 1.2rem + var(--name-gap) + var(--giant-fs) * 0.8 + var(--lockup-gap) +
+          var(--lockup-fs) * 0.9 + 0.25rem
+      );
+      bottom: auto;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .hero__creds {
+      display: none;
     }
 
     .hero__actions {
-      gap: 1.1rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 1.5rem;
+    }
+
+    .hero__actions :global(.btn) {
+      width: 100%;
+    }
+
+    .hero__actions :global(.hero__ghost) {
+      display: none;
+    }
+
+    .hero__text {
+      font-size: 1rem;
     }
   }
 
-  @media (min-width: 30rem) and (max-width: 47.99rem) {
-    .hero__actions .btn {
-      flex: 0 1 auto;
-    }
+  /* Hidden until the intro timeline plays (only when motion is on). */
+  :global(.motion) [data-hero-fade],
+  :global(.motion) .hero__portrait,
+  :global(.motion) .hero__glow {
+    opacity: 0;
   }
 
-  /* ─── Load-in motion ─── */
-  @media (prefers-reduced-motion: no-preference) {
-    .hero__line > span {
-      animation: rise 1s var(--ease-out) both;
-    }
-
-    .hero__line:nth-child(2) > span {
-      animation-delay: 90ms;
-    }
-
-    .hero__role,
-    .hero__lead,
-    .hero__actions {
-      animation: fade-up 0.9s var(--ease-out) both;
-    }
-
-    .hero__role {
-      animation-delay: 260ms;
-    }
-
-    .hero__lead {
-      animation-delay: 360ms;
-    }
-
-    .hero__actions {
-      animation-delay: 440ms;
-    }
-
-    .hero__panel {
-      animation: panel 1.1s var(--ease-out) 120ms both;
-    }
-
-    .hero__portrait {
-      animation: fade-up 1.1s var(--ease-out) 260ms both;
-    }
-
-    .hero__caption {
-      animation: fade-up 0.9s var(--ease-out) 520ms both;
-    }
-  }
-
-  @keyframes rise {
-    from {
-      transform: translateY(105%);
-    }
-  }
-
-  @keyframes fade-up {
-    from {
-      opacity: 0;
-      transform: translateY(18px);
-    }
-  }
-
-  @keyframes panel {
-    from {
-      transform: scaleY(0.82);
-      opacity: 0;
-    }
+  :global(.motion) .hero__giant {
+    visibility: hidden;
   }
 </style>

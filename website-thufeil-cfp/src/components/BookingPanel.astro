@@ -1,129 +1,101 @@
 ---
 /*
- * Booking panel — renders one of two states from src/config/site.ts:
- *
- *  • Booking live  (booking.enabled = true and booking.calUrl set):
- *      the Cal.com calendar is embedded inline, with a fallback link.
- *  • Booking not live (default):
- *      the real channels that work today — Instagram DM and the
- *      consultation form on the IFAC profile.
- *
- * WhatsApp is shown in both states; it stays disabled until
- * whatsapp.enabled = true and whatsapp.number is filled in.
+ * Booking panel — state comes from src/config/profile.ts:
+ *  • booking.enabled + booking.calUrl → Cal.com calendar embedded inline.
+ *  • otherwise → the contact channels, shown as disabled placeholders
+ *    until real accounts are connected.
  */
+import Button from './Button.astro';
 import Icon from './Icon.astro';
-import { booking, isBookingLive, isWhatsappLive, whatsappHref, links } from '../config/site';
+import { booking, isBookingLive, contact } from '../config/profile';
 
 const cal = isBookingLive ? new URL(booking.calUrl) : null;
 ---
 
-<div class:list={['booking', { 'booking--live': isBookingLive }]}>
+<div class:list={['book', { 'book--live': isBookingLive }]}>
   {
     isBookingLive && cal ? (
       <Fragment>
-        <p class="booking__label">Pilih jadwal</p>
-        <div
-          class="booking__cal"
-          id="cal-inline"
-          data-cal-origin={cal.origin}
-          data-cal-link={cal.pathname.replace(/^\//, '')}
-        />
-        <a class="text-link booking__fallback" href={booking.calUrl} target="_blank" rel="noopener noreferrer">
-          Buka kalender di tab baru
-          <Icon name="external" />
+        <p class="book__label">Pilih jadwal</p>
+        <div class="book__cal" id="cal-inline" data-cal-origin={cal.origin} data-cal-link={cal.pathname.replace(/^\//, '')} />
+        <a class="book__fallback" href={booking.calUrl} target="_blank" rel="noopener noreferrer">
+          Buka kalender di tab baru <Icon name="external" />
         </a>
       </Fragment>
     ) : (
       <Fragment>
-        <p class="booking__label">Atur jadwal lewat</p>
-        <div class="booking__actions">
-          <a class="btn btn--primary" href={links.instagramDm} target="_blank" rel="noopener noreferrer">
-            <Icon name="instagram" />
-            Kirim DM di Instagram
-            <span class="sr-only">(tab baru)</span>
-          </a>
-          <a class="btn btn--outline" href={links.ifacProfile} target="_blank" rel="noopener noreferrer">
-            Isi formulir di profil IFAC
-            <Icon name="external" />
-            <span class="sr-only">(tab baru)</span>
-          </a>
+        <p class="book__label">Atur jadwal lewat</p>
+        <div class="book__actions">
+          <Button label="Kirim DM di Instagram" icon="instagram" />
+          <Button label="Isi formulir konsultasi" variant="ghost" />
         </div>
       </Fragment>
     )
   }
 
-  <div class="booking__wa">
-    {
-      isWhatsappLive && whatsappHref ? (
-        <a class="btn btn--outline" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-          <Icon name="whatsapp" />
-          Hubungi via WhatsApp
-          <span class="sr-only">(tab baru)</span>
-        </a>
-      ) : (
-        <span class="btn booking__wa-off" role="link" aria-disabled="true" aria-describedby="wa-note">
-          <Icon name="whatsapp" />
-          Hubungi via WhatsApp
-        </span>
-      )
-    }
-    {!isWhatsappLive && <span class="booking__note" id="wa-note">Nomor WhatsApp belum tersedia.</span>}
+  <div class="book__wa">
+    <Button label="Hubungi via WhatsApp" icon="whatsapp" variant="ghost" />
+    <span class="book__note">WhatsApp {contact.whatsappDisplay} · kanal kontak segera aktif.</span>
   </div>
 </div>
 
 <style>
-  .booking {
+  .book {
     display: grid;
     gap: 1rem;
-    padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
-    background: var(--surface);
-    border-radius: var(--radius);
-    box-shadow: 0 1px 0 rgb(20 24 43 / 0.08);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border-radius: var(--r-lg);
+    background: var(--night);
+    color: var(--cream);
+    box-shadow: 0 40px 80px -40px rgb(10 14 28 / 0.6);
   }
 
-  .booking__label {
-    font-size: var(--fs-label);
-    font-weight: 650;
-    letter-spacing: 0.16em;
+  .book__label {
+    font-size: var(--t-label);
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--ink-3);
+    color: var(--fog);
   }
 
-  .booking__actions {
+  .book__actions,
+  .book__wa {
     display: grid;
     gap: 0.6rem;
   }
 
-  .booking__wa {
-    display: grid;
-    gap: 0.4rem;
-    margin-top: 0.4rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--line);
-  }
-
-  .booking__wa .btn {
+  .book :global(.btn) {
     width: 100%;
+    justify-content: space-between;
   }
 
-  .booking__wa-off {
-    user-select: none;
+  .book__wa {
+    margin-top: 0.5rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--line-d);
   }
 
-  .booking__note {
-    font-size: var(--fs-caption);
-    color: var(--ink-3);
+
+  .book__note {
+    font-size: var(--t-label);
+    color: var(--fog-2);
     text-align: center;
   }
 
-  .booking__cal {
+  .book__cal {
     min-height: 34rem;
     width: 100%;
     overflow: auto;
+    border-radius: var(--r-md);
+    background: var(--cream);
   }
 
-  .booking__fallback {
+  .book__fallback {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     justify-self: start;
+    font-size: var(--t-small);
+    color: var(--sun);
   }
 </style>
 

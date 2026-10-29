@@ -1,8 +1,7 @@
 ---
 import BookingPanel from './BookingPanel.astro';
-import { booking, isBookingLive } from '../config/site';
+import { booking, isBookingLive } from '../config/profile';
 
-// Step one describes whatever scheduling actually works right now.
 const steps = [
   {
     title: 'Atur jadwal',
@@ -12,7 +11,7 @@ const steps = [
   },
   {
     title: 'Ceritakan kondisimu',
-    body: 'Gambaran singkat soal penghasilan, pengeluaran, utang, atau tujuan yang sedang kamu pikirkan. Tidak perlu rapi.',
+    body: 'Penghasilan, pengeluaran, utang, atau tujuan yang lagi kamu pikirkan. Nggak perlu rapi.',
   },
   {
     title: `Ngobrol ${booking.durationMinutes} menit`,
@@ -21,129 +20,103 @@ const steps = [
 ];
 ---
 
-<section class:list={['section consult', { 'consult--live': isBookingLive }]} id="konsultasi" aria-labelledby="consult-title">
-  <div class="container consult__grid">
-    <div class="consult__copy" data-reveal>
-      <span class="eyebrow">Konsultasi gratis</span>
-      <h2 class="h2 consult__title" id="consult-title">Mulai dari {booking.durationMinutes} menit <em>ngobrol</em>.</h2>
-      <p class="consult__lead">
-        Gratis dan online. Bawa pertanyaanmu, serapi atau seberantakan apa pun kondisi keuanganmu sekarang.
-      </p>
+<section class:list={['cta on-sun', { 'cta--live': isBookingLive }]} id="konsultasi" aria-labelledby="cta-title">
+  <div class="wrap">
+    <p class="label" data-reveal>Konsultasi gratis · {booking.durationMinutes} menit · online</p>
+    <h2 class="cta__title display" id="cta-title" data-chars>Yuk, ngobrol.</h2>
 
-      <ol class="steps" role="list">
-        {
-          steps.map((step, i) => (
-            <li class="step">
-              <span class="step__num" aria-hidden="true">{i + 1}</span>
-              <div>
-                <h3 class="step__title">{step.title}</h3>
-                <p class="step__body">{step.body}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
+    <div class="cta__grid">
+      <div class="cta__copy">
+        <p class="cta__lead" data-reveal>
+          Bawa pertanyaanmu, serapi atau seberantakan apa pun kondisi keuanganmu sekarang.
+        </p>
+        <ol class="steps" role="list">
+          {
+            steps.map((s, i) => (
+              <li class="step" data-reveal>
+                <span class="step__num display">0{i + 1}</span>
+                <div>
+                  <h3 class="step__title">{s.title}</h3>
+                  <p class="step__body">{s.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
 
-    <div class="consult__panel" data-reveal style="--reveal-delay: 120ms">
-      <BookingPanel />
+      <div class="cta__panel" data-reveal>
+        <BookingPanel />
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .consult {
-    background: var(--mustard);
-    color: var(--ink);
+  .cta {
+    position: relative;
+    z-index: 2;
+    padding-block: var(--section);
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
   }
 
-  .consult .eyebrow {
-    color: var(--ink);
+  .cta__title {
+    margin-top: 1rem;
+    font-size: clamp(4.25rem, 1rem + 13.5vw, 15rem);
+    line-height: 0.8;
   }
 
-  .consult__grid {
+  .cta__grid {
     display: grid;
-    gap: clamp(2.5rem, 2rem + 3vw, 4rem);
+    gap: 3rem;
+    margin-top: clamp(2.5rem, 2rem + 3vw, 4.5rem);
   }
 
   @media (min-width: 60rem) {
-    .consult:not(.consult--live) .consult__grid {
+    .cta:not(.cta--live) .cta__grid {
       grid-template-columns: minmax(0, 7fr) minmax(0, 4.5fr);
-      gap: clamp(3rem, 6vw, 6.5rem);
-      align-items: end;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: start;
     }
   }
 
-  .consult__copy {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .consult__title {
-    font-size: clamp(2.6rem, 1.6rem + 4.2vw, 5.25rem);
-    line-height: 0.96;
-  }
-
-  .consult__lead {
+  .cta__lead {
     max-width: 30rem;
-    font-size: var(--fs-lead);
-    line-height: 1.5;
+    font-size: var(--t-lead);
+    font-weight: 500;
+    line-height: 1.45;
   }
 
   .steps {
-    margin-top: clamp(1.5rem, 1rem + 2vw, 2.5rem);
-    border-top: 1px solid rgb(20 24 43 / 0.35);
-  }
-
-  @media (min-width: 48rem) {
-    .consult--live .steps,
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.75rem;
-      border-top: 0;
-    }
-
-    .step {
-      border-top: 1px solid rgb(20 24 43 / 0.35);
-      padding-top: 1rem;
-    }
+    margin-top: 2.5rem;
   }
 
   .step {
     display: grid;
-    align-content: start;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.75rem;
-    padding-block: 1.1rem;
-    border-bottom: 1px solid rgb(20 24 43 / 0.2);
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1.4rem;
+    border-top: 1px solid rgb(10 14 28 / 0.2);
   }
 
-  @media (min-width: 48rem) {
-    .step {
-      grid-template-columns: 1fr;
-      border-bottom: 0;
-      padding-bottom: 0;
-      gap: 0.6rem;
-    }
+  .step:last-child {
+    border-bottom: 1px solid rgb(10 14 28 / 0.2);
   }
 
   .step__num {
-    font-family: var(--font-display);
-    font-size: 1.75rem;
-    line-height: 1;
+    font-size: 2.75rem;
+    line-height: 0.85;
   }
 
   .step__title {
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.125rem;
+    font-weight: 650;
     line-height: 1.3;
   }
 
   .step__body {
     margin-top: 0.3rem;
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    color: rgb(20 24 43 / 0.82);
+    color: rgb(10 14 28 / 0.75);
+    max-width: 32rem;
   }
 </style>

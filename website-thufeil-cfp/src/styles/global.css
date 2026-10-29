@@ -1,46 +1,46 @@
 /* ─── Tokens ──────────────────────────────────────────────────────
-   Palette derived from Thufeil's own material: the navy varsity jacket,
-   the deep green and mustard of his Instagram carousels, and warm paper. */
+   Two-colour identity: the navy of the varsity jacket and a warm
+   sun yellow for energy, on a cream reading surface.                 */
 
 :root {
-  --paper: #f3eee3;
-  --paper-deep: #e7dfcc;
-  --surface: #fbf8f2;
-  --ink: #14182b;
-  --ink-2: #3d4256;
-  --ink-3: #535768;
-  --navy: #1b2445;
-  --navy-2: #232d52;
-  --green: #1e5e45;
-  --green-deep: #174a37;
-  --mustard: #e9b824;
-  --line: rgb(20 24 43 / 0.14);
-  --line-strong: rgb(20 24 43 / 0.3);
-  --on-dark: #f3eee3;
-  --on-dark-2: rgb(243 238 227 / 0.74);
-  --line-dark: rgb(243 238 227 / 0.18);
+  --night: #080c1a;
+  --night-2: #0f1529;
+  --navy: #182042;
+  --navy-3: #222c57;
+  --sun: #f7c21b;
+  --sun-2: #ffd54a;
+  --cream: #f3efe6;
+  --cream-2: #e9e3d5;
+  --ink: #0a0e1c;
+  --fog: rgb(243 239 230 / 0.64);
+  --fog-2: rgb(243 239 230 / 0.4);
+  --line-d: rgb(243 239 230 / 0.12);
+  --line-l: rgb(10 14 28 / 0.12);
+  --ink-soft: rgb(10 14 28 / 0.68);
 
-  --font-display: 'Instrument Serif', 'Iowan Old Style', 'Times New Roman', serif;
-  --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --f-display: 'Archivo Variable', 'Archivo', 'Arial Narrow', sans-serif;
+  --f-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, sans-serif;
 
-  --fs-display: clamp(3rem, 1.55rem + 5.4vw, 6.75rem);
-  --fs-h2: clamp(2.25rem, 1.65rem + 2.6vw, 4.1rem);
-  --fs-h3: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
-  --fs-lead: clamp(1.0625rem, 0.99rem + 0.35vw, 1.25rem);
-  --fs-body: 1rem;
-  --fs-small: 0.875rem;
-  --fs-caption: 0.8125rem;
-  --fs-label: 0.75rem;
+  --t-giant: clamp(6rem, 1rem + 25vw, 31rem);
+  --t-xl: clamp(3.4rem, 1.4rem + 8.6vw, 10.5rem);
+  --t-lg: clamp(2.6rem, 1.5rem + 4.6vw, 6.25rem);
+  --t-md: clamp(1.6rem, 1.15rem + 1.9vw, 2.75rem);
+  --t-lead: clamp(1.0625rem, 0.98rem + 0.4vw, 1.3rem);
+  --t-body: 1rem;
+  --t-small: 0.875rem;
+  --t-label: 0.75rem;
 
-  --gutter: clamp(1rem, 0.4rem + 2.6vw, 2.5rem);
-  --section: clamp(4.5rem, 2.8rem + 6vw, 8.5rem);
-  --max: 76rem;
-  --radius: 4px;
-  --nav-h: 4.25rem;
+  --gutter: clamp(1.125rem, 0.5rem + 2.8vw, 3rem);
+  --max: 90rem;
+  --section: clamp(5.5rem, 3.5rem + 8vw, 11rem);
+  --r-lg: clamp(1.5rem, 1rem + 1.8vw, 2.5rem);
+  --r-md: 1.125rem;
+  --nav-h: 4.5rem;
 
-  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 /* ─── Reset ───────────────────────────────────────────────────── */
@@ -56,23 +56,39 @@
 }
 
 html {
+  /* Clip off-canvas decoration at the viewport as well as the body. */
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-h) + 1rem);
+}
+
+html:not(.has-lenis) {
+  scroll-behavior: smooth;
 }
 
 body {
   min-height: 100dvh;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: var(--fs-body);
+  background: var(--night);
+  color: var(--cream);
+  font-family: var(--f-sans);
+  font-size: var(--t-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
   overflow-x: clip;
+}
+
+/* Film grain: one fixed layer, gives the flat colour fields some tooth. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
 }
 
 img,
@@ -83,25 +99,21 @@ svg {
   height: auto;
 }
 
-button,
-input {
+button {
   font: inherit;
   color: inherit;
-}
-
-button {
-  cursor: pointer;
   background: none;
   border: 0;
   padding: 0;
+  cursor: pointer;
 }
 
 a {
   color: inherit;
 }
 
-ul[role='list'],
-ol[role='list'] {
+/* Zero specificity so component classes can set their own padding. */
+:where(ul[role='list'], ol[role='list']) {
   list-style: none;
   padding: 0;
 }
@@ -109,21 +121,26 @@ ol[role='list'] {
 h1,
 h2,
 h3 {
-  font-weight: 400;
-  text-wrap: balance;
+  font-weight: inherit;
 }
 
 p {
   text-wrap: pretty;
 }
 
+::selection {
+  background: var(--sun);
+  color: var(--ink);
+}
+
 :focus-visible {
-  outline: 2px solid var(--green);
+  outline: 2px solid var(--sun);
   outline-offset: 3px;
 }
 
-.on-dark :focus-visible {
-  outline-color: var(--mustard);
+.on-light :focus-visible,
+.on-sun :focus-visible {
+  outline-color: var(--ink);
 }
 
 .sr-only {
@@ -142,13 +159,13 @@ p {
   position: fixed;
   top: 0.75rem;
   left: 0.75rem;
-  z-index: 100;
-  padding: 0.75rem 1rem;
-  background: var(--ink);
-  color: var(--paper);
+  z-index: 200;
+  padding: 0.75rem 1.1rem;
+  border-radius: 999px;
+  background: var(--sun);
+  color: var(--ink);
   font-weight: 600;
   text-decoration: none;
-  border-radius: var(--radius);
   transform: translateY(-200%);
 }
 
@@ -158,156 +175,344 @@ p {
 
 /* ─── Layout ──────────────────────────────────────────────────── */
 
-.container {
+.wrap {
   width: 100%;
   max-width: calc(var(--max) + var(--gutter) * 2);
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
 
-.section {
-  padding-block: var(--section);
+.on-light {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.on-sun {
+  background: var(--sun);
+  color: var(--ink);
 }
 
 /* ─── Type ────────────────────────────────────────────────────── */
 
-.eyebrow {
-  display: block;
-  font-size: var(--fs-label);
-  font-weight: 650;
-  letter-spacing: 0.16em;
+.display {
+  font-family: var(--f-display);
+  font-stretch: 62%;
+  font-weight: 820;
   text-transform: uppercase;
-  color: var(--ink-3);
+  line-height: 0.86;
+  letter-spacing: -0.005em;
 }
 
-.on-dark .eyebrow {
-  color: var(--on-dark-2);
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--t-label);
+  font-weight: 550;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.h2 {
-  font-family: var(--font-display);
-  font-size: var(--fs-h2);
-  line-height: 1.02;
-  letter-spacing: -0.01em;
+.label::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
 }
 
-.h2 em {
-  font-style: italic;
+.label--sun::before {
+  background: var(--sun);
 }
 
 .lead {
-  font-size: var(--fs-lead);
-  line-height: 1.55;
-  color: var(--ink-2);
+  font-size: var(--t-lead);
+  line-height: 1.5;
   max-width: 34rem;
 }
 
-.on-dark .lead {
-  color: var(--on-dark-2);
-}
-
 sup.reg {
-  font-size: 0.42em;
-  vertical-align: 0;
-  position: relative;
-  top: -0.95em;
-  margin-left: 0.04em;
-  font-family: var(--font-sans);
+  font-size: 0.32em;
+  font-family: var(--f-sans);
   font-weight: 500;
+  vertical-align: top;
+  position: relative;
+  top: 0.35em;
+  margin-left: 0.06em;
 }
 
-/* ─── Buttons & links ─────────────────────────────────────────── */
+/* Word-mask reveal produced by the split helpers in motion.ts. */
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.wi {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────── */
 
 .btn {
+  --btn-bg: var(--sun);
+  --btn-fg: var(--ink);
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  min-height: 3.25rem;
-  padding: 0.85rem 1.5rem;
-  border-radius: var(--radius);
+  gap: 0.7rem;
+  min-height: 3.5rem;
+  padding: 0 1.6rem;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
   font-size: 0.9375rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.005em;
-  line-height: 1.2;
   text-decoration: none;
-  text-align: center;
-  transition:
-    background-color 0.25s var(--ease-out),
-    color 0.25s var(--ease-out),
-    border-color 0.25s var(--ease-out);
+  white-space: nowrap;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.5s var(--ease);
 }
 
-.btn--primary {
-  background: var(--ink);
-  color: var(--paper);
+/* A fill that rises from below on hover. */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--btn-hover, var(--cream));
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease);
 }
 
-.btn--primary:hover {
-  background: var(--green);
+.btn:hover::before {
+  transform: none;
 }
 
-.btn--outline {
-  border: 1px solid var(--line-strong);
-  color: var(--ink);
+.btn--ink {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--cream);
+  --btn-hover: var(--navy-3);
 }
 
-.btn--outline:hover {
-  border-color: var(--ink);
-  background: rgb(20 24 43 / 0.04);
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: currentColor;
+  --btn-hover: rgb(243 239 230 / 0.1);
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.on-light .btn--ghost,
+.on-sun .btn--ghost {
+  --btn-hover: rgb(10 14 28 / 0.08);
 }
 
 .btn[aria-disabled='true'] {
   cursor: not-allowed;
-  border: 1px dashed var(--line-strong);
-  background: transparent;
-  color: var(--ink-3);
+  opacity: 0.7;
 }
 
-.text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 650;
-  font-size: 0.9375rem;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.35em;
-  text-decoration-color: var(--line-strong);
-  transition: text-decoration-color 0.25s var(--ease-out);
+.btn[aria-disabled='true']::before {
+  display: none;
 }
 
-.text-link:hover {
-  text-decoration-color: currentColor;
+/* Placeholder channels: visible, never clickable. */
+.btn__soon {
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px currentColor;
+  opacity: 0.8;
+}
+
+/* Label roll: the text slides up and a copy slides in from below. */
+.roll {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1.25;
+}
+
+.roll > span {
+  display: block;
+  transition: transform 0.55s var(--ease);
+}
+
+.roll > span + span {
+  position: absolute;
+  inset: 0;
+  transform: translateY(105%);
+}
+
+.btn:hover .roll > span:first-child,
+a:hover > .roll > span:first-child {
+  transform: translateY(-105%);
+}
+
+.btn:hover .roll > span + span,
+a:hover > .roll > span + span {
+  transform: none;
 }
 
 .icon {
-  width: 1.05em;
-  height: 1.05em;
+  width: 1.1em;
+  height: 1.1em;
   flex: none;
 }
 
-/* ─── Reveal (only active when JS runs and motion is allowed) ─── */
+.btn__arrow {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-right: -0.9rem;
+  border-radius: 50%;
+  background: var(--btn-fg);
+  color: var(--btn-bg);
+  transition: transform 0.55s var(--ease);
+}
 
-@media (prefers-reduced-motion: no-preference) {
-  .js [data-reveal] {
-    opacity: 0;
-    transform: translateY(14px);
-    transition:
-      opacity 0.8s var(--ease-out),
-      transform 0.8s var(--ease-out);
-    transition-delay: var(--reveal-delay, 0ms);
-  }
+.btn--ghost .btn__arrow {
+  background: currentColor;
+}
 
-  .js [data-reveal].is-in {
-    opacity: 1;
-    transform: none;
-  }
+.btn--ghost .btn__arrow .icon {
+  color: var(--night);
+}
+
+.on-light .btn--ghost .btn__arrow .icon,
+.on-sun .btn--ghost .btn__arrow .icon {
+  color: var(--cream);
+}
+
+.btn:hover .btn__arrow {
+  transform: rotate(-45deg);
+}
+
+/* ─── Rail: horizontal carousel (behaviour in scripts/rail.ts) ────
+   A native scroller, so swipe, trackpad and keyboard all work and the
+   page can be scrolled past it at any time.                           */
+
+.rail__track {
+  display: flex;
+  gap: var(--rail-gap, clamp(0.75rem, 0.5rem + 0.8vw, 1.25rem));
+  /* Full-bleed track whose first item lines up with .wrap content. */
+  padding-inline: calc(var(--gutter) + max(0px, (100% - var(--max) - var(--gutter) * 2) / 2));
+  scroll-padding-inline: calc(var(--gutter) + max(0px, (100% - var(--max) - var(--gutter) * 2) / 2));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.rail__track::-webkit-scrollbar {
+  display: none;
+}
+
+.rail__track > * {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.rail__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: clamp(1.25rem, 1rem + 1vw, 2rem);
+}
+
+.rail__hint {
+  font-size: var(--t-small);
+  opacity: 0.72;
+}
+
+.rail__bar {
+  flex: 1;
+  max-width: 14rem;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  overflow: hidden;
+}
+
+.rail__bar > span {
+  display: block;
+  height: 100%;
+  background: var(--sun);
+  transform-origin: left;
+  transform: scaleX(0.1);
+  transition: transform 0.3s var(--ease);
+}
+
+.on-light .rail__bar > span {
+  background: var(--ink);
+}
+
+.rail__controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rail__btn {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px currentColor;
+  transition:
+    background-color 0.4s var(--ease),
+    color 0.4s var(--ease),
+    opacity 0.4s var(--ease);
+}
+
+.rail__btn .icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.rail__btn:hover:not(:disabled) {
+  background: var(--sun);
+  color: var(--ink);
+  box-shadow: none;
+}
+
+.rail__btn[hidden] {
+  display: none;
+}
+
+.rail__btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* ─── Motion defaults (JS lifts these; nothing stays hidden without it) */
+
+.motion [data-reveal] {
+  opacity: 0;
+  transform: translateY(2rem);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior: auto !important;
   }
 
   *,
