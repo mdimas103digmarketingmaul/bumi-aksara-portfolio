@@ -4,3 +4,7 @@
 # /humanies-exploration/ — source, config and reference files stay unreachable.
 /humanies-exploration    /humanies-exploration/           301
 /humanies-exploration/*  /humanies-exploration/deploy/:splat  200
+
+# option-02-untuk-portfolio/: white-label portfolio version (fictional "Rangkul Project").
+/option-02-untuk-portfolio    /option-02-untuk-portfolio/           301
+/option-02-untuk-portfolio/*  /option-02-untuk-portfolio/deploy/:splat  200

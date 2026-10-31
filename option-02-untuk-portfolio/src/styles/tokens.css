@@ -1,0 +1,75 @@
+/*
+ * Rangkul Project tokens (fictional brand for this portfolio concept).
+ * One primary blue (#1A2BC3), lavender-tinted surfaces, navy headings, Poppins + Fraunces.
+ */
+:root {
+  /* Surfaces — lavender-tinted whites, as on the live site (#F5F5FE). */
+  --paper: #f5f5fe;
+  --paper-2: #e9e9f8;
+  --surface: #ffffff;
+  --line: #e2e3f3;
+  --line-strong: #c9cce6;
+
+  /* Text */
+  --navy: #011f53; /* navy — section titles */
+  --ink: #0e0f52; /* deep indigo — body text on light */
+  --ink-2: #363c6b;
+  --muted: #5a6385; /* AA contrast on white */
+
+  /* Brand */
+  --brand: #1a2bc3; /* brand blue (mark, buttons, blue bands) */
+  --brand-hover: #1421a3;
+  --brand-bright: #422dfc; /* nav hover violet */
+  --brand-soft: #e5e5ff;
+  --brand-tint: rgba(26, 43, 195, 0.12);
+  --brand-lilac: #ccd1ff;
+
+  /* Status (used with restraint; harmonised against the blue) */
+  --alert: #e8572f;
+  --alert-ink: #ad3517;
+  --alert-soft: #fdebe4;
+  --recovery: #f0ad1c;
+  --recovery-ink: #7a5000;
+  --recovery-soft: #fdf2d8;
+
+  /* Type */
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Shape & depth — small practical radii like the live site, a big one for feature blocks. */
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 12px;
+  --radius-xl: 32px;
+  --shadow-float: 0 1px 2px rgba(14, 15, 82, 0.06), 0 10px 28px -12px rgba(14, 15, 82, 0.22);
+  --shadow-drawer: 0 1px 2px rgba(14, 15, 82, 0.08), 0 24px 60px -20px rgba(14, 15, 82, 0.32);
+  --shadow-card: 0 2px 4px rgba(14, 15, 82, 0.05), 0 14px 30px -18px rgba(14, 15, 82, 0.3);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 0.8, 0.24, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur: 320ms;
+  --dur-slow: 560ms;
+
+  /* Layout */
+  --gutter: 20px;
+  --page-pad: clamp(16px, 4vw, 32px);
+  --container: 1200px;
+  --panel-w: 300px;
+  --drawer-w: 432px;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --panel-w: 340px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}
