@@ -1,0 +1,380 @@
+/* ───────────── Map shell ───────────── */
+
+.map-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #eceefb; /* matches MAP_COLORS.ocean so loading never flashes */
+}
+
+.map-canvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+}
+
+.map-shell.is-loaded .map-canvas {
+  opacity: 1;
+}
+
+.maplibregl-canvas:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: -2px;
+}
+
+/* Attribution: keep it, keep it quiet. */
+.maplibregl-ctrl-bottom-right {
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.maplibregl-ctrl-attrib.maplibregl-compact {
+  margin: 0 12px 12px 0;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.stage.has-selection .maplibregl-ctrl-bottom-right,
+.stage.has-selection .map-controls {
+  transform: translateX(calc(-1 * (var(--drawer-w) + var(--gutter))));
+}
+
+/* Cooperative-gesture hint ("Use ⌘ + scroll to zoom"): a quiet pill instead of
+   MapLibre's full-map dark overlay. Appears instantly, lingers, then fades. */
+.maplibregl-cooperative-gesture-screen {
+  padding: 16px;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.4;
+  transition: opacity 420ms var(--ease-out) 900ms;
+}
+
+.maplibregl-cooperative-gesture-screen.maplibregl-show {
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.maplibregl-cooperative-gesture-screen > div {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(14, 15, 82, 0.82);
+  color: #fff;
+  font-weight: 500;
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ───────────── Controls ───────────── */
+
+.map-controls {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 52px;
+  z-index: 2;
+  display: grid;
+  gap: 8px;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.map-controls__stack {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+}
+
+.map-controls__btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  background: var(--surface);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.map-controls__stack .map-controls__btn + .map-controls__btn {
+  border-top: 1px solid var(--line);
+}
+
+.map-controls__btn:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.map-controls__btn:focus-visible {
+  outline-offset: -2px;
+}
+
+.map-controls__btn--solo {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-float);
+}
+
+/* ───────────── Markers ───────────── */
+
+/* MapLibre positions this zero-size anchor exactly on the coordinate. */
+.marker-anchor {
+  width: 0;
+  height: 0;
+}
+
+.marker {
+  --size: 22px;
+  position: absolute;
+  font-family: var(--font-ui); /* .maplibregl-map sets Helvetica */
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    opacity var(--dur) var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+.marker:focus-visible {
+  outline: none;
+}
+
+.marker__body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  border: 2px solid #fff;
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    opacity var(--dur) var(--ease-out);
+}
+
+/* Active response — the most prominent: larger, brand blue, breathing rings. */
+.marker--active-response {
+  --size: 30px;
+}
+
+.marker--active-response .marker__body {
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 3px 10px -2px rgba(26, 43, 195, 0.45);
+}
+
+.marker__pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--size);
+  height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  border-radius: 50%;
+  background: rgba(26, 43, 195, 0.16);
+  border: 1px solid rgba(26, 43, 195, 0.35);
+  pointer-events: none;
+  animation: marker-pulse 3.2s var(--ease-out) infinite;
+  animation-delay: var(--pulse-delay, 0s);
+}
+
+.marker__pulse--late {
+  animation-delay: calc(var(--pulse-delay, 0s) - 1.6s);
+}
+
+@keyframes marker-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  70%,
+  100% {
+    transform: scale(2.7);
+    opacity: 0;
+  }
+}
+
+/* Alert — diamond. */
+.marker--alert {
+  --size: 19px;
+}
+
+.marker--alert .marker__body {
+  border-radius: 4px;
+  background: var(--alert);
+  color: #fff;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 6px -1px rgba(173, 53, 23, 0.4);
+}
+
+.marker--alert .marker__body svg {
+  transform: rotate(-45deg);
+}
+
+/* Recovery — rounded square. */
+.marker--recovery {
+  --size: 21px;
+}
+
+.marker--recovery .marker__body {
+  border-radius: 6px;
+  background: var(--recovery);
+  color: #3f2b00;
+  box-shadow: 0 2px 6px -1px rgba(124, 83, 0, 0.35);
+}
+
+/* Hover / focus / selected */
+.marker:hover .marker__body,
+.marker.is-hovered .marker__body,
+.marker:focus-visible .marker__body {
+  transform: scale(1.18);
+}
+
+.marker--alert:hover .marker__body,
+.marker--alert.is-hovered .marker__body,
+.marker--alert:focus-visible .marker__body {
+  transform: rotate(45deg) scale(1.18);
+}
+
+.marker:focus-visible .marker__body {
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px var(--brand);
+}
+
+.marker.is-selected .marker__body {
+  transform: scale(1.28);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.9),
+    0 0 0 4.5px var(--navy),
+    0 6px 16px -4px rgba(14, 15, 82, 0.4);
+}
+
+.marker--alert.is-selected .marker__body {
+  transform: rotate(45deg) scale(1.28);
+}
+
+/* While one event is open, others step back. */
+.marker.is-dimmed:not(:hover):not(.is-hovered) .marker__body {
+  opacity: 0.5;
+}
+
+.marker.is-dimmed .marker__pulse {
+  opacity: 0.35;
+}
+
+/* Filtered out */
+.marker.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--dur) var(--ease-out),
+    visibility 0s linear var(--dur);
+}
+
+.marker.is-hidden .marker__body {
+  transform: scale(0.4);
+}
+
+.marker--alert.is-hidden .marker__body {
+  transform: rotate(45deg) scale(0.4);
+}
+
+/* Label */
+.marker__label {
+  position: absolute;
+  left: calc(50% + 20px);
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  gap: 1px;
+  padding: 7px 11px 7px 10px;
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow-float), 0 0 0 1px rgba(14, 15, 82, 0.06);
+  text-align: left;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-4px, -50%);
+  pointer-events: none;
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.marker--active-response .marker__label {
+  left: calc(50% + 24px);
+}
+
+.marker__label-title {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.marker__label-place {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.marker:hover .marker__label,
+.marker.is-hovered .marker__label,
+.marker:focus-visible .marker__label,
+.marker.is-selected .marker__label {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker__pulse {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .map-controls {
+    bottom: 40px;
+    right: 12px;
+  }
+
+  .map-controls__stack {
+    display: none;
+  }
+
+  .stage.has-selection .maplibregl-ctrl-bottom-right,
+  .stage.has-selection .map-controls {
+    transform: none;
+  }
+
+  /* Slightly larger targets on touch. */
+  .marker--alert {
+    --size: 21px;
+  }
+
+  .marker--recovery {
+    --size: 23px;
+  }
+
+  .marker--active-response {
+    --size: 32px;
+  }
+}

@@ -1,0 +1,1156 @@
+/* ───────────── Containers ───────────── */
+
+.container {
+  max-width: calc(var(--container) + var(--page-pad) * 2);
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+}
+
+.container--narrow {
+  max-width: calc(900px + var(--page-pad) * 2);
+}
+
+/* ───────────── Header — sticky white bar, as on humaniesproject.org ───────────── */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--surface);
+  box-shadow: 0 1px 0 var(--line);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1440px;
+  height: 74px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+}
+
+.site-header__logo img {
+  width: 150px;
+  height: auto;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.site-header__nav ul {
+  display: flex;
+  gap: 26px;
+}
+
+.site-header__nav ul a {
+  position: relative;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.site-header__nav ul a:hover {
+  color: var(--brand-bright);
+}
+
+.site-header__nav ul a[aria-current='page'] {
+  color: var(--brand);
+}
+
+.site-header__nav ul a[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--brand);
+}
+
+/* ───────────── Hero ───────────── */
+
+.hero {
+  background: var(--paper);
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 32px 64px;
+  max-width: calc(var(--container) + var(--page-pad) * 2);
+  margin: 0 auto;
+  padding: clamp(40px, 5.5vw, 72px) var(--page-pad) clamp(32px, 4vw, 48px);
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 6px 12px 6px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.hero__live {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.hero__live::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--brand);
+  animation: live-dot 2.4s var(--ease-out) infinite;
+}
+
+@keyframes live-dot {
+  from {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Fraunces Bold, like "Change Begins with Caring." on the live site. */
+.hero__title {
+  position: relative;
+  max-width: 15ch;
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.8vw, 64px);
+  font-weight: 700;
+  font-variation-settings: 'opsz' 48;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+}
+
+.hero__title-line {
+  color: var(--brand);
+}
+
+.hero__sparkle {
+  display: inline-block;
+  width: 0.62em;
+  height: auto;
+  margin-left: 0.12em;
+  color: var(--brand);
+  vertical-align: -0.02em;
+}
+
+.hero__copy {
+  max-width: 46ch;
+  margin-top: 22px;
+  color: var(--ink-2);
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.6;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.hero__aside {
+  display: grid;
+  gap: 16px;
+}
+
+.hero__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* "Humanies In Number" card: big Poppins number, navy label. */
+.stat-card {
+  display: grid;
+  gap: 8px;
+  padding: 18px 16px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.stat-card__value {
+  color: var(--brand);
+  font-size: clamp(36px, 3.6vw, 52px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-card--alert .stat-card__value {
+  color: var(--alert-ink);
+}
+
+.stat-card--recovery .stat-card__value {
+  color: var(--recovery-ink);
+}
+
+.stat-card__label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--navy);
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.hero__badge {
+  padding: 3px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+/* ───────────── Watch — the map stage, framed as a Humanies feature block ───────────── */
+
+.watch {
+  padding: 0 var(--page-pad) clamp(24px, 3vw, 40px);
+  background: var(--paper);
+  scroll-margin-top: 74px;
+}
+
+.stage {
+  position: relative;
+  max-width: 1376px;
+  height: clamp(600px, calc(100svh - 74px - 32px), 900px);
+  margin: 0 auto;
+  border-radius: 24px;
+  box-shadow: 0 0 0 1px var(--line), var(--shadow-card);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.stage__map {
+  position: absolute;
+  inset: 0;
+}
+
+.stage__panel {
+  position: absolute;
+  top: var(--gutter);
+  left: var(--gutter);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: var(--panel-w);
+  max-height: calc(100% - var(--gutter) * 2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.stage__panel-head {
+  padding: 18px 20px 12px;
+}
+
+.stage__panel-title {
+  color: var(--navy);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.stage__panel-hint {
+  margin-top: 4px;
+  min-height: 2.9em;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+  animation: fade-in var(--dur) var(--ease-out);
+}
+
+.stage__filter {
+  padding: 0 14px 12px;
+}
+
+.stage__list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-top: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+
+/* ───────────── Home context sections ───────────── */
+
+.home-section {
+  padding: clamp(56px, 7vw, 96px) 0;
+  background: var(--surface);
+}
+
+.home-section--tint {
+  background: var(--paper);
+}
+
+.home-section--band {
+  padding-top: 0;
+  padding-bottom: clamp(48px, 5vw, 72px);
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-bottom: 32px;
+}
+
+/* Poppins 600 navy, like "Our Programs" / "Humanies In Number" on the live site. */
+.section-title {
+  color: var(--navy);
+  font-size: clamp(26px, 2.6vw, 32px);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+#programs-title {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+/* Program rows — tinted, like the live "Our Programs" list. */
+.programs {
+  display: grid;
+  gap: 12px;
+}
+
+.program-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) auto minmax(0, 1.4fr) auto;
+  align-items: center;
+  gap: 16px 28px;
+  padding: 24px 32px;
+  border-radius: 8px;
+  background: var(--paper-2);
+  color: var(--navy);
+  text-decoration: none;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.program-row:hover {
+  background: var(--brand-soft);
+  transform: translateY(-2px);
+}
+
+.program-row__name {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.program-row__tag {
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.program-row__year {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.program-row__body {
+  color: var(--ink-2);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.program-row__arrow {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.program-row:hover .program-row__arrow {
+  transform: translate(2px, -2px);
+}
+
+.program-row--featured {
+  background: var(--brand);
+  color: #fff;
+}
+
+.program-row--featured .program-row__body {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.program-row--featured:hover {
+  background: var(--brand-hover);
+}
+
+/* Story cards — image + date + title, like /impact-stories. */
+.stories {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.story-card {
+  display: grid;
+  gap: 8px;
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.story-card__media {
+  display: block;
+  aspect-ratio: 3 / 2;
+  margin-bottom: 8px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--paper-2);
+}
+
+.story-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.story-card:hover .story-card__media img {
+  transform: scale(1.04);
+}
+
+.story-card__date {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.story-card__title {
+  font-size: 16.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.story-card:hover .story-card__title {
+  color: var(--brand);
+}
+
+/* Blue statement band with sparkles — the live site's signature block. */
+.band {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: clamp(48px, 6vw, 80px) clamp(24px, 5vw, 72px);
+  border-radius: var(--radius-xl);
+  background: var(--brand);
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+.band__sparkle {
+  position: absolute;
+  right: clamp(20px, 6vw, 88px);
+  top: clamp(20px, 4vw, 48px);
+  color: #fff;
+  opacity: 0.95;
+}
+
+.band__title {
+  max-width: 22ch;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.6vw, 46px);
+  font-weight: 600;
+  font-variation-settings: 'opsz' 48;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.band__copy {
+  max-width: 52ch;
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* ───────────── Galang Dana — real Humanies campaigns from Mayar ───────────── */
+
+.section-eyebrow {
+  margin-bottom: 8px;
+  color: var(--brand);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.section-lead {
+  max-width: 60ch;
+  margin-top: 10px;
+  color: var(--ink-2);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+.campaigns__head {
+  align-items: end;
+  margin-bottom: 24px;
+}
+
+.campaigns__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.campaigns__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.campaigns__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.campaigns__chip:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.campaigns__chip.is-active {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.campaigns__chip-count {
+  color: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+.campaigns__nav {
+  display: flex;
+  flex: none;
+  gap: 8px;
+}
+
+.campaigns__arrow {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--navy);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.campaigns__arrow:hover:not(:disabled) {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+
+.campaigns__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.campaigns__summary {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Full-bleed row whose first card lines up with the container edge. */
+.campaigns__viewport {
+  --edge: max(var(--page-pad), calc((100vw - var(--container)) / 2));
+  position: relative;
+  margin-top: 16px;
+}
+
+.campaigns__viewport::before,
+.campaigns__viewport::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 24px;
+  z-index: 1;
+  width: 56px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease-out);
+}
+
+.campaigns__viewport::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--surface), rgba(255, 255, 255, 0));
+}
+
+.campaigns__viewport::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--surface), rgba(255, 255, 255, 0));
+}
+
+.campaigns__viewport.fade-start::before,
+.campaigns__viewport.fade-end::after {
+  opacity: 1;
+}
+
+.campaigns__track {
+  display: flex;
+  gap: 20px;
+  padding: 4px var(--edge) 24px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--edge);
+  scrollbar-width: none;
+}
+
+.campaigns__track::-webkit-scrollbar {
+  display: none;
+}
+
+.campaigns__item {
+  flex: 0 0 clamp(264px, 24vw, 300px);
+  scroll-snap-align: start;
+  animation: fade-up var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(var(--i) * 40ms);
+}
+
+.campaign-card {
+  height: 100%;
+}
+
+.campaign-card__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--navy);
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.campaign-card__link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 4px rgba(14, 15, 82, 0.06), 0 20px 36px -18px rgba(14, 15, 82, 0.38);
+}
+
+.campaign-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+
+.campaign-card__media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.campaign-card__link:hover .campaign-card__media > img {
+  transform: scale(1.04);
+}
+
+.campaign-card__status {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 9px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.campaign-card__status--open {
+  background: #fff;
+  color: var(--brand);
+  box-shadow: 0 2px 8px -2px rgba(14, 15, 82, 0.35);
+}
+
+.campaign-card__status--closed {
+  background: rgba(14, 15, 82, 0.78);
+  color: #fff;
+}
+
+/* Generated cover: blue banner with white wordmark, like Humanies' own Mayar banners. */
+.campaign-cover {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 20px 28px;
+  background:
+    radial-gradient(120% 90% at 85% 100%, rgba(66, 45, 252, 0.55), rgba(66, 45, 252, 0) 60%),
+    radial-gradient(90% 80% at 0% 0%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 55%),
+    var(--brand);
+  color: #fff;
+  text-align: center;
+}
+
+.campaign-cover__logo {
+  width: 84px;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.campaign-cover__title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.campaign-cover__sub {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.campaign-cover__sparkle {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.campaign-card__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px 18px 18px;
+}
+
+.campaign-chip {
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.campaign-chip--bencana-alam {
+  background: var(--alert-soft);
+  color: var(--alert-ink);
+}
+
+.campaign-chip--kegiatan-sosial {
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+
+.campaign-chip--bantuan-pendidikan {
+  background: #e0f3f2;
+  color: #0b6b68;
+}
+
+.campaign-chip--kemanusiaan {
+  background: var(--recovery-soft);
+  color: var(--recovery-ink);
+}
+
+.campaign-card__title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.campaign-card__note {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.campaign-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.campaign-card__cta {
+  min-height: 38px;
+  padding: 0 16px;
+}
+
+.campaign-card__view {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--brand);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.campaign-card__via {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ───────────── Footer ───────────── */
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1.4fr;
+  gap: 32px 48px;
+  max-width: calc(var(--container) + var(--page-pad) * 2);
+  margin: 0 auto;
+  padding: 48px var(--page-pad) 32px;
+}
+
+.site-footer__mark {
+  width: 120px;
+  height: auto;
+}
+
+.site-footer__heading {
+  margin-bottom: 12px;
+  color: var(--navy);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.site-footer__col ul {
+  display: grid;
+  gap: 8px;
+}
+
+.site-footer__col a {
+  color: var(--ink-2);
+  font-size: 14.5px;
+  text-decoration: none;
+}
+
+.site-footer__col a:hover {
+  color: var(--brand);
+}
+
+.site-footer__about {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  color: var(--ink-2);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.site-footer__copy {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.site-footer__note {
+  max-width: calc(var(--container) + var(--page-pad) * 2);
+  margin: 0 auto;
+  padding: 0 var(--page-pad) 32px;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.site-footer__note p {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.site-footer__note strong {
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+/* ───────────── Tablet ───────────── */
+
+@media (max-width: 1199px) {
+  .site-header__nav ul {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .site-header__nav ul {
+    display: none;
+  }
+
+  .hero__inner {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  /* The drawer would crowd the panel; step the panel back while it is open. */
+  .stage.has-selection .stage__panel {
+    opacity: 0;
+    transform: translateX(-12px);
+    pointer-events: none;
+  }
+
+  .program-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 22px 24px;
+  }
+
+  .program-row__body {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .program-row__arrow {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .program-row__year {
+    display: none;
+  }
+
+  .site-footer__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .site-footer__mark {
+    grid-column: 1 / -1;
+    width: 96px;
+  }
+}
+
+/* ───────────── Mobile ───────────── */
+
+@media (max-width: 767px) {
+  .site-header__inner {
+    height: 64px;
+  }
+
+  .site-header__logo img {
+    width: 120px;
+  }
+
+  .hero__title {
+    max-width: none;
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .hero__stats {
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 14px 12px 12px;
+  }
+
+  .stat-card__label {
+    font-size: 12px;
+  }
+
+  .watch {
+    padding: 0 0 48px;
+    scroll-margin-top: 64px;
+  }
+
+  /* Stack: panel heading → filter → map → list. */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stage__panel {
+    display: contents;
+  }
+
+  .stage__panel-head {
+    order: 1;
+    padding: 20px var(--page-pad) 8px;
+  }
+
+  .stage__panel-hint {
+    min-height: 0;
+  }
+
+  .stage__filter {
+    order: 2;
+    padding: 4px var(--page-pad) 14px;
+  }
+
+  .stage__map {
+    order: 3;
+    position: relative;
+    inset: auto;
+    height: 58svh;
+    min-height: 360px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stage__list {
+    order: 4;
+    overflow: visible;
+    border-top: 0;
+  }
+
+  .stage.has-selection .stage__panel {
+    opacity: 1;
+    transform: none;
+  }
+
+  .stories {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .campaigns__nav {
+    display: none;
+  }
+
+  .campaigns__chips {
+    flex-wrap: nowrap;
+    margin: 0 calc(var(--page-pad) * -1);
+    padding: 0 var(--page-pad) 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .campaigns__track {
+    gap: 14px;
+  }
+
+  .campaigns__item {
+    flex-basis: 80vw;
+  }
+
+  .band__sparkle {
+    width: 44px;
+    top: 16px;
+    right: 16px;
+  }
+
+  .site-footer__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 24px;
+  }
+
+  .site-footer__about {
+    grid-column: 1 / -1;
+  }
+}

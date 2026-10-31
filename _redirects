@@ -1,0 +1,6 @@
+# Cloudflare Pages serves this repository as-is (no build step).
+# humanies-exploration/ holds Vite *source*; its production build is committed to
+# humanies-exploration/deploy/ (`npm run build:deploy`). Serve only that build at
+# /humanies-exploration/ — source, config and reference files stay unreachable.
+/humanies-exploration    /humanies-exploration/           301
+/humanies-exploration/*  /humanies-exploration/deploy/:splat  200
