@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>RJS Cottage — Villa private pool untuk rombongan di Cisarua, Puncak</title>
+  <meta name="description" content="RJS Cottage: tiga cottage dengan kolam renang pribadi di Cisarua, Puncak, Bogor. Untuk keluarga besar dan rombongan 20–25 orang. Billiard, karaoke, BBQ, halaman. Cek tanggal via WhatsApp.">
+  <!-- Design exploration (Option 01). Remove noindex when this becomes the official site. -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f4f1ea">
+  <link rel="canonical" href="https://bumi-aksara-portfolio.pages.dev/rjs-cottage/">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:site_name" content="RJS Cottage">
+  <meta property="og:title" content="RJS Cottage — Kumpul dulu, pulangnya nanti.">
+  <meta property="og:description" content="Tiga cottage private pool di Cisarua, Puncak, untuk keluarga besar dan rombongan hingga 25 orang.">
+  <meta property="og:url" content="https://bumi-aksara-portfolio.pages.dev/rjs-cottage/">
+  <meta property="og:image" content="https://bumi-aksara-portfolio.pages.dev/rjs-cottage/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preload" href="assets/fonts/fraunces-full.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/video/hero-poster.webp" as="image" fetchpriority="high">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script>
+    (function (d) {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      d.classList.add('js', reduce ? 'no-motion' : 'motion');
+      // Safety net: if the motion script never runs, show everything.
+      setTimeout(function () { if (!d.classList.contains('is-ready')) d.classList.replace('motion', 'no-motion'); }, 4000);
+    })(document.documentElement);
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": "RJS Cottage",
+    "description": "Tiga cottage dengan kolam renang pribadi di Cisarua, Puncak, untuk keluarga besar dan rombongan.",
+    "url": "https://bumi-aksara-portfolio.pages.dev/rjs-cottage/",
+    "image": "https://bumi-aksara-portfolio.pages.dev/rjs-cottage/assets/og-image.jpg",
+    "priceRange": "Rp1.800.000 – Rp3.800.000 per malam",
+    "checkoutTime": "12:00",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Cisarua",
+      "addressRegion": "Jawa Barat",
+      "postalCode": "16750",
+      "addressCountry": "ID"
+    },
+    "amenityFeature": [
+      {"@type": "LocationFeatureSpecification", "name": "Private pool", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Billiard", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Karaoke", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "BBQ area", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Kitchen", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "WiFi", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Free parking", "value": true}
+    ],
+    "sameAs": [
+      "https://www.instagram.com/rjscottage",
+      "https://www.tiktok.com/@rjscottageofficial",
+      "https://www.facebook.com/profile.php?id=61582023847281"
+    ]
+  }
+  </script>
+
+  <script defer src="js/vendor/gsap.min.js"></script>
+  <script defer src="js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="js/vendor/lenis.min.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Langsung ke konten</a>
+
+  <!-- ─── Header ─────────────────────────────────────────────── -->
+  <header class="nav" data-nav>
+    <div class="nav__inner wrap">
+      <a class="brand" href="#top" aria-label="RJS Cottage, ke atas">
+        <span class="brand__mark">RJS</span><span class="brand__word">Cottage</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Navigasi utama">
+        <a href="#cottage">Cottage</a>
+        <a href="#sehari">Pengalaman</a>
+        <a href="#galeri">Galeri</a>
+        <a href="#lokasi">Lokasi</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav__actions">
+        <a class="btn btn--sm btn--dark" href="#booking" data-wa="Halo RJS Cottage, saya mau cek tanggal kosong.">
+          <span>Cek tanggal</span>
+        </a>
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+          <span class="sr-only">Buka menu</span>
+          <span class="nav__burger" aria-hidden="true"><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" data-menu hidden>
+    <nav class="menu__links" aria-label="Menu">
+      <a href="#cottage" data-menu-link><span>01</span>Pilih cottage</a>
+      <a href="#sehari" data-menu-link><span>02</span>Sehari di RJS</a>
+      <a href="#fasilitas" data-menu-link><span>03</span>Fasilitas</a>
+      <a href="#cerita-tamu" data-menu-link><span>04</span>Cerita tamu</a>
+      <a href="#galeri" data-menu-link><span>05</span>Galeri</a>
+      <a href="#lokasi" data-menu-link><span>06</span>Lokasi</a>
+      <a href="#faq" data-menu-link><span>07</span>FAQ</a>
+    </nav>
+    <div class="menu__foot">
+      <a class="btn btn--light btn--block" href="#booking" data-menu-link data-wa="Halo RJS Cottage, saya mau cek tanggal kosong.">
+        <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span>Cek tanggal via WhatsApp</span>
+      </a>
+      <p>Cisarua, Puncak · Bogor</p>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ─── Hero ─────────────────────────────────────────────── -->
+    <section class="hero" id="top" aria-labelledby="hero-title" data-hero>
+      <div class="hero__media" data-hero-media>
+        <div class="hero__arch" data-hero-arch>
+          <video class="hero__video" autoplay muted loop playsinline preload="metadata"
+                 poster="assets/video/hero-poster.webp" aria-label="Cuplikan RJS Cottage: kolam di antara pepohonan, kamar dengan jendela besar, billiard, dan teras kolam di sore hari." data-hero-video>
+            <source src="assets/video/hero-reel.mp4" type="video/mp4">
+          </video>
+          <button class="hero__pause" type="button" aria-pressed="false" data-video-toggle>
+            <span class="sr-only" data-video-label>Jeda video</span>
+            <svg class="ico ico--pause" aria-hidden="true"><use href="#i-pause"/></svg>
+            <svg class="ico ico--play" aria-hidden="true"><use href="#i-play"/></svg>
+          </button>
+        </div>
+        <figure class="hero__card" data-hero-card>
+          <img src="assets/images/c3-pool-steps-sm.webp" width="720" height="540" alt="Dua tamu menuruni tangga batu menuju kolam RJS Cottage 3." decoding="async">
+          <figcaption>Cottage 3 · kolam bertangga batu</figcaption>
+        </figure>
+      </div>
+
+      <div class="hero__content wrap">
+        <p class="eyebrow hero__eyebrow" data-hero-fade>
+          <span class="dot" aria-hidden="true"></span> RJS Cottage — Cisarua, Puncak
+        </p>
+        <h1 class="hero__title display" id="hero-title" data-hero-title>
+          <span class="line"><span class="li">Kumpul dulu,</span></span>
+          <span class="line"><span class="li">pulangnya <em>nanti.</em></span></span>
+        </h1>
+        <p class="hero__lede" data-hero-fade>
+          Tiga cottage dengan kolam renang pribadi, untuk keluarga besar dan rombongan hingga 25&nbsp;orang. Sekitar 90&nbsp;menit dari Jakarta.
+        </p>
+        <div class="hero__actions" data-hero-fade>
+          <a class="btn btn--dark" href="#booking" data-wa="Halo RJS Cottage, saya mau cek tanggal kosong.">
+            <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>
+            <span>Cek tanggal kosong</span>
+          </a>
+          <a class="btn btn--ghost" href="#cottage">
+            <span>Lihat 3 cottage</span>
+            <svg class="ico ico--sm" aria-hidden="true"><use href="#i-down"/></svg>
+          </a>
+        </div>
+        <p class="hero__meta" data-hero-fade>
+          Mulai <strong>Rp1,8 jt</strong>/malam <span aria-hidden="true">·</span> satu cottage utuh, bukan per kamar
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── Intro / manifesto ─────────────────────────────────── -->
+    <section class="intro" id="cerita" aria-labelledby="intro-title">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>Satu rombongan, satu rumah</p>
+        <h2 class="sr-only" id="intro-title">Tentang RJS Cottage</h2>
+        <p class="intro__text display" data-words>
+          Di RJS Cottage, satu rombongan dapat satu rumah utuh. Anak-anak berenang sampai jarinya keriput
+          <span class="pill" aria-hidden="true"><img src="assets/images/c1-pool-terrace-sm.webp" alt="" loading="lazy" decoding="async"></span>,
+          om dan tante adu billiard
+          <span class="pill" aria-hidden="true"><img src="assets/images/c1-billiard-sm.webp" alt="" loading="lazy" decoding="async"></span>,
+          yang muda rebutan mic karaoke. Ada yang memanggang di halaman, ada yang cuma duduk menghirup udara Puncak
+          <span class="pill" aria-hidden="true"><img src="assets/images/c1-garden-sm.webp" alt="" loading="lazy" decoding="async"></span>.
+          Tidak ada tamu lain. <em>Hanya orang-orang kamu.</em>
+        </p>
+
+        <dl class="facts">
+          <div class="fact" data-reveal>
+            <dt>Cottage, masing-masing dengan kolam sendiri</dt>
+            <dd class="display">3</dd>
+          </div>
+          <div class="fact" data-reveal>
+            <dt>Tamu per cottage</dt>
+            <dd class="display">20–25</dd>
+          </div>
+          <div class="fact" data-reveal>
+            <dt>Mdpl, udara sejuk Cisarua</dt>
+            <dd class="display">±800</dd>
+          </div>
+          <div class="fact" data-reveal>
+            <dt>Menit dari Jakarta via tol Ciawi</dt>
+            <dd class="display">±90</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ─── Choose your cottage ───────────────────────────────── -->
+    <section class="cottages" id="cottage" aria-labelledby="cottage-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow" data-reveal>Pilih cottage</p>
+          <h2 class="sec-title display" id="cottage-title" data-reveal>Pilih rumahmu untuk <em>akhir pekan.</em></h2>
+          <p class="sec-lede" data-reveal>
+            Ketiganya punya kolam pribadi, ruang kumpul yang lega, billiard, karaoke, dan halaman untuk sore yang panjang.
+            Bedanya ada di ukuran rombongan dan suasananya.
+          </p>
+        </header>
+
+        <div class="picker" data-picker>
+          <div class="picker__tabs" role="tablist" aria-label="Pilih cottage">
+            <button class="picker__tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true" tabindex="0" data-tab="1">
+              <span class="picker__num display">01</span>
+              <span class="picker__name">Cottage 1<small>hingga 20 tamu</small></span>
+            </button>
+            <button class="picker__tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1" data-tab="2">
+              <span class="picker__num display">02</span>
+              <span class="picker__name">Cottage 2<small>hingga 25 tamu</small></span>
+            </button>
+            <button class="picker__tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1" data-tab="3">
+              <span class="picker__num display">03</span>
+              <span class="picker__name">Cottage 3<small>hingga 25 tamu</small></span>
+            </button>
+            <span class="picker__ink" aria-hidden="true" data-picker-ink></span>
+          </div>
+
+          <!-- Cottage 1 -->
+          <article class="unit" role="tabpanel" id="panel-1" aria-labelledby="tab-1" data-panel="1">
+            <div class="unit__media">
+              <figure class="unit__main arch">
+                <img src="assets/images/c1-pool-sign-lg.webp" srcset="assets/images/c1-pool-sign-sm.webp 540w, assets/images/c1-pool-sign-lg.webp 1050w" sizes="(min-width: 64rem) 34vw, 92vw" width="1050" height="1400" alt="Kolam renang RJS Cottage 1 di samping dinding bertuliskan RJS Cottage, langit biru berawan." loading="lazy" decoding="async">
+              </figure>
+              <figure class="unit__sub unit__sub--a">
+                <img src="assets/images/c1-billiard-sm.webp" width="720" height="540" alt="Meja billiard merah di saung berdinding bambu dengan lantai rumput sintetis." loading="lazy" decoding="async">
+              </figure>
+              <figure class="unit__sub unit__sub--b">
+                <img src="assets/images/c1-pool-terrace-sm.webp" width="720" height="540" alt="Teras beratap di tepi kolam dengan meja kayu dan perosotan anak." loading="lazy" decoding="async">
+              </figure>
+            </div>
+            <div class="unit__body">
+              <p class="unit__kicker">Yang paling hangat</p>
+              <h3 class="unit__title display">RJS Cottage 1</h3>
+              <p class="unit__desc">Kolam dengan perosotan kecil, gazebo, dan saung billiard berdinding bambu. Pas untuk keluarga yang membawa anak-anak dan ingin sore yang santai di halaman.</p>
+              <dl class="specs">
+                <div><dt>Tamu</dt><dd>20</dd></div>
+                <div><dt>Kamar tidur</dt><dd>3</dd></div>
+                <div><dt>Kamar mandi</dt><dd>4</dd></div>
+                <div><dt>Parkir</dt><dd>5 mobil</dd></div>
+              </dl>
+              <table class="rates">
+                <caption class="sr-only">Tarif RJS Cottage 1 per malam</caption>
+                <tbody>
+                  <tr><th scope="row">Minggu–Kamis</th><td>Rp1.800.000</td></tr>
+                  <tr><th scope="row">Jumat</th><td>Rp2.300.000</td></tr>
+                  <tr><th scope="row">Sabtu</th><td>Rp3.700.000</td></tr>
+                </tbody>
+              </table>
+              <ul class="chips" role="list" aria-label="Fasilitas Cottage 1">
+                <li>Private pool</li><li>Gazebo</li><li>Billiard</li><li>Karaoke</li><li>BBQ space</li><li>Halaman</li><li>Chill space</li><li>Kitchen set</li>
+              </ul>
+              <a class="btn btn--dark" href="#booking" data-wa="Halo RJS Cottage, saya mau cek tanggal untuk RJS Cottage 1." data-unit-pick="1">
+                <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span>Tanya tanggal Cottage 1</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Cottage 2 -->
+          <article class="unit" role="tabpanel" id="panel-2" aria-labelledby="tab-2" data-panel="2" hidden>
+            <div class="unit__media">
+              <figure class="unit__main arch">
+                <img src="assets/images/c2-lounge-lg.webp" srcset="assets/images/c2-lounge-sm.webp 720w, assets/images/c2-lounge-lg.webp 1400w" sizes="(min-width: 64rem) 34vw, 92vw" width="1400" height="1050" alt="Ruang keluarga RJS Cottage 2 dengan sofa kulit dan jendela kaca tinggi menghadap kolam dan pepohonan." loading="lazy" decoding="async">
+              </figure>
+              <figure class="unit__sub unit__sub--a">
+                <img src="assets/images/c2-pool-house-sm.webp" width="720" height="540" alt="Kolam renang RJS Cottage 2 di depan bangunan putih dengan tangga batu." loading="lazy" decoding="async">
+              </figure>
+              <figure class="unit__sub unit__sub--b">
+                <img src="assets/images/c2-billiard-sm.webp" width="720" height="540" alt="Meja billiard di teras beratap RJS Cottage 2 yang terbuka ke arah pepohonan." loading="lazy" decoding="async">
+              </figure>
+            </div>
+            <div class="unit__body">
+              <p class="unit__kicker">Yang paling terang</p>
+              <h3 class="unit__title display">RJS Cottage 2</h3>
+              <p class="unit__desc">Jendela kaca tinggi, ruang keluarga yang lapang, dan teras billiard beratap. Untuk rombongan yang lebih besar, hingga 25&nbsp;orang.</p>
+              <dl class="specs">
+                <div><dt>Tamu</dt><dd>25</dd></div>
+                <div><dt>Kamar tidur</dt><dd>3</dd></div>
+                <div><dt>Kamar mandi</dt><dd>4</dd></div>
+                <div><dt>Parkir</dt><dd>5 mobil</dd></div>
+              </dl>
+              <table class="rates">
+                <caption class="sr-only">Tarif RJS Cottage 2 per malam</caption>
+                <tbody>
+                  <tr><th scope="row">Minggu–Kamis</th><td>Rp2.000.000</td></tr>
+                  <tr><th scope="row">Jumat</th><td>Rp2.700.000</td></tr>
+                  <tr><th scope="row">Sabtu</th><td>Rp3.800.000</td></tr>
+                </tbody>
+              </table>
+              <ul class="chips" role="list" aria-label="Fasilitas Cottage 2">
+                <li>Private pool</li><li>Billiard</li><li>Karaoke</li><li>BBQ space</li><li>Halaman</li><li>Chill space</li><li>Kitchen set</li>
+              </ul>
+              <p class="note"><svg class="ico ico--sm" aria-hidden="true"><use href="#i-info"/></svg> Akses ke cottage menanjak/menurun. Kurang ideal untuk lansia. Ceritakan kebutuhan rombonganmu ke admin.</p>
+              <a class="btn btn--dark" href="#booking" data-wa="Halo RJS Cottage, saya mau cek tanggal untuk RJS Cottage 2." data-unit-pick="2">
+                <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span>Tanya tanggal Cottage 2</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Cottage 3 -->
+          <article class="unit" role="tabpanel" id="panel-3" aria-labelledby="tab-3" data-panel="3" hidden>
+            <div class="unit__media">
+              <figure class="unit__main arch">
+                <img src="assets/images/c3-pool-steps-lg.webp" srcset="assets/images/c3-pool-steps-sm.webp 720w, assets/images/c3-pool-steps-lg.webp 1400w" sizes="(min-width: 64rem) 34vw, 92vw" width="1400" height="1050" alt="Dua tamu menuruni tangga batu menuju kolam RJS Cottage 3 yang berlatar dinding tanaman." loading="lazy" decoding="async">
+              </figure>
+              <figure class="unit__sub unit__sub--a">
+                <img src="assets/images/c3-billiard-view-sm.webp" width="720" height="540" alt="Teras billiard beratap RJS Cottage 3 yang terbuka ke arah pepohonan." loading="lazy" decoding="async">
+              </figure>
+              <figure class="unit__sub unit__sub--b">
+                <img src="assets/images/c3-living-sm.webp" width="720" height="540" alt="Ruang keluarga RJS Cottage 3 dengan sofa, karpet, dan jendela besar." loading="lazy" decoding="async">
+              </figure>
+            </div>
+            <div class="unit__body">
+              <p class="unit__kicker">Yang paling teduh</p>
+              <h3 class="unit__title display">RJS Cottage 3</h3>
+              <p class="unit__desc">Kolam bertangga batu berlatar dinding hijau, dan teras billiard yang terbuka ke pepohonan. Kapasitas dan tarif sama dengan Cottage&nbsp;2.</p>
+              <dl class="specs">
+                <div><dt>Tamu</dt><dd>25</dd></div>
+                <div><dt>Kamar tidur</dt><dd>3</dd></div>
+                <div><dt>Kamar mandi</dt><dd>4</dd></div>
+                <div><dt>Parkir</dt><dd>5 mobil</dd></div>
+              </dl>
+              <table class="rates">
+                <caption class="sr-only">Tarif RJS Cottage 3 per malam</caption>
+                <tbody>
+                  <tr><th scope="row">Minggu–Kamis</th><td>Rp2.000.000</td></tr>
+                  <tr><th scope="row">Jumat</th><td>Rp2.700.000</td></tr>
+                  <tr><th scope="row">Sabtu</th><td>Rp3.800.000</td></tr>
+                </tbody>
+              </table>
+              <ul class="chips" role="list" aria-label="Fasilitas Cottage 3">
+                <li>Private pool</li><li>Billiard</li><li>Karaoke</li><li>BBQ space</li><li>Halaman</li><li>Chill space</li><li>Kitchen set</li>
+              </ul>
+              <p class="note"><svg class="ico ico--sm" aria-hidden="true"><use href="#i-info"/></svg> Akses ke cottage menanjak/menurun. Kurang ideal untuk lansia. Ceritakan kebutuhan rombonganmu ke admin.</p>
+              <a class="btn btn--dark" href="#booking" data-wa="Halo RJS Cottage, saya mau cek tanggal untuk RJS Cottage 3." data-unit-pick="3">
+                <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span>Tanya tanggal Cottage 3</span>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <p class="fineprint">Tarif per malam untuk satu cottage utuh, per November 2026. Tarif libur panjang dapat berbeda. Admin akan mengonfirmasi harga final.</p>
+      </div>
+    </section>
+
+    <!-- ─── Breather: mask expands to full bleed ───────────────── -->
+    <section class="breather" aria-label="Kolam RJS Cottage 2" data-breather>
+      <div class="breather__stage">
+        <div class="breather__frame" data-breather-frame>
+          <img src="assets/images/c2-pool-house-lg.webp" srcset="assets/images/c2-pool-house-sm.webp 720w, assets/images/c2-pool-house-lg.webp 1400w" sizes="100vw" width="1400" height="1050" alt="Kolam renang pribadi RJS Cottage 2 di depan bangunan putih, dikelilingi pepohonan Puncak." loading="lazy" decoding="async">
+        </div>
+        <p class="breather__quote display" data-breather-quote>
+          Satu kolam. Satu rumah.<br><em>Satu rombongan.</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── A day at RJS (horizontal on desktop) ──────────────── -->
+    <section class="day" id="sehari" aria-labelledby="day-title" data-day>
+      <div class="day__pin" data-day-pin>
+        <header class="day__head wrap">
+          <p class="eyebrow">Sehari di RJS</p>
+          <h2 class="sec-title display" id="day-title">Kira-kira <em>begini</em> harinya.</h2>
+          <div class="day__clock" aria-hidden="true">
+            <span class="day__time display" data-day-time>07.00</span>
+            <span class="day__bar"><span data-day-progress></span></span>
+          </div>
+        </header>
+
+        <div class="day__track" data-day-track>
+          <ol class="day__list" role="list">
+            <li class="moment" data-time="07.00">
+              <figure class="moment__img arch"><img src="assets/images/v-window.webp" width="720" height="1070" alt="Seorang tamu berdiri di depan jendela kamar yang menghadap pepohonan." loading="lazy" decoding="async"></figure>
+              <div class="moment__copy">
+                <p class="moment__time">07.00</p>
+                <h3 class="moment__title display">Kabut tipis, jendela dibuka.</h3>
+                <p>Puncak paling jujur di pagi hari. Biarkan udara ±800&nbsp;mdpl masuk ke kamar.</p>
+              </div>
+            </li>
+            <li class="moment" data-time="09.30">
+              <figure class="moment__img"><img src="assets/images/c1-pool-terrace-sm.webp" width="720" height="540" alt="Kolam RJS Cottage 1 dengan perosotan anak dan teras beratap." loading="lazy" decoding="async"></figure>
+              <div class="moment__copy">
+                <p class="moment__time">09.30</p>
+                <h3 class="moment__title display">Kolam dibuka. Oleh anak-anak, tentu.</h3>
+                <p>Kolamnya milik rombonganmu sendiri, jadi tidak perlu antre dengan tamu lain.</p>
+              </div>
+            </li>
+            <li class="moment" data-time="12.30">
+              <figure class="moment__img"><img src="assets/images/c2-kitchen-sm.webp" width="720" height="540" alt="Kitchen set putih dengan kabinet kaca di RJS Cottage 2." loading="lazy" decoding="async"></figure>
+              <div class="moment__copy">
+                <p class="moment__time">12.30</p>
+                <h3 class="moment__title display">Masak bareng, makan lesehan.</h3>
+                <p>Ada kitchen set di setiap cottage. Mau masak besar atau mi instan paling enak sedunia, terserah kalian.</p>
+              </div>
+            </li>
+            <li class="moment" data-time="15.00">
+              <figure class="moment__img arch"><img src="assets/images/v-billiard.webp" width="720" height="1070" alt="Meja billiard merah di bawah lampu gantung." loading="lazy" decoding="async"></figure>
+              <div class="moment__copy">
+                <p class="moment__time">15.00</p>
+                <h3 class="moment__title display">Turnamen billiard keluarga.</h3>
+                <p>Yang kalah cuci piring. Itu aturan rombongan, bukan aturan kami.</p>
+              </div>
+            </li>
+            <li class="moment" data-time="18.30">
+              <figure class="moment__img arch"><img src="assets/images/v-evening-slide.webp" width="720" height="1070" alt="Teras kolam di senja hari dengan lampu gantung menyala dan perosotan anak." loading="lazy" decoding="async"></figure>
+              <div class="moment__copy">
+                <p class="moment__time">18.30</p>
+                <h3 class="moment__title display">Lampu menyala, arang membara.</h3>
+                <p>Area BBQ dan halaman siap untuk sate, jagung bakar, dan obrolan yang tidak selesai-selesai.</p>
+              </div>
+            </li>
+            <li class="moment" data-time="20.00">
+              <figure class="moment__img"><img src="assets/images/c3-karaoke-sm.webp" width="720" height="540" alt="Smart TV dan perangkat karaoke di ruang keluarga RJS Cottage 3." loading="lazy" decoding="async"></figure>
+              <div class="moment__copy">
+                <p class="moment__time">20.00</p>
+                <h3 class="moment__title display">Mic-nya dipegang siapa?</h3>
+                <p>Karaoke di ruang keluarga. Nyanyi sepuasnya sampai jam tenang pukul 22.00.</p>
+              </div>
+            </li>
+            <li class="moment" data-time="22.00">
+              <figure class="moment__img arch"><img src="assets/images/v-dusk-pool.webp" width="720" height="1070" alt="Kolam memantulkan langit senja dan pepohonan pinus." loading="lazy" decoding="async"></figure>
+              <div class="moment__copy">
+                <p class="moment__time">22.00</p>
+                <h3 class="moment__title display">Lalu, pelan-pelan sunyi.</h3>
+                <p>Udara dingin, cerita terakhir di teras, dan rencana untuk berenang lagi besok pagi.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Facilities + house notes ──────────────────────────── -->
+    <section class="facilities" id="fasilitas" aria-labelledby="fac-title">
+      <div class="wrap">
+        <header class="sec-head sec-head--split">
+          <div>
+            <p class="eyebrow" data-reveal>Fasilitas</p>
+            <h2 class="sec-title display" id="fac-title" data-reveal>Sudah <em>menunggu</em> di setiap cottage.</h2>
+          </div>
+          <p class="sec-lede" data-reveal>Tinggal bawa baju ganti, bahan BBQ, dan daftar lagu karaoke.</p>
+        </header>
+
+        <div class="fac" data-fac>
+          <div class="fac__col">
+            <h3 class="fac__head">Untuk kumpul &amp; main</h3>
+            <ul class="fac__list" role="list">
+              <li data-fac-img="assets/images/c3-pool-sm.webp">Kolam renang pribadi</li>
+              <li data-fac-img="assets/images/c1-billiard-sm.webp">Meja billiard</li>
+              <li data-fac-img="assets/images/c3-karaoke-sm.webp">Karaoke &amp; Smart TV</li>
+              <li data-fac-img="assets/images/c1-garden-sm.webp">Halaman &amp; chill space</li>
+              <li data-fac-img="assets/images/v-evening-slide.webp">Area BBQ</li>
+              <li data-fac-img="assets/images/c1-pool-terrace-sm.webp">Gazebo <small>Cottage 1</small></li>
+            </ul>
+          </div>
+          <div class="fac__col">
+            <h3 class="fac__head">Untuk istirahat &amp; praktis</h3>
+            <ul class="fac__list" role="list">
+              <li data-fac-img="assets/images/c2-bedroom-sm.webp">3 kamar tidur</li>
+              <li data-fac-img="assets/images/c1-living-sm.webp">4 kamar mandi, water heater</li>
+              <li data-fac-img="assets/images/c2-living-sm.webp">Ruang keluarga</li>
+              <li data-fac-img="assets/images/c3-kitchen-sm.webp">Kitchen set</li>
+              <li data-fac-img="assets/images/c2-lounge-sm.webp">WiFi</li>
+              <li data-fac-img="assets/images/c2-pool-house-sm.webp">Parkir hingga 5 mobil</li>
+            </ul>
+          </div>
+          <figure class="fac__float" aria-hidden="true" data-fac-float><img alt=""></figure>
+        </div>
+
+        <div class="rules">
+          <div class="rules__intro">
+            <h3 class="rules__title display">Sebelum booking, <em>biar sama-sama enak.</em></h3>
+            <p>Ringkasan kebijakan yang berlaku saat ini. Admin akan mengonfirmasi detailnya saat kamu bertanya.</p>
+          </div>
+          <ul class="rules__list" role="list">
+            <li><strong>Check-out pukul 12.00</strong><span>Lewat dari itu dikenakan biaya Rp500.000. Jam check-in dikonfirmasi admin.</span></li>
+            <li><strong>DP minimal 30%</strong><span>Pelunasan paling lambat H-3. DP tidak dapat dikembalikan. Reschedule maksimal H-7 dengan tambahan DP.</span></li>
+            <li><strong>Jam tenang pukul 22.00</strong><span>Supaya tetangga dan rombongan lain tetap nyaman.</span></li>
+            <li><strong>Lebih dari kapasitas</strong><span>Tambahan Rp50.000 per orang.</span></li>
+            <li><strong>Tanpa hewan peliharaan &amp; alkohol</strong><span>Kerusakan barang menjadi tanggung jawab penyewa.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Guest stories ─────────────────────────────────────── -->
+    <section class="stories" id="cerita-tamu" aria-labelledby="stories-title">
+      <div class="wrap">
+        <header class="sec-head sec-head--split">
+          <div>
+            <p class="eyebrow" data-reveal>Cerita tamu</p>
+            <h2 class="sec-title display" id="stories-title" data-reveal>Datang rombongan, <em>pulang bawa cerita.</em></h2>
+          </div>
+          <p class="sec-lede" data-reveal>
+            Diambil apa adanya dari highlight “REVIEW” di Instagram
+            <a href="https://www.instagram.com/rjscottage" target="_blank" rel="noopener">@rjscottage</a>.
+            Keluarga besar, kantor, komunitas, sekolah.
+          </p>
+        </header>
+      </div>
+
+      <div class="stories__rail" data-rail tabindex="0" aria-label="Story tamu, geser untuk melihat lainnya">
+        <ul class="stories__list" role="list">
+          <li class="story">
+            <button class="story__btn" type="button" data-lightbox="stories" data-src="assets/testimonials/story-1.webp" data-caption="Reuni keluarga di tepi kolam RJS Cottage 1">
+              <img src="assets/testimonials/story-1.webp" width="720" height="1273" alt="Instagram Story: keluarga besar berfoto di tepi kolam depan dinding bertuliskan RJS Cottage, dengan teks ucapan terima kasih dari RJS Cottage." loading="lazy" decoding="async">
+            </button>
+            <p class="story__cap">Keluarga besar, tiga generasi</p>
+          </li>
+          <li class="story">
+            <button class="story__btn" type="button" data-lightbox="stories" data-src="assets/testimonials/story-3.webp" data-caption="Malam keakraban di halaman">
+              <img src="assets/testimonials/story-3.webp" width="720" height="1288" alt="Instagram Story: kolase malam keakraban di halaman, api unggun, dan tamu duduk melingkar, ditandai @RJSCOTTAGE Puncak Cisarua." loading="lazy" decoding="async">
+            </button>
+            <p class="story__cap">Malam keakraban komunitas</p>
+          </li>
+          <li class="story">
+            <button class="story__btn" type="button" data-lightbox="stories" data-src="assets/testimonials/story-2.webp" data-caption="Rombongan keluarga di tepi kolam dengan perosotan">
+              <img src="assets/testimonials/story-2.webp" width="720" height="1283" alt="Instagram Story: rombongan keluarga berfoto di bawah kanopi tepi kolam dengan perosotan hijau." loading="lazy" decoding="async">
+            </button>
+            <p class="story__cap">Satu rombongan, satu frame</p>
+          </li>
+          <li class="story">
+            <button class="story__btn" type="button" data-lightbox="stories" data-src="assets/testimonials/story-8.webp" data-caption="Games di halaman">
+              <img src="assets/testimonials/story-8.webp" width="720" height="1321" alt="Instagram Story: sekelompok tamu bermain games di halaman rumput, dengan teks Moving Family." loading="lazy" decoding="async">
+            </button>
+            <p class="story__cap">Games di halaman</p>
+          </li>
+          <li class="story">
+            <button class="story__btn" type="button" data-lightbox="stories" data-src="assets/testimonials/story-4.webp" data-caption="Rombongan di bawah kanopi kolam">
+              <img src="assets/testimonials/story-4.webp" width="720" height="1299" alt="Instagram Story: rombongan berfoto di bawah kanopi, dengan stiker Arigato dan tag @rjscottage." loading="lazy" decoding="async">
+            </button>
+            <p class="story__cap">Rombongan kantor</p>
+          </li>
+          <li class="story">
+            <button class="story__btn" type="button" data-lightbox="stories" data-src="assets/testimonials/story-5.webp" data-caption="Rombongan besar di teras">
+              <img src="assets/testimonials/story-5.webp" width="720" height="1294" alt="Instagram Story: rombongan besar duduk berjajar di dinding teras, dengan tulisan tentang tertawa lepas di alam." loading="lazy" decoding="async">
+            </button>
+            <p class="story__cap">Tertawa lepas, rame-rame</p>
+          </li>
+        </ul>
+      </div>
+      <div class="wrap stories__hint" aria-hidden="true"><span>Geser</span><span class="stories__line"></span></div>
+    </section>
+
+    <!-- ─── Gallery ───────────────────────────────────────────── -->
+    <section class="gallery" id="galeri" aria-labelledby="gallery-title">
+      <div class="wrap">
+        <header class="sec-head sec-head--split">
+          <div>
+            <p class="eyebrow" data-reveal>Galeri</p>
+            <h2 class="sec-title display" id="gallery-title" data-reveal>Lihat lebih <em>dekat.</em></h2>
+          </div>
+          <div class="filters" role="group" aria-label="Saring galeri" data-filters>
+            <button type="button" aria-pressed="true" data-filter="all">Semua</button>
+            <button type="button" aria-pressed="false" data-filter="1">Cottage 1</button>
+            <button type="button" aria-pressed="false" data-filter="2">Cottage 2</button>
+            <button type="button" aria-pressed="false" data-filter="3">Cottage 3</button>
+          </div>
+        </header>
+
+        <ul class="grid" role="list" data-grid>
+          <li class="g g--tall" data-unit="1"><button type="button" data-lightbox="gallery" data-src="assets/images/c1-pool-sign-lg.webp" data-caption="Cottage 1 · kolam & dinding RJS"><img src="assets/images/c1-pool-sign-sm.webp" width="540" height="720" alt="Kolam RJS Cottage 1 di samping dinding bertuliskan RJS Cottage." loading="lazy" decoding="async"></button></li>
+          <li class="g g--video" data-unit="1"><button type="button" data-lightbox="gallery" data-video="assets/video/hero-reel.mp4" data-src="assets/video/hero-poster.webp" data-caption="Cuplikan video RJS Cottage"><video src="assets/video/hero-reel.mp4" muted loop playsinline preload="none" poster="assets/video/hero-poster.webp" aria-hidden="true" data-autoplay></video><span class="g__badge">Video</span><span class="sr-only">Putar cuplikan video RJS Cottage</span></button></li>
+          <li class="g g--wide" data-unit="2"><button type="button" data-lightbox="gallery" data-src="assets/images/c2-pool-house-lg.webp" data-caption="Cottage 2 · kolam & bangunan"><img src="assets/images/c2-pool-house-sm.webp" width="720" height="540" alt="Kolam renang RJS Cottage 2 di depan bangunan putih." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="2"><button type="button" data-lightbox="gallery" data-src="assets/images/c2-living-lg.webp" data-caption="Cottage 2 · ruang keluarga"><img src="assets/images/c2-living-sm.webp" width="720" height="540" alt="Ruang keluarga RJS Cottage 2 dengan lampu gantung kristal dan TV." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="1"><button type="button" data-lightbox="gallery" data-src="assets/images/c1-billiard-lg.webp" data-caption="Cottage 1 · saung billiard"><img src="assets/images/c1-billiard-sm.webp" width="720" height="540" alt="Meja billiard di saung bambu RJS Cottage 1." loading="lazy" decoding="async"></button></li>
+          <li class="g g--tall" data-unit="1"><button type="button" data-lightbox="gallery" data-src="assets/images/c1-garden-lg.webp" data-caption="Cottage 1 · halaman"><img src="assets/images/c1-garden-sm.webp" width="540" height="720" alt="Kursi kayu di halaman rumput RJS Cottage 1 di bawah pepohonan tinggi." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="3"><button type="button" data-lightbox="gallery" data-src="assets/images/c3-pool-steps-lg.webp" data-caption="Cottage 3 · kolam bertangga batu"><img src="assets/images/c3-pool-steps-sm.webp" width="720" height="540" alt="Tangga batu menuju kolam RJS Cottage 3." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="3"><button type="button" data-lightbox="gallery" data-src="assets/images/c3-billiard-view-lg.webp" data-caption="Cottage 3 · teras billiard"><img src="assets/images/c3-billiard-view-sm.webp" width="720" height="540" alt="Teras billiard RJS Cottage 3 yang terbuka ke pepohonan." loading="lazy" decoding="async"></button></li>
+          <li class="g g--wide" data-unit="2"><button type="button" data-lightbox="gallery" data-src="assets/images/c2-lounge-lg.webp" data-caption="Cottage 2 · sofa & jendela kaca"><img src="assets/images/c2-lounge-sm.webp" width="720" height="540" alt="Sofa kulit menghadap jendela kaca tinggi di RJS Cottage 2." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="3"><button type="button" data-lightbox="gallery" data-src="assets/images/c3-bedroom-lg.webp" data-caption="Cottage 3 · kamar tidur"><img src="assets/images/c3-bedroom-sm.webp" width="720" height="540" alt="Kamar tidur RJS Cottage 3 dengan jendela besar dan tamu duduk di tepi kasur." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="1"><button type="button" data-lightbox="gallery" data-src="assets/images/c1-bedroom-lg.webp" data-caption="Cottage 1 · kamar tidur"><img src="assets/images/c1-bedroom-sm.webp" width="720" height="540" alt="Kamar tidur RJS Cottage 1 dengan lampu plafon hangat." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="2"><button type="button" data-lightbox="gallery" data-src="assets/images/c2-billiard-terrace-lg.webp" data-caption="Cottage 2 · teras beratap"><img src="assets/images/c2-billiard-terrace-sm.webp" width="720" height="540" alt="Teras beratap RJS Cottage 2 dengan meja billiard dan bangku batu." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="3"><button type="button" data-lightbox="gallery" data-src="assets/images/c3-hut-lg.webp" data-caption="Area Cottage 3 · saung di antara pepohonan"><img src="assets/images/c3-hut-sm.webp" width="720" height="540" alt="Saung beratap ijuk di antara pepohonan hijau." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="1"><button type="button" data-lightbox="gallery" data-src="assets/images/c1-living-lg.webp" data-caption="Cottage 1 · ruang keluarga"><img src="assets/images/c1-living-sm.webp" width="720" height="540" alt="Ruang keluarga RJS Cottage 1 dengan karpet motif dan sofa." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="2"><button type="button" data-lightbox="gallery" data-src="assets/images/c2-bedroom-lg.webp" data-caption="Cottage 2 · kamar tidur"><img src="assets/images/c2-bedroom-sm.webp" width="720" height="540" alt="Kamar tidur RJS Cottage 2 dengan kasur besar dan lampu plafon." loading="lazy" decoding="async"></button></li>
+          <li class="g" data-unit="3"><button type="button" data-lightbox="gallery" data-src="assets/images/c3-kitchen-lg.webp" data-caption="Cottage 3 · dapur"><img src="assets/images/c3-kitchen-sm.webp" width="720" height="540" alt="Dapur RJS Cottage 3 dengan meja panjang dan kompor." loading="lazy" decoding="async"></button></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ─── Location ──────────────────────────────────────────── -->
+    <section class="location" id="lokasi" aria-labelledby="loc-title">
+      <div class="wrap loc">
+        <div class="loc__copy">
+          <p class="eyebrow" data-reveal>Lokasi</p>
+          <h2 class="sec-title display" id="loc-title" data-reveal>Dekat dari Jakarta, <em>jauh dari rutinitas.</em></h2>
+          <p class="loc__addr" data-reveal>Cisarua, Puncak<br>Kabupaten Bogor, Jawa Barat</p>
+          <ul class="loc__notes" role="list">
+            <li data-reveal><strong>±90 menit</strong> dari Jakarta lewat tol Jagorawi, keluar di Ciawi. Akhir pekan bisa lebih lama.</li>
+            <li data-reveal><strong>±800 mdpl.</strong> Siang sejuk, malam dingin. Bawa jaket.</li>
+            <li data-reveal><strong>Cek jadwal one way Puncak</strong> sebelum berangkat di akhir pekan atau libur panjang.</li>
+          </ul>
+          <div class="loc__actions" data-reveal>
+            <a class="btn btn--dark" href="https://share.google/7Mlnp7XQzOKyLsDFa" target="_blank" rel="noopener">
+              <svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg><span>Buka di Google Maps</span>
+            </a>
+            <a class="btn btn--ghost" href="#booking" data-wa="Halo RJS Cottage, boleh minta share lokasi dan rute ke cottage?">
+              <span>Minta rute ke admin</span>
+            </a>
+          </div>
+        </div>
+
+        <figure class="route" aria-label="Rute dari Jakarta ke RJS Cottage: Jakarta, tol Jagorawi, Ciawi, Jalan Raya Puncak, Cisarua.">
+          <svg class="route__svg" viewBox="0 0 400 520" aria-hidden="true" data-route>
+            <path class="route__hill" d="M0 150 C 60 110, 110 70, 170 92 S 280 40, 340 60 S 400 80, 400 80 V0 H0Z"/>
+            <path class="route__path" d="M60 470 C 70 420, 150 420, 160 370 S 90 300, 140 250 S 280 230, 270 175 S 200 125, 236 98" data-route-path/>
+          </svg>
+          <ol class="route__stops" role="list">
+            <li style="--x: 15%; --y: 90%">Jakarta</li>
+            <li style="--x: 40%; --y: 71%">Tol Jagorawi</li>
+            <li style="--x: 35%; --y: 48%">Exit Ciawi</li>
+            <li style="--x: 67.5%; --y: 33.6%">Jl. Raya Puncak</li>
+            <li class="is-end" style="--x: 59%; --y: 18.8%">RJS Cottage<small>Cisarua</small></li>
+          </ol>
+          <figcaption>Ilustrasi rute, bukan skala peta.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ─── Booking ───────────────────────────────────────────── -->
+    <section class="booking" id="booking" aria-labelledby="booking-title">
+      <div class="wrap book">
+        <div class="book__intro">
+          <p class="eyebrow eyebrow--light">Reservasi</p>
+          <h2 class="sec-title display" id="booking-title">Tanya tanggal dulu, <em>santai saja.</em></h2>
+          <p class="book__lede">Isi seperlunya, lalu pesanmu langsung terbuka di WhatsApp admin. Tidak ada pembayaran di sini.</p>
+          <ol class="steps" role="list">
+            <li><span>1</span>Chat admin. Sebutkan tanggal, jumlah tamu, dan cottage.</li>
+            <li><span>2</span>Admin cek ketersediaan dan kirim formulir booking.</li>
+            <li><span>3</span>Bayar DP minimal 30% untuk mengunci tanggal.</li>
+            <li><span>4</span>Pelunasan H-3, lalu tinggal berangkat.</li>
+          </ol>
+        </div>
+
+        <form class="enquiry" data-enquiry novalidate>
+          <fieldset class="enquiry__group">
+            <legend>Cottage</legend>
+            <div class="seg" role="radiogroup">
+              <label><input type="radio" name="unit" value="1" checked><span>Cottage 1<small>≤20 tamu</small></span></label>
+              <label><input type="radio" name="unit" value="2"><span>Cottage 2<small>≤25 tamu</small></span></label>
+              <label><input type="radio" name="unit" value="3"><span>Cottage 3<small>≤25 tamu</small></span></label>
+              <label><input type="radio" name="unit" value="0"><span>Bantu pilihkan<small>belum yakin</small></span></label>
+            </div>
+          </fieldset>
+
+          <div class="enquiry__row">
+            <label class="field">
+              <span class="field__label">Check-in</span>
+              <input type="date" name="checkin" required data-checkin>
+            </label>
+            <div class="field">
+              <span class="field__label" id="nights-label">Malam</span>
+              <div class="stepper" role="group" aria-labelledby="nights-label">
+                <button type="button" aria-label="Kurangi malam" data-step="nights" data-dir="-1">−</button>
+                <output name="nights" aria-live="polite">1</output>
+                <button type="button" aria-label="Tambah malam" data-step="nights" data-dir="1">+</button>
+              </div>
+            </div>
+            <div class="field">
+              <span class="field__label" id="guests-label">Tamu</span>
+              <div class="stepper" role="group" aria-labelledby="guests-label">
+                <button type="button" aria-label="Kurangi tamu" data-step="guests" data-dir="-1">−</button>
+                <output name="guests" aria-live="polite">15</output>
+                <button type="button" aria-label="Tambah tamu" data-step="guests" data-dir="1">+</button>
+              </div>
+            </div>
+          </div>
+
+          <label class="field">
+            <span class="field__label">Nama panggilan <small>(opsional)</small></span>
+            <input type="text" name="name" autocomplete="given-name" placeholder="Biar admin bisa menyapa">
+          </label>
+
+          <div class="estimate" aria-live="polite" data-estimate>
+            <p class="estimate__label">Perkiraan tarif</p>
+            <p class="estimate__total display" data-estimate-total>—</p>
+            <p class="estimate__detail" data-estimate-detail>Pilih tanggal check-in untuk melihat perkiraan.</p>
+          </div>
+
+          <button class="btn btn--light btn--block btn--lg" type="submit">
+            <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span>Kirim ke WhatsApp admin</span>
+          </button>
+          <p class="enquiry__fine">Perkiraan dihitung dari tarif yang tertera dan belum final. Ketersediaan, tarif libur panjang, dan biaya tambahan dikonfirmasi admin.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ─── FAQ ───────────────────────────────────────────────── -->
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+      <div class="wrap faq__grid">
+        <header>
+          <p class="eyebrow" data-reveal>FAQ</p>
+          <h2 class="sec-title display" id="faq-title" data-reveal>Yang sering <em>ditanyakan.</em></h2>
+          <p class="sec-lede" data-reveal>Belum terjawab? <a href="#booking" data-wa="Halo RJS Cottage, saya mau tanya-tanya dulu.">Tanya admin langsung</a>.</p>
+        </header>
+        <div class="faq__list">
+          <details>
+            <summary>Jam berapa check-in dan check-out?</summary>
+            <p>Check-out pukul 12.00. Lewat dari itu ada biaya Rp500.000. Jam check-in disepakati bersama admin saat booking.</p>
+          </details>
+          <details>
+            <summary>Rombongan kami lebih dari kapasitas. Bisa?</summary>
+            <p>Kapasitas Cottage 1 adalah 20 tamu, Cottage 2 dan 3 masing-masing 25 tamu. Tamu tambahan dikenakan Rp50.000 per orang. Diskusikan jumlah pastinya dengan admin.</p>
+          </details>
+          <details>
+            <summary>Satu cottage disewa utuh atau per kamar?</summary>
+            <p>Utuh. Satu rombongan menempati satu cottage, lengkap dengan kolam, halaman, dan ruang kumpulnya sendiri.</p>
+          </details>
+          <details>
+            <summary>Apakah DP bisa dikembalikan?</summary>
+            <p>Tidak. DP minimal 30% tidak dapat dikembalikan dalam kondisi apa pun. Reschedule bisa dilakukan paling lambat H-7 dengan tambahan DP, dan pelunasan paling lambat H-3.</p>
+          </details>
+          <details>
+            <summary>Cocok untuk orang tua atau lansia?</summary>
+            <p>Akses ke Cottage 2 dan 3 menanjak/menurun, jadi kurang ideal untuk lansia. Ceritakan kebutuhan rombonganmu ke admin supaya dibantu memilih.</p>
+          </details>
+          <details>
+            <summary>Boleh bawa hewan peliharaan atau alkohol?</summary>
+            <p>Tidak keduanya. Jam tenang berlaku mulai pukul 22.00.</p>
+          </details>
+          <details>
+            <summary>Bisa untuk gathering kantor atau komunitas?</summary>
+            <p>Bisa. Banyak tamu kami datang sebagai rombongan kantor, komunitas, dan sekolah. Pilih cottage sesuai jumlah peserta, lalu tanyakan kebutuhan acaranya ke admin.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─── Footer ──────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__cta">
+        <p class="footer__big display">Sampai jumpa <em>di Puncak.</em></p>
+        <a class="btn btn--light btn--lg" href="#booking" data-wa="Halo RJS Cottage, saya mau cek tanggal kosong.">
+          <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span>Cek tanggal via WhatsApp</span>
+        </a>
+      </div>
+      <div class="footer__cols">
+        <div>
+          <p class="footer__label">Alamat</p>
+          <p>RJS Cottage<br>Cisarua, Puncak<br>Kabupaten Bogor, Jawa Barat</p>
+          <a class="footer__link" href="https://share.google/7Mlnp7XQzOKyLsDFa" target="_blank" rel="noopener">Google Maps ↗</a>
+        </div>
+        <div>
+          <p class="footer__label">Ikuti</p>
+          <ul role="list">
+            <li><a class="footer__link" href="https://www.instagram.com/rjscottage" target="_blank" rel="noopener">Instagram ↗</a></li>
+            <li><a class="footer__link" href="https://www.tiktok.com/@rjscottageofficial" target="_blank" rel="noopener">TikTok ↗</a></li>
+            <li><a class="footer__link" href="https://www.facebook.com/profile.php?id=61582023847281" target="_blank" rel="noopener">Facebook ↗</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__label">Jelajahi</p>
+          <ul role="list">
+            <li><a class="footer__link" href="#cottage">Pilih cottage</a></li>
+            <li><a class="footer__link" href="#galeri">Galeri</a></li>
+            <li><a class="footer__link" href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer__mark display" aria-hidden="true">RJS Cottage</p>
+      <div class="footer__base">
+        <p>© 2026 RJS Cottage. Tarif dan kebijakan dapat berubah sewaktu-waktu.</p>
+        <a href="#top">Kembali ke atas ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── Mobile sticky booking bar ───────────────────────────── -->
+  <div class="dock" data-dock aria-hidden="true">
+    <p class="dock__price"><small>Mulai</small><strong>Rp1,8 jt</strong><small>/malam</small></p>
+    <a class="btn btn--dark" href="#booking" tabindex="-1" data-wa="Halo RJS Cottage, saya mau cek tanggal kosong.">
+      <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span>Cek tanggal</span>
+    </a>
+  </div>
+
+  <!-- ─── Lightbox ────────────────────────────────────────────── -->
+  <dialog class="lightbox" data-lb aria-label="Pratinjau foto">
+    <div class="lightbox__stage" data-lb-stage></div>
+    <p class="lightbox__cap" data-lb-cap></p>
+    <button class="lightbox__close" type="button" data-lb-close><span class="sr-only">Tutup</span><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+    <button class="lightbox__nav lightbox__nav--prev" type="button" data-lb-prev><span class="sr-only">Sebelumnya</span><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    <button class="lightbox__nav lightbox__nav--next" type="button" data-lb-next><span class="sr-only">Berikutnya</span><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  </dialog>
+
+  <!-- ─── Icon sprite ─────────────────────────────────────────── -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5.1 5.24-1.37A9.9 9.9 0 1 0 12.04 2Zm0 18.1c-1.5 0-2.97-.4-4.25-1.16l-.3-.18-3.1.82.83-3.03-.2-.31a8.2 8.2 0 1 1 7.02 3.86Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.17.25-.64.8-.78.96-.14.17-.29.19-.53.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.72-1.33.08-.16.04-.3-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04 4.76 4.76 0 0 0 1 2.53c.12.16 1.7 2.6 4.13 3.65 1.53.66 2.13.72 2.9.6.47-.07 1.46-.6 1.66-1.17.2-.58.2-1.07.15-1.17-.06-.1-.22-.17-.47-.29Z"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0-6-6m6 6 6-6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 11v5m0-8.5v.5"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></symbol>
+  </svg>
+</body>
+</html>
