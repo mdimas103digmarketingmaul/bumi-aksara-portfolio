@@ -4,8 +4,10 @@
  * - label lokasi di atas judul dapat diklik (Google Maps, tab baru);
  * - baris harga mulai (data resmi Flyer) di bawah tombol, agar harga terlihat tanpa scroll;
  * - motion: judul masuk per baris, piring nasi kuning berputar sangat pelan (lihat site.css).
+ * - arch: galeri foto; garis emas menjadi penanda waktu bercahaya (lihat HeroGallery.astro).
  */
 import Icon from './Icon.astro';
+import HeroGallery from './HeroGallery.astro';
 import BatikMegaMendung from './BatikMegaMendung.astro';
 import { MAPS_URL, asset, img, productImg, products, rupiah, waLink } from './data';
 
@@ -63,10 +65,7 @@ const sealGlyphs = sealItems.map((item) => {
 
     <div class="o1-hero__visual">
       <BatikMegaMendung class="o1-hero__batik" />
-      <div class="o1-hero__arch-outline" aria-hidden="true"></div>
-      <figure class="o1-hero__arch">
-        <img src={img('nasi-box-styled.webp')} alt="Nasi box Hanasari berisi ayam, sayuran, sambal, dan buah dalam kemasan khas Hanasari" width="778" height="1066" fetchpriority="high" />
-      </figure>
+      <HeroGallery />
       <div class="o1-hero__plate" aria-hidden="true">
         <img src={img('nasi-kuning.webp')} alt="" width="926" height="903" />
       </div>

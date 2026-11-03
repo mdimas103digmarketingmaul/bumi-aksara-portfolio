@@ -1,0 +1,66 @@
+---
+/*
+ * Galeri foto di dalam arch hero.
+ * - Garis emas (arch-outline) menjadi penanda waktu: cahaya berjalan dari balik medalion HS,
+ *   turun di sisi kiri, menyelinap di bawah piring, lalu sampai ke pojok kanan bawah.
+ *   Saat garis penuh (3,5 detik), foto berganti dengan reveal lembut dari arah medalion.
+ * - Tanpa caption/kontrol visual; interaksi: klik/tap = foto berikutnya, geser = maju/mundur,
+ *   hover = jeda, keyboard (fokus pada foto): panah kiri/kanan, Spasi = jeda/lanjut.
+ * - Hanya foto pertama yang dimuat saat halaman dibuka; foto berikutnya dimuat satu langkah di depan.
+ * - Framing per foto: `pos` (object-position), `scale` + `origin` untuk memotong latar yang kosong.
+ */
+import { img } from './data';
+
+type Slide = { src: string; alt: string; w: number; h: number; pos?: string; scale?: number; origin?: string };
+const hero = (file: string) => `/assets/hero/${file}.webp`;
+const slides: Slide[] = [
+  { src: img('nasi-box-styled.webp'), w: 778, h: 1066, pos: '50% 60%', scale: 1.04, alt: 'Nasi box Hanasari berisi ayam, sayuran, sambal, dan buah dalam kemasan khas Hanasari' },
+  { src: hero('mini-tumpeng'), w: 1000, h: 1333, scale: 1.04, alt: 'Tumpeng nasi kuning dilihat dari atas dengan ayam, perkedel, tempe, kentang, dan bihun' },
+  { src: hero('hantaran'), w: 1000, h: 1778, pos: '50% 62%', alt: 'Hantaran Hanasari dengan ayam bakar, rendang, bihun, nasi, dan besek berpita' },
+  { src: hero('nasi-box'), w: 1000, h: 1333, alt: 'Deretan nasi box berisi nasi, cumi, sayuran, dan tempe' },
+  { src: hero('tumpeng-acara'), w: 960, h: 1280, pos: '50% 62%', alt: 'Tumpeng Hanasari untuk perayaan ulang tahun KORPRI' },
+  { src: hero('rice-bowl'), w: 720, h: 1280, alt: 'Rice bowl ayam dengan taburan wijen dan selada' },
+  { src: hero('pecel'), w: 1000, h: 1333, pos: '50% 100%', scale: 1.16, origin: '50% 100%', alt: 'Tampah pecel dengan lontong, sayuran, tahu, tempe, dan bumbu kacang' },
+  { src: hero('liwet'), w: 1000, h: 750, pos: '42% 50%', scale: 1.22, origin: '42% 55%', alt: 'Sajian nasi liwet, ikan, ayam, sayuran, sambal, dan kerupuk dalam besek' },
+  { src: hero('tumpeng-birthday'), w: 1000, h: 1333, pos: '50% 62%', alt: 'Mini tumpeng ulang tahun dengan dekorasi dan lauk pendamping' },
+  { src: hero('sambal'), w: 1000, h: 1333, pos: '50% 82%', scale: 1.12, origin: '50% 90%', alt: 'Enam botol sambal Hanasari dengan berbagai varian' }
+];
+---
+<div class="o1-hero__arch-outline" aria-hidden="true">
+  <svg class="o1-hero__trace" data-hero-trace focusable="false">
+    <path class="o1-hero__trace-flash" data-trace-flash />
+    <path class="o1-hero__trace-line" data-trace-line />
+    <circle class="o1-hero__trace-head" data-trace-head r="3.5" cx="-20" cy="-20" />
+  </svg>
+</div>
+<div
+  class="o1-hero__arch"
+  data-hero-gallery
+  role="region"
+  aria-roledescription="galeri"
+  aria-label="Foto sajian Hanasari. Panah kiri dan kanan untuk berganti foto, Spasi untuk menjeda."
+  tabindex="0"
+>
+  {slides.map((s, i) => (
+    <img
+      class:list={['o1-hero__slide', { 'is-active': i === 0 }]}
+      data-hero-slide
+      src={i === 0 ? s.src : undefined}
+      data-src={i === 0 ? undefined : s.src}
+      alt={s.alt}
+      width={s.w}
+      height={s.h}
+      aria-hidden={i === 0 ? undefined : 'true'}
+      fetchpriority={i === 0 ? 'high' : undefined}
+      decoding="async"
+      draggable="false"
+      style={`object-position: ${s.pos ?? '50% 50%'}; --s: ${s.scale ?? 1}; --o: ${s.origin ?? '50% 50%'}`}
+    />
+  ))}
+  <span class="o1-visually-hidden" data-hero-status aria-live="polite"></span>
+</div>
+
+<script>
+  import { initHeroGallery } from './hero-gallery';
+  initHeroGallery();
+</script>
