@@ -120,6 +120,11 @@ export interface DisasterEvent {
    * are simulated for the prototype. Shown as a "Simulasi" label in the UI.
    */
   simulated?: boolean;
+  /** Fully fictional showcase; unlike a simulated response on a sourced real event. */
+  demoOnly?: boolean;
+  timeline?: { date: string; title: string; description?: string; demo?: boolean }[];
+  documentation?: { url: string; caption: string; credit: string }[];
+  accountability?: { demo?: boolean; activities: string[]; assistance: string[]; note?: string };
 }
 
-export type StatusFilter = 'all' | MapStatus;
+export type StatusFilter = 'all' | IncidentStatus;

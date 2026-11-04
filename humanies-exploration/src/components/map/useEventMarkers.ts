@@ -1,38 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as maplibregl from 'maplibre-gl';
-import type { DisasterEvent } from '../../types/disaster';
+import type { PositionedEvent } from '../../types/bmkg';
 
-/**
- * Creates one MapLibre marker per event and returns the DOM element MapLibre
- * positions for each. React content is portalled into those elements, so the
- * marker visuals stay declarative while MapLibre handles projection.
- */
-export function useEventMarkers(map: maplibregl.Map | null, events: DisasterEvent[]) {
+/** Reconcile by ID: background updates keep the existing DOM markers and focus. */
+export function useEventMarkers(map: maplibregl.Map | null, events: PositionedEvent[]) {
+  const markers = useRef(new Map<string, maplibregl.Marker>());
   const [containers, setContainers] = useState<Map<string, HTMLElement>>(() => new Map());
-
+  useEffect(() => () => {
+    markers.current.forEach(marker => marker.remove());
+    markers.current.clear();
+  }, [map]);
   useEffect(() => {
     if (!map) return;
-
-    const markers: maplibregl.Marker[] = [];
-    const next = new Map<string, HTMLElement>();
-
+    let changed = false;
+    const ids = new Set(events.map(event => event.id));
+    markers.current.forEach((marker, id) => {
+      if (!ids.has(id)) { marker.remove(); markers.current.delete(id); changed = true; }
+    });
     for (const event of events) {
-      const element = document.createElement('div');
-      element.className = 'marker-anchor';
-      const marker = new maplibregl.Marker({ element, anchor: 'center' })
-        .setLngLat([event.longitude, event.latitude])
-        .addTo(map);
-      markers.push(marker);
-      next.set(event.id, element);
+      const existing = markers.current.get(event.id);
+      if (existing) {
+        const position = existing.getLngLat();
+        if (position.lng !== event.longitude || position.lat !== event.latitude) existing.setLngLat([event.longitude, event.latitude]);
+      } else {
+        const element = document.createElement('div');
+        element.className = 'marker-anchor';
+        markers.current.set(event.id, new maplibregl.Marker({ element, anchor: 'center' }).setLngLat([event.longitude, event.latitude]).addTo(map));
+        changed = true;
+      }
     }
-
-    setContainers(next);
-
-    return () => {
-      markers.forEach((marker) => marker.remove());
-      setContainers(new Map());
-    };
+    if (changed) setContainers(new Map([...markers.current].map(([id, marker]) => [id, marker.getElement()])));
   }, [map, events]);
-
   return containers;
 }

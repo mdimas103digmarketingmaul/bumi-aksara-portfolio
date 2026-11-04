@@ -8,7 +8,11 @@
     "build": "tsc -b && vite build",
     "build:deploy": "tsc -b && vite build --outDir deploy --emptyOutDir",
     "typecheck": "tsc -b",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:showcase": "tsc -b && vite build --mode showcase",
+    "prepare:pages": "npm run build:deploy && node scripts/prepare-pages-preview.mjs",
+    "preview:pages": "npx --yes wrangler@4.152.0 pages dev . --cwd .pages-preview --ip 127.0.0.1 --port 8788 --compatibility-date 2026-09-26",
+    "test": "node --test tests/bmkg.test.mjs tests/weather-proxy.test.mjs tests/petabencana.test.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",

@@ -50,7 +50,7 @@ export function Hero({ counts, updatedLabel }: HeroProps) {
           </ul>
           <p className="hero__meta">
             <span className="hero__badge">Real events · Active Response simulated</span>
-            <span>Updated {updatedLabel}</span>
+            <span>Last manual update: {updatedLabel}</span>
           </p>
         </div>
       </div>

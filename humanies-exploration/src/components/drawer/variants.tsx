@@ -1,7 +1,8 @@
+import { ResponseJourney } from '../ResponseJourney';
 import { ArrowRight, ArrowUpRight, Eye } from 'lucide-react';
 import type { DisasterEvent } from '../../types/disaster';
 import { MONITORING_LABEL, SEVERITY_LABEL, STATUS_META } from '../../lib/status';
-import { getDonateAction, getReportAction } from '../../lib/actions';
+import { getDonateAction, getReportAction, safeExternalUrl } from '../../lib/actions';
 import { formatCount } from '../../lib/format';
 import {
   CampaignNote,
@@ -11,7 +12,6 @@ import {
   ImpactStats,
   ProgressBar,
   ResponseBlock,
-  SimulationNotice,
   SourceNote,
 } from './parts';
 
@@ -36,17 +36,13 @@ function prototypeLink(onAction: PrototypeAction, message: string) {
  * Once a campaign has closed there is nothing to donate to: point to the
  * published report if there is one, otherwise to the (future) response page.
  */
-function ClosedCampaignAction({ event, onAction }: { event: DisasterEvent; onAction: PrototypeAction }) {
+function ClosedCampaignAction({ event }: { event: DisasterEvent; onAction: PrototypeAction }) {
   const report = getReportAction(event);
-  if (report) return <ExternalActionLink action={report} variant="secondary" />;
+  if (report) return <ExternalActionLink action={{ ...report, label: event.incidentStatus === 'resolved' ? 'View Impact Report' : 'View Response Report' }} variant="secondary" />;
   return (
-    <a
-      href="#"
-      className="btn btn--secondary btn--block"
-      onClick={prototypeLink(onAction, 'Prototype — response pages are not built yet.')}
-    >
+    <button type="button" className="btn btn--secondary btn--block" onClick={() => document.getElementById(`${event.id}-journey`)?.scrollIntoView({ block: 'start', behavior: 'smooth' })}>
       View Response <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-    </a>
+    </button>
   );
 }
 
@@ -70,14 +66,15 @@ export function ActiveResponseDetail({ event, top, onAction }: VariantProps) {
               className={donate ? 'btn btn--text' : 'btn btn--secondary btn--block'}
               onClick={prototypeLink(onAction, 'Prototype — the full situation page is not built yet.')}
             >
-              View Details <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+              View Details (Prototype) <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
             </a>
           )}
         </div>
       }
     >
-      <SimulationNotice event={event} />
       <DetailHeading event={event} />
+      <ResponseJourney event={event} />
+      <p className="detail-copy">{event.description}</p>
       <ImpactStats event={event} />
       <ResponseBlock event={event} />
       <CampaignNote event={event} />
@@ -95,16 +92,19 @@ export function AlertDetail({ event, top, onAction }: VariantProps) {
       footer={
         <div className="detail-actions">
           <a
-            href="#"
+            href={safeExternalUrl(event.sourceUrl) ?? '#'}
             className="btn btn--secondary btn--block"
-            onClick={prototypeLink(onAction, 'Prototype — situation updates page is not built yet.')}
+            target={safeExternalUrl(event.sourceUrl) ? '_blank' : undefined}
+            rel="noopener noreferrer"
+            onClick={safeExternalUrl(event.sourceUrl) ? undefined : prototypeLink(onAction, 'Prototype — situation updates page is not built yet.')}
           >
-            View Situation <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
+            {safeExternalUrl(event.sourceUrl) ? 'Lihat Sumber Resmi' : 'View Situation (Prototype)'} <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
           </a>
         </div>
       }
     >
       <DetailHeading event={event} />
+      <ResponseJourney event={event} />
       <dl className="facts">
         <div>
           <dt>Status</dt>
@@ -162,7 +162,7 @@ export function RecoveryDetail({ event, top, onAction }: VariantProps) {
       className={donate || isClosed ? 'btn btn--text' : 'btn btn--secondary btn--block'}
       onClick={prototypeLink(onAction, 'Prototype — program pages are not built yet.')}
     >
-      Explore the program <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+      Explore the program (Prototype) <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
     </a>
   );
 
@@ -178,6 +178,7 @@ export function RecoveryDetail({ event, top, onAction }: VariantProps) {
       }
     >
       <DetailHeading event={event} />
+      <ResponseJourney event={event} />
       <section className="recovery" aria-labelledby={`${event.id}-recovery`}>
         <h3 id={`${event.id}-recovery`} className="section-label">
           {progress != null ? 'Recovery progress' : 'Recovery'}
@@ -222,12 +223,13 @@ export function ResolvedDetail({ event, top }: VariantProps) {
       footer={
         report && (
           <div className="detail-actions">
-            <ExternalActionLink action={report} variant="secondary" />
+            <ExternalActionLink action={{ ...report, label: event.incidentStatus === 'resolved' ? 'View Impact Report' : 'View Response Report' }} variant="secondary" />
           </div>
         )
       }
     >
       <DetailHeading event={event} />
+      <ResponseJourney event={event} />
       <p className="detail-copy">{event.description}</p>
       <ResponseBlock event={event} title="How Humanies helped" />
       <SourceNote event={event} />

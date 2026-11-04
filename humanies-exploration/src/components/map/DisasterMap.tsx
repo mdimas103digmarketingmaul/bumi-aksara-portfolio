@@ -1,14 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ReportIcon } from '../PetaBencanaInformation';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
-import type { DisasterEvent } from '../../types/disaster';
+import { isBMKG, isWeather, isHumanies, isPetaBencana, type PositionedEvent } from '../../types/bmkg';
+import { Activity, CloudLightning } from 'lucide-react';
 import { INDONESIA_BOUNDS, MAX_BOUNDS, mapStyle } from './mapStyle';
 import { useEventMarkers } from './useEventMarkers';
 import { EventMarker } from './EventMarker';
 import { MapControls } from './MapControls';
 import './map.css';
+import { useWeatherOverlay } from './useWeatherOverlay';
 
 // Vite pre-bundles maplibre-gl, which breaks its default worker lookup
 // (resolved next to the module). Point it at the self-contained worker file.
@@ -22,12 +25,14 @@ export interface MapInsets {
   left: number;
 }
 
-interface DisasterMapProps {
-  events: DisasterEvent[];
+export interface DisasterMapProps {
+  events: PositionedEvent[];
   visibleIds: Set<string>;
   selectedId: string | null;
   hoveredId: string | null;
   insets: MapInsets;
+  overviewInsets: MapInsets;
+  onReset: () => void;
   reducedMotion: boolean;
   isMobile: boolean;
   onSelect: (id: string) => void;
@@ -41,18 +46,14 @@ const GESTURE_HINTS = {
   'CooperativeGesturesHandler.MobileHelpText': 'Use two fingers to move the map',
 };
 
-function boundsOf(events: DisasterEvent[]) {
-  const bounds = new maplibregl.LngLatBounds();
-  events.forEach((e) => bounds.extend([e.longitude, e.latitude]));
-  return bounds;
-}
-
-export function DisasterMap({
+export const DisasterMap = memo(function DisasterMap({
   events,
   visibleIds,
   selectedId,
   hoveredId,
   insets,
+  overviewInsets,
+  onReset,
   reducedMotion,
   isMobile,
   onSelect,
@@ -65,6 +66,12 @@ export function DisasterMap({
   // Latest values for use inside map callbacks without re-running effects.
   const insetsRef = useRef(insets);
   insetsRef.current = insets;
+  const overviewRef = useRef(overviewInsets);
+  overviewRef.current = overviewInsets;
+  const eventsRef = useRef(events);
+  eventsRef.current = events;
+  const motionRef = useRef(reducedMotion);
+  motionRef.current = reducedMotion;
 
   /* ── Initialise once ─────────────────────────────────────────── */
   useEffect(() => {
@@ -75,7 +82,7 @@ export function DisasterMap({
       container,
       style: mapStyle,
       bounds: INDONESIA_BOUNDS,
-      fitBoundsOptions: { padding: insetsRef.current },
+      fitBoundsOptions: { padding: overviewRef.current },
       maxBounds: MAX_BOUNDS,
       minZoom: 2,
       maxZoom: 11,
@@ -112,70 +119,57 @@ export function DisasterMap({
   }, []);
 
   const containers = useEventMarkers(map, events);
+  useWeatherOverlay(map, events, visibleIds);
 
   /* ── Camera: fly to the selected event ───────────────────────── */
   useEffect(() => {
     if (!map || !selectedId) return;
-    const event = events.find((e) => e.id === selectedId);
+    const event = eventsRef.current.find((e) => e.id === selectedId);
     if (!event) return;
+    if (isWeather(event) && event.polygons.length) {
+      const bounds = new maplibregl.LngLatBounds();
+      event.polygons.flat().forEach(p => bounds.extend(p));
+      map.fitBounds(bounds, { padding: insetsRef.current, maxZoom: 5.8, duration: motionRef.current ? 0 : 1000 });
+      return;
+    }
     // `offset` (not `padding`) so nothing persists on the map transform and
     // later fitBounds calls are not double-padded.
     const { top, right, bottom, left } = insetsRef.current;
     map.flyTo({
       center: [event.longitude, event.latitude],
-      zoom: Math.max(map.getZoom(), 6.2),
+      zoom: 5.8,
       offset: [(left - right) / 2, (top - bottom) / 2],
-      duration: reducedMotion ? 0 : 1300,
+      duration: motionRef.current ? 0 : 1000,
       curve: 1.25,
       essential: true,
     });
-  }, [map, selectedId, events, reducedMotion]);
+  }, [map, selectedId]);
 
-  /* ── Camera: frame the filtered set ──────────────────────────── */
-  const isFirstFilter = useRef(true);
-  useEffect(() => {
-    if (!map) return;
-    if (isFirstFilter.current) {
-      isFirstFilter.current = false;
-      return;
-    }
-    if (selectedId) return;
-    const visible = events.filter((e) => visibleIds.has(e.id));
-    if (visible.length === 0) return;
-    const showAll = visible.length === events.length;
-    const extra = showAll ? 0 : 60;
-    map.fitBounds(showAll ? INDONESIA_BOUNDS : boundsOf(visible), {
-      padding: {
-        top: insetsRef.current.top + extra,
-        right: insetsRef.current.right + extra,
-        bottom: insetsRef.current.bottom + extra,
-        left: insetsRef.current.left + extra,
-      },
-      maxZoom: 5.6,
-      duration: reducedMotion ? 0 : 1100,
-      essential: true,
-    });
-    // Only re-frame when the filter itself changes.
-  }, [map, visibleIds]);
+  // Filters, search and background data refresh deliberately preserve the camera.
+  // Only selecting an event or Reset View moves it programmatically.
 
   const resetView = useCallback(() => {
+    onReset();
     map?.fitBounds(INDONESIA_BOUNDS, {
-      padding: insetsRef.current,
+      padding: overviewRef.current,
       duration: reducedMotion ? 0 : 1100,
       essential: true,
     });
-  }, [map, reducedMotion]);
+  }, [map, reducedMotion, onReset]);
+
+  const byId = useMemo(() => new Map(events.map(e => [e.id, e])), [events]);
 
   const activeOrder = useMemo(() => {
     const order = new Map<string, number>();
-    events.filter((e) => e.incidentStatus === 'active-response').forEach((e, i) => order.set(e.id, i));
+    events.filter((e) => isHumanies(e) && e.incidentStatus === 'active-response').forEach((e, i) => order.set(e.id, i));
     return order;
   }, [events]);
 
   // Keep the hovered / selected marker above its neighbours.
   useEffect(() => {
     containers.forEach((el, id) => {
-      el.style.zIndex = id === selectedId ? '3' : id === hoveredId ? '4' : '';
+      const event = eventsRef.current.find(e => e.id === id);
+      el.style.zIndex = id === selectedId ? '5' : id === hoveredId ? '6' : event && isHumanies(event) ? '2' : '1';
     });
   }, [containers, selectedId, hoveredId]);
 
@@ -188,10 +182,10 @@ export function DisasterMap({
         aria-label="Map of Indonesia showing disaster alerts and Humanies responses. Use the list of situations for a text alternative."
       />
       {[...containers].map(([id, element]) => {
-        const event = events.find((e) => e.id === id);
+        const event = byId.get(id);
         if (!event) return null;
         return createPortal(
-          <EventMarker
+          isPetaBencana(event) ? <button type="button" className={`bmkg-marker peta-marker${id === selectedId ? ' is-selected' : ''}${event.simulated ? ' is-demo' : ''}`} hidden={!visibleIds.has(id)} aria-label={`${event.simulated ? 'DEMO ' : ''}PetaBencana: ${event.title}, ${event.city ?? event.regionCode ?? 'lokasi laporan'}`} aria-pressed={id === selectedId} onClick={() => onSelect(id)} onMouseEnter={() => onHover(id)} onMouseLeave={() => onHover(null)} onFocus={() => onHover(id)} onBlur={() => onHover(null)}><ReportIcon type={event.disasterType} size={14} /></button> : isWeather(event) ? <button type="button" className="bmkg-marker weather-marker" hidden={!visibleIds.has(id)} aria-label={`Weather warning BMKG: ${event.region}`} aria-pressed={id === selectedId} onClick={() => onSelect(id)}><CloudLightning size={16} aria-hidden="true" /></button> : isBMKG(event) ? <button type="button" className={`bmkg-marker${id === selectedId ? ' is-selected' : ''}`} hidden={!visibleIds.has(id)} aria-label={`BMKG: M ${event.magnitude}, ${event.region}`} aria-pressed={id === selectedId} onClick={() => onSelect(id)} onMouseEnter={() => onHover(id)} onMouseLeave={() => onHover(null)}><Activity size={16} aria-hidden="true" /></button> : <EventMarker
             event={event}
             pulseIndex={activeOrder.get(id) ?? 0}
             isSelected={id === selectedId}
@@ -212,4 +206,4 @@ export function DisasterMap({
       />
     </div>
   );
-}
+});

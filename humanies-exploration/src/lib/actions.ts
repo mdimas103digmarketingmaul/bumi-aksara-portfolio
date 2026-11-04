@@ -31,7 +31,7 @@ export function safeExternalUrl(url: string | undefined) {
 export function getDonateAction(event: DisasterEvent): ExternalAction | null {
   const label = DEFAULT_DONATE_LABEL[event.incidentStatus];
   const url = safeExternalUrl(event.actionUrl);
-  if (event.fundraisingStatus !== 'open' || !label || !url) return null;
+  if (event.simulated || event.fundraisingStatus !== 'open' || !label || !url) return null;
   return { label: event.actionLabel ?? label, url, platform: event.platform };
 }
 

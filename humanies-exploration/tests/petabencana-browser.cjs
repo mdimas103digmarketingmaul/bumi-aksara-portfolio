@@ -1,0 +1,81 @@
+const { chromium } = require(process.env.PLAYWRIGHT_PATH || '/Users/alami/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert = require('node:assert/strict');
+const url = process.env.PREVIEW_URL || 'http://127.0.0.1:8788/humanies-exploration/';
+(async () => {
+  const browser = await chromium.launch({ headless: true, executablePath: process.env.BROWSER_PATH || '/Users/alami/.cache/puppeteer/chrome-headless-shell/mac_arm-148.0.7778.97/chrome-headless-shell-mac-arm64/chrome-headless-shell' });
+  try {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
+    const errors = []; page.on('pageerror', e => errors.push(e.message));
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.getByRole('button', { name: 'PetaBencana', exact: true }).click();
+    await page.waitForFunction(() => document.querySelector('.peta-list')?.textContent.includes('Terakhir berhasil diambil'));
+    const live = await page.request.get(new URL('api/petabencana', url).href);
+    assert.equal(live.status(), 200); const payload = await live.json();
+    const count = payload.result.features.filter(f => f.properties.is_training === false && Date.parse(f.properties.created_at) <= Date.now() && Date.parse(f.properties.created_at) >= Date.now() - 604800000).length;
+    console.log('Live PetaBencana:', { raw: payload.result.features.length, nonTraining: count });
+    assert(count > 0, 'live source available during this test');
+    await page.waitForSelector('.map-shell.is-loaded');
+    await page.waitForSelector('.peta-marker:not([hidden])');
+    assert.equal(await page.locator('.peta-marker:not([hidden])').count(), count);
+    assert.equal(await page.locator('.peta-row').count(), Math.min(count, 20));
+    if (count > 20) { await page.getByRole('button', { name: 'Tampilkan 20 laporan berikutnya' }).click(); assert.equal(await page.locator('.peta-row').count(), Math.min(count, 40)); }
+    assert.equal(await page.locator('.weather-marker:not([hidden])').count(), 0);
+    await page.locator('.peta-row').first().click();
+    assert.match(await page.locator('.drawer.is-open').innerText(), /LAPORAN PETABENCANA/);
+    assert.equal(await page.locator('.drawer.is-open a.btn--primary').count(), 0);
+    assert.equal(await page.locator('.drawer.is-open img').count(), 0);
+    assert.equal(await page.locator('.drawer.is-open a.btn').getAttribute('href'), 'https://petabencana.id/');
+    const label = await page.locator('#drawer-title').innerText();
+    await page.getByRole('button', { name: 'Close details' }).click();
+    await page.getByRole('button', { name: /Reset View/ }).click();
+    await page.locator('.peta-marker:not([hidden])').first().click({ force: true });
+    assert.equal(await page.locator('#drawer-title').innerText(), label);
+    await page.getByRole('button', { name: 'Close details' }).click();
+    await page.getByRole('searchbox').fill('POLEWALI'); assert(await page.locator('.peta-row').count() > 0);
+    await page.getByRole('searchbox').fill('no-such-report'); assert.equal(await page.locator('.peta-row').count(), 0); assert.match(await page.locator('.peta-list').innerText(), /Tidak ada laporan/);
+    await page.getByRole('searchbox').fill('');
+    await page.getByRole('button', { name: /Reset View/ }).click();
+    await page.locator('.stage').evaluate(e => window.scrollBy(0, e.getBoundingClientRect().top - 84));
+    await page.screenshot({ path: '/tmp/humanies-i5-desktop.png' });
+    await page.setViewportSize({ width: 390, height: 844 }); await page.getByRole('button', { name: /Reset View/ }).click();
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    await page.locator('.stage__filter').evaluate(e => window.scrollBy(0, e.getBoundingClientRect().top - 74));
+    await page.screenshot({ path: '/tmp/humanies-i5-mobile.png' });
+    await page.locator('.peta-row').first().click(); assert(await page.locator('.drawer.is-open').isVisible());
+    await page.getByRole('button', { name: 'Close details' }).click();
+    await page.getByRole('button', { name: 'Explore Demo', exact: true }).click();
+    await page.getByRole('button', { name: 'PetaBencana', exact: true }).click();
+    assert.equal(await page.locator('.peta-row').count(), 2); assert.equal(await page.locator('.peta-marker:not([hidden])').count(), 2);
+    await page.locator('.peta-row').first().click();
+    const demo = await page.locator('.drawer.is-open').innerText(); assert.match(demo, /DEMO \/ SIMULATION/); assert.doesNotMatch(demo, /Terakhir berhasil diambil/);
+    await page.getByRole('button', { name: 'Close details' }).click();
+    await page.getByRole('button', { name: 'Kembali ke data sumber', exact: true }).click();
+    await page.getByRole('button', { name: 'PetaBencana', exact: true }).click(); assert.equal(await page.locator('.peta-marker:not([hidden])').count(), count);
+    assert.deepEqual(errors, []); await page.close();
+
+    // Deterministic fault/empty/missing status/XSS cases: these are fixtures, never live data.
+    const p = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+    await p.clock.install(); const fixedNow = Date.now(); let requests = 0, mode = 'success';
+    const fixture = { statusCode: 200, result: { type: 'FeatureCollection', features: [{ type: 'Feature', geometry: { type: 'Point', coordinates: [106.82, -6.2] }, properties: { pkey: 'fixture-1', disaster_type: 'flood', is_training: false, status: null, created_at: new Date(fixedNow - 1000).toISOString(), title: 'Fixture report', text: '<img src=x onerror="window.petaInjected=1">', tags: { city: 'Fixture City' } } }] } };
+    await p.route('**/api/petabencana', route => { requests++; return route.fulfill({ status: mode === 'failure' ? 503 : 200, headers: { 'Content-Type': 'application/json', 'X-PetaBencana-Fetched-At': new Date(fixedNow).toISOString() }, body: JSON.stringify(mode === 'empty' ? { statusCode: 200, result: { type: 'FeatureCollection', features: [] } } : fixture) }); });
+    await p.goto(url, { waitUntil: 'domcontentloaded' }); await p.getByRole('button', { name: 'PetaBencana', exact: true }).click();
+    await p.waitForSelector('.peta-row'); assert.equal(requests, 1);
+    await p.locator('.peta-row').click(); assert.match(await p.locator('.drawer.is-open').innerText(), /Status verifikasi tidak tersedia/); assert.equal(await p.locator('.drawer.is-open img').count(), 0); assert.equal(await p.evaluate(() => window.petaInjected), undefined);
+    mode = 'failure'; await p.reload({ waitUntil: 'domcontentloaded' }); await p.getByRole('button', { name: 'PetaBencana', exact: true }).click();
+    await p.waitForFunction(() => document.querySelector('.peta-list')?.textContent.includes('sementara tidak dapat diperbarui'));
+    assert.equal(await p.locator('.peta-row').count(), 1); assert.match(await p.locator('.peta-list').innerText(), /Data tersimpan, belum diperbarui/);
+    const afterReload = requests;
+    await p.clock.fastForward(60_000); assert.equal(requests, afterReload, 'no excess retries before 10 minutes');
+    await p.clock.fastForward(31 * 60_000);
+    await p.waitForFunction(() => document.querySelectorAll('.peta-row').length === 0);
+    await p.getByRole('button', { name: 'Humanies', exact: true }).click(); assert(await p.locator('.situation').count() > 0);
+    await p.evaluate(() => localStorage.removeItem('humanies-petabencana-v1')); await p.reload({ waitUntil: 'domcontentloaded' });
+    await p.getByRole('button', { name: 'PetaBencana', exact: true }).click(); await p.waitForFunction(() => document.querySelector('.peta-list')?.textContent.includes('sementara tidak dapat diperbarui')); assert.equal(await p.locator('.peta-row').count(), 0);
+    // New page restores wall time for a fresh empty response.
+    await p.close(); const empty = await browser.newPage();
+    await empty.route('**/api/petabencana', r => r.fulfill({ status: 200, headers: { 'Content-Type': 'application/json', 'X-PetaBencana-Fetched-At': new Date().toISOString() }, body: '{"statusCode":200,"result":{"type":"FeatureCollection","features":[]}}' }));
+    await empty.goto(url); await empty.getByRole('button', { name: 'PetaBencana', exact: true }).click(); await empty.waitForFunction(() => document.querySelector('.peta-list')?.textContent.includes('Tidak ada laporan PetaBencana'));
+    assert.equal(await empty.locator('.peta-row').count(), 0);
+    console.log('PASS: PetaBencana live Pages integration, filters/search/markers/drawer/reset, pagination, desktop/mobile, demo separation, XSS-safe text, missing verification, stale/offline/empty/cache expiry, no excessive retries');
+  } finally { await browser.close(); }
+})().catch(e => { console.error(e); process.exit(1); });

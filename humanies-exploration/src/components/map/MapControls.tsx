@@ -21,10 +21,10 @@ export function MapControls({ onZoomIn, onZoomOut, onReset }: MapControlsProps) 
         type="button"
         className="map-controls__btn map-controls__btn--solo"
         onClick={onReset}
-        aria-label="Show all of Indonesia"
-        title="Show all of Indonesia"
+        aria-label="Reset View — Indonesia"
+        title="Reset View — Indonesia"
       >
-        <Scan size={16} strokeWidth={1.75} aria-hidden="true" />
+        <Scan size={16} strokeWidth={1.75} aria-hidden="true" /><span className="map-controls__reset-label">Reset View</span>
       </button>
     </div>
   );

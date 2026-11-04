@@ -6,6 +6,7 @@ interface FilterBarProps {
   value: StatusFilter;
   counts: Record<MapStatus, number>;
   total: number;
+  archived: number;
   onChange: (value: StatusFilter) => void;
 }
 
@@ -15,10 +16,11 @@ const SHORT_LABEL: Record<MapStatus, string> = {
   recovery: 'Recovery',
 };
 
-export function FilterBar({ value, counts, total, onChange }: FilterBarProps) {
+export function FilterBar({ value, counts, total, archived, onChange }: FilterBarProps) {
   const options: { id: StatusFilter; label: string; count: number }[] = [
     { id: 'all', label: 'All', count: total },
     ...STATUS_ORDER.map((status) => ({ id: status, label: SHORT_LABEL[status], count: counts[status] })),
+    { id: 'resolved', label: 'Archived', count: archived },
   ];
 
   return (

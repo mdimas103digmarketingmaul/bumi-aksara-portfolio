@@ -37,7 +37,7 @@ export function DetailHeading({ event }: { event: DisasterEvent }) {
           <dd>{formatEventDate(event.eventDate)}</dd>
         </div>
         <div>
-          <dt>Last updated</dt>
+          <dt>Last manual update</dt>
           <dd>{formatUpdated(event.lastUpdated, event.timeZone)}</dd>
         </div>
       </dl>
@@ -221,8 +221,7 @@ export function SimulationNotice({ event }: { event: DisasterEvent }) {
     <div className="sim-notice" role="note">
       <span className="sim-tag">Simulasi</span>
       <p>
-        The disaster and its figures are real. The Humanies response and campaign shown here are
-        simulated for this prototype — the donate button does not lead to a real campaign.
+        {event.demoOnly ? 'Seluruh kejadian, respons, timeline, dan campaign ini adalah DEMO fiktif. Bukan laporan kegiatan Humanies.' : 'Kejadian bersumber dari laporan publik. Respons Humanies dan campaign pada contoh ini adalah simulasi; tautan donasi tidak aktif.'}
       </p>
     </div>
   );

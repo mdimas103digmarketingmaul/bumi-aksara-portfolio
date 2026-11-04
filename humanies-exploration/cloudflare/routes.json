@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "include": [
+    "/humanies-exploration/api/weather",
+    "/humanies-exploration/api/weather/*",
+    "/humanies-exploration/api/petabencana"
+  ],
+  "exclude": []
+}
